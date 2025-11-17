@@ -119,8 +119,8 @@ def get_hourly_blocks(ticker: str):
             "blocks": [
                 {
                     "block_num": 1,
-                    "start_time_et": "2025-11-16T10:00:00-05:00",
-                    "end_time_et": "2025-11-16T10:08:34-05:00",
+                    "start_time": "2025-11-16T10:00:00-05:00",
+                    "end_time": "2025-11-16T10:08:34-05:00",
                     "is_complete": true,
                     "ohlc": {
                         "open": 17240.0,
@@ -132,7 +132,13 @@ def get_hourly_blocks(ticker: str):
                     }
                 },
                 ...7 blocks total
-            ]
+            ],
+            "current_block": {
+                "block_num": 3,
+                "start_time": "2025-11-16T10:17:08-05:00",
+                "end_time": "2025-11-16T10:25:42-05:00",
+                "ohlc": {...}
+            }
         }
     """
     try:
@@ -175,7 +181,8 @@ def get_hourly_blocks(ticker: str):
         # Extract OHLC for each block
         blocks_data = []
         blocks_completed = 0
-        current_block = None
+        current_block_num = None
+        current_block_data = None
 
         for block_info in blocks_info:
             block_ohlc = extract_block_ohlc(
@@ -186,8 +193,8 @@ def get_hourly_blocks(ticker: str):
 
             block_dict = {
                 "block_num": block_info['block_num'],
-                "start_time_et": block_info['start_time'].isoformat(),
-                "end_time_et": block_info['end_time'].isoformat(),
+                "start_time": block_info['start_time'].isoformat(),
+                "end_time": block_info['end_time'].isoformat(),
                 "is_complete": block_info['is_complete']
             }
 
@@ -198,12 +205,15 @@ def get_hourly_blocks(ticker: str):
 
             if block_info['is_complete']:
                 blocks_completed += 1
-            elif current_block is None:
-                current_block = block_info['block_num']
+            elif current_block_num is None:
+                current_block_num = block_info['block_num']
+                current_block_data = block_dict
 
         # If no current block found (all complete), current is the last one
-        if current_block is None:
-            current_block = BLOCKS_PER_HOUR
+        if current_block_num is None:
+            current_block_num = BLOCKS_PER_HOUR
+            if blocks_data:
+                current_block_data = blocks_data[-1]
 
         # Calculate progress
         progress_percent = round((blocks_completed / BLOCKS_PER_HOUR) * 100, 1)
@@ -220,11 +230,12 @@ def get_hourly_blocks(ticker: str):
             "current_time_utc": current_time_utc.isoformat(),
             "current_time_et": current_time_et.isoformat(),
             "current_hour": current_hour_str,
-            "current_block": current_block,
+            "current_block": current_block_num,
             "blocks_completed": blocks_completed,
             "blocks_total": BLOCKS_PER_HOUR,
             "progress_percent": progress_percent,
-            "blocks": blocks_data
+            "blocks": blocks_data,
+            "current_block": current_block_data  # Add current block object for UI
         }), 200
 
     except Exception as e:
@@ -247,8 +258,10 @@ def get_current_block(ticker: str):
             "ticker": "NQ=F",
             "current_time_et": "2025-11-16T10:45:28-05:00",
             "current_block": 3,
-            "block_start_et": "2025-11-16T10:17:08-05:00",
-            "block_end_et": "2025-11-16T10:25:42-05:00",
+            "block_start": "2025-11-16T10:17:08-05:00",
+            "block_end": "2025-11-16T10:25:42-05:00",
+            "start_time": "2025-11-16T10:17:08-05:00",
+            "end_time": "2025-11-16T10:25:42-05:00",
             "ohlc": {...}
         }
     """
@@ -283,8 +296,10 @@ def get_current_block(ticker: str):
             "ticker": ticker,
             "current_time_et": current_time_et.isoformat(),
             "current_block": current_block_info['block_num'],
-            "block_start_et": current_block_info['start_time'].isoformat(),
-            "block_end_et": current_block_info['end_time'].isoformat(),
+            "block_start": current_block_info['start_time'].isoformat(),
+            "block_end": current_block_info['end_time'].isoformat(),
+            "start_time": current_block_info['start_time'].isoformat(),
+            "end_time": current_block_info['end_time'].isoformat(),
             "ohlc": block_ohlc if block_ohlc else None
         }), 200
 

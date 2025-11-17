@@ -17,18 +17,22 @@ from ..analysis.reference_levels import (
     calculate_daily_open,
     calculate_hourly_open,
     calculate_4hourly_open,
+    calculate_2hourly_open,
     calculate_30min_open,
     calculate_15min_open,
     calculate_weekly_open,
     calculate_monthly_open,
     calculate_7am_open,
     calculate_830am_open,
+    calculate_previous_hourly_open,
     calculate_prev_week_open,
     calculate_prev_day_high_low,
+    calculate_prev_week_high,
+    calculate_prev_week_low,
     calculate_week_high_low,
     calculate_all_reference_levels
 )
-from ..utils.timezone import get_current_time_utc
+from ..utils.timezone import get_current_time_utc, ensure_et
 
 logger = logging.getLogger(__name__)
 
@@ -100,11 +104,13 @@ class ReferenceLevelService:
         logger.info(f"Calculating reference levels for {ticker} at price {current_price}")
 
         try:
+            # Convert to ET for time-based calculations
+            current_time_et = ensure_et(current_time)
+            
             # Fetch all required OHLC data
             hourly_data = LiveDataFetcher.fetch_data(ticker, interval='1h')
             daily_data = LiveDataFetcher.fetch_data(ticker, interval='1d')
             minute_data = LiveDataFetcher.fetch_data(ticker, interval='1m')
-            weekly_data = LiveDataFetcher.fetch_data(ticker, interval='1wk')
 
             if hourly_data is None or daily_data is None:
                 logger.error(f"Failed to fetch data for {ticker}")
@@ -113,52 +119,52 @@ class ReferenceLevelService:
             # Calculate all 16 levels
             levels = {
                 "weekly_open": cls._safe_calculate(
-                    calculate_weekly_open, hourly_data, current_time, "Weekly Open"
+                    calculate_weekly_open, hourly_data, current_time_et
                 ),
                 "monthly_open": cls._safe_calculate(
-                    calculate_monthly_open, hourly_data, current_time, "Monthly Open"
+                    calculate_monthly_open, hourly_data, current_time_et
                 ),
                 "daily_open_midnight": cls._safe_calculate(
-                    calculate_daily_open, hourly_data, current_time, "Midnight Open"
+                    calculate_daily_open, hourly_data, current_time_et
                 ),
                 "ny_open_0830": cls._safe_calculate(
-                    calculate_830am_open, hourly_data, current_time, "NY Open (08:30)"
+                    calculate_830am_open, hourly_data, current_time_et
                 ),
                 "ny_open_0700": cls._safe_calculate(
-                    calculate_7am_open, hourly_data, current_time, "Pre-NY Open (07:00)"
+                    calculate_7am_open, hourly_data, current_time_et
                 ),
                 "four_hour_open": cls._safe_calculate(
-                    calculate_4hourly_open, hourly_data, current_time, "4H Open"
+                    calculate_4hourly_open, hourly_data
                 ),
                 "two_hour_open": cls._safe_calculate(
-                    calculate_2hourly_open, hourly_data, current_time, "2H Open"
+                    calculate_2hourly_open, hourly_data
                 ),
                 "hourly_open": cls._safe_calculate(
-                    calculate_hourly_open, hourly_data, current_time, "1H Open"
+                    calculate_hourly_open, hourly_data
                 ),
                 "previous_hourly_open": cls._safe_calculate(
-                    calculate_previous_hourly_open, hourly_data, current_time, "Previous Hour Open"
+                    calculate_previous_hourly_open, hourly_data, current_time_et
                 ),
                 "fifteen_min_open": cls._safe_calculate(
-                    calculate_15min_open, minute_data, current_time, "15min Open"
+                    calculate_15min_open, minute_data
                 ) if minute_data is not None else None,
                 "previous_day_high": cls._safe_calculate(
-                    lambda d: calculate_prev_day_high_low(d)[0], daily_data, "Previous Day High"
+                    lambda d: calculate_prev_day_high_low(d)[0], daily_data
                 ),
                 "previous_day_low": cls._safe_calculate(
-                    lambda d: calculate_prev_day_high_low(d)[1], daily_data, "Previous Day Low"
+                    lambda d: calculate_prev_day_high_low(d)[1], daily_data
                 ),
                 "previous_week_high": cls._safe_calculate(
-                    calculate_prev_week_high, daily_data, current_time, "Previous Week High"
+                    calculate_prev_week_high, daily_data
                 ),
                 "previous_week_low": cls._safe_calculate(
-                    calculate_prev_week_low, daily_data, current_time, "Previous Week Low"
+                    calculate_prev_week_low, daily_data
                 ),
                 "weekly_high": cls._safe_calculate(
-                    lambda d: calculate_week_high_low(d)[0], daily_data, "Weekly High"
+                    lambda d: calculate_week_high_low(d)[0], daily_data
                 ),
                 "weekly_low": cls._safe_calculate(
-                    lambda d: calculate_week_high_low(d)[1], daily_data, "Weekly Low"
+                    lambda d: calculate_week_high_low(d)[1], daily_data
                 )
             }
 
@@ -212,21 +218,20 @@ class ReferenceLevelService:
 
     @staticmethod
     def _get_current_price(ticker: str) -> Optional[float]:
-        """Get current price from yfinance"""
+        """Get current price from yfinance or mock data"""
         return LiveDataFetcher.get_current_price(ticker)
 
     @staticmethod
-    def _safe_calculate(func, *args, **kwargs) -> Optional[float]:
+    def _safe_calculate(func, *args) -> Optional[float]:
         """Safely call a calculation function, returning None on error"""
         try:
-            return func(*args, **kwargs)
+            return func(*args)
         except Exception as e:
-            level_name = kwargs.get("level_name", str(func.__name__))
-            logger.debug(f"Error calculating {level_name}: {e}")
+            logger.debug(f"Error calculating {func.__name__}: {e}")
             return None
 
     @classmethod
-    def _calculate_signal(cls, current_price: float, reference_level: float) -> tuple[str, int]:
+    def _calculate_signal(cls, current_price: float, reference_level: float) -> tuple:
         """
         Calculate proximity and signal for a reference level
 
@@ -237,8 +242,11 @@ class ReferenceLevelService:
         Returns:
             Tuple of (proximity: "ABOVE"/"NEAR"/"BELOW", signal: 1/-1/0)
         """
+        if reference_level is None or reference_level == 0:
+            return PriceProximity.NEAR, 0
+            
         distance = current_price - reference_level
-        distance_pct = abs((distance / reference_level) * 100) if reference_level != 0 else 0
+        distance_pct = abs((distance / reference_level) * 100)
 
         if distance_pct < cls.NEAR_THRESHOLD_PCT:
             # Price is near reference level
@@ -262,104 +270,36 @@ class ReferenceLevelService:
         current_price: Optional[float] = None
     ) -> Dict[str, Any]:
         """
-        Get a summary of key reference levels (for UI display)
+        Get summary of key reference levels for dashboard display
 
-        Returns only the most important levels for dashboard display
-
-        Args:
-            ticker: Ticker symbol
-            current_price: Current price (fetched if not provided)
-
-        Returns:
-            Dict with key levels formatted for UI
+        Returns only the most important levels for UI display
         """
-        all_levels = cls.calculate_all_levels(ticker, current_price)
-
-        if "error" in all_levels:
-            return all_levels
-
-        # Extract key levels for display
+        result = cls.calculate_all_levels(ticker, current_price)
+        
+        if "error" in result:
+            return result
+        
+        # Filter to key levels for dashboard
         key_levels = [
             "weekly_open",
             "daily_open_midnight",
             "ny_open_0830",
             "hourly_open",
             "previous_day_high",
-            "previous_day_low",
-            "weekly_high",
-            "weekly_low"
+            "previous_day_low"
         ]
-
-        summary = {
-            "current_price": all_levels["current_price"],
-            "current_time": all_levels["current_time_utc"],
-            "levels": {}
-        }
-
+        
+        summary_levels = {}
         for level_key in key_levels:
-            if level_key in all_levels["signals"]:
-                summary["levels"][level_key] = all_levels["signals"][level_key]
-
-        return summary
-
-
-# Helper functions for calculations not in reference_levels.py
-def calculate_2hourly_open(hourly_hist, current_time):
-    """Calculate 2-hourly open from hourly data"""
-    from ..utils.timezone import get_candle_open_time
-    candle_2h_time = get_candle_open_time(current_time, 120)
-    two_hourly_data = hourly_hist[hourly_hist.index >= candle_2h_time]
-
-    if not two_hourly_data.empty:
-        return two_hourly_data['Open'].iloc[0]
-
-    nearby_data = hourly_hist[hourly_hist.index <= candle_2h_time]
-    if not nearby_data.empty:
-        return nearby_data['Open'].iloc[-1]
-
-    return None
-
-
-def calculate_previous_hourly_open(hourly_hist, current_time):
-    """Calculate previous hour's open"""
-    from ..utils.timezone import get_candle_open_time
-    from datetime import timedelta
-
-    candle_1h_time = get_candle_open_time(current_time, 60)
-    prev_1h_time = candle_1h_time - timedelta(hours=1)
-
-    prev_hourly_data = hourly_hist[
-        (hourly_hist.index >= prev_1h_time) & (hourly_hist.index < candle_1h_time)
-    ]
-
-    if not prev_hourly_data.empty:
-        return prev_hourly_data['Open'].iloc[0]
-    return None
-
-
-def calculate_prev_week_high(daily_hist, current_time):
-    """Calculate previous week's high"""
-    from ..utils.timezone import get_week_start
-    from datetime import timedelta
-
-    current_week_start = get_week_start(current_time)
-    prev_week_start = current_week_start - timedelta(days=7)
-    prev_week_data = daily_hist[(daily_hist.index >= prev_week_start) & (daily_hist.index < current_week_start)]
-
-    if not prev_week_data.empty:
-        return prev_week_data['High'].max()
-    return None
-
-
-def calculate_prev_week_low(daily_hist, current_time):
-    """Calculate previous week's low"""
-    from ..utils.timezone import get_week_start
-    from datetime import timedelta
-
-    current_week_start = get_week_start(current_time)
-    prev_week_start = current_week_start - timedelta(days=7)
-    prev_week_data = daily_hist[(daily_hist.index >= prev_week_start) & (daily_hist.index < current_week_start)]
-
-    if not prev_week_data.empty:
-        return prev_week_data['Low'].min()
-    return None
+            if level_key in result["reference_levels"]:
+                summary_levels[level_key] = result["reference_levels"][level_key]
+        
+        return {
+            "success": True,
+            "ticker": ticker,
+            "current_price": result["current_price"],
+            "current_time_utc": result["current_time_utc"],
+            "reference_levels": summary_levels,
+            "signals": {k: result["signals"][k] for k in key_levels if k in result["signals"]},
+            "closest_level": result["closest_level"]
+        }
