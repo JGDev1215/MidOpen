@@ -1,0 +1,356 @@
+2025-11-17 08:25:44,935 - __main__ - INFO - Starting NQ=F Market Data Dashboard API on port 8080
+ * Serving Flask app 'app'
+ * Debug mode: off
+2025-11-17 08:25:45,117 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.0.105:8080
+2025-11-17 08:25:45,118 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-11-17 08:27:51,776 - werkzeug - INFO - 127.0.0.1 - - [17/Nov/2025 08:27:51] "GET /health HTTP/1.1" 200 -
+2025-11-17 08:29:52,687 - werkzeug - INFO - 127.0.0.1 - - [17/Nov/2025 08:29:52] "GET / HTTP/1.1" 200 -
+2025-11-17 08:29:52,710 - werkzeug - INFO - 127.0.0.1 - - [17/Nov/2025 08:29:52] "GET /health HTTP/1.1" 200 -
+2025-11-17 08:29:52,726 - __main__ - INFO - Serving dashboard UI
+2025-11-17 08:29:52,746 - werkzeug - INFO - 127.0.0.1 - - [17/Nov/2025 08:29:52] "GET /dashboard HTTP/1.1" 200 -
+2025-11-17 08:29:52,772 - werkzeug - INFO - 127.0.0.1 - - [17/Nov/2025 08:29:52] "GET /api/market-status/NQ=F HTTP/1.1" 200 -
+2025-11-17 08:29:52,788 - werkzeug - INFO - 127.0.0.1 - - [17/Nov/2025 08:29:52] "GET /api/market-status/NQ=F/is-open HTTP/1.1" 200 -
+2025-11-17 08:29:52,804 - werkzeug - INFO - 127.0.0.1 - - [17/Nov/2025 08:29:52] "GET /api/market-status/NQ=F/next-event HTTP/1.1" 200 -
+2025-11-17 08:29:52,835 - nasdaq_predictor.api.routes.price_routes - INFO - Fetching price for NQ=F
+2025-11-17 08:29:52,835 - nasdaq_predictor.data.fetcher_live - INFO - Fetching NQ=F 1m data (period: 7d)
+2025-11-17 08:29:52,844 - yfinance - ERROR - Failed to get ticker 'NQ=F' reason: unsupported operand type(s) for -: 'datetime.datetime' and 'str'
+2025-11-17 08:29:52,846 - yfinance - ERROR - NQ=F: No price data found, symbol may be delisted (period=7d)
+2025-11-17 08:29:52,846 - nasdaq_predictor.data.fetcher_live - WARNING - Fetch attempt 1/3 failed: Empty DataFrame returned for NQ=F 1m
+2025-11-17 08:29:52,846 - nasdaq_predictor.data.fetcher_live - INFO - Retrying in 2s...
+2025-11-17 08:29:54,853 - yfinance - ERROR - Failed to get ticker 'NQ=F' reason: unsupported operand type(s) for -: 'datetime.datetime' and 'str'
+2025-11-17 08:29:54,854 - yfinance - ERROR - NQ=F: No price data found, symbol may be delisted (period=7d)
+2025-11-17 08:29:54,854 - nasdaq_predictor.data.fetcher_live - WARNING - Fetch attempt 2/3 failed: Empty DataFrame returned for NQ=F 1m
+2025-11-17 08:29:54,854 - nasdaq_predictor.data.fetcher_live - INFO - Retrying in 5s...
+2025-11-17 08:29:59,860 - yfinance - ERROR - Failed to get ticker 'NQ=F' reason: unsupported operand type(s) for -: 'datetime.datetime' and 'str'
+2025-11-17 08:29:59,861 - yfinance - ERROR - NQ=F: No price data found, symbol may be delisted (period=7d)
+2025-11-17 08:29:59,861 - nasdaq_predictor.data.fetcher_live - WARNING - Fetch attempt 3/3 failed: Empty DataFrame returned for NQ=F 1m
+2025-11-17 08:29:59,861 - nasdaq_predictor.data.fetcher_live - ERROR - All 3 fetch attempts failed for NQ=F 1m
+2025-11-17 08:29:59,861 - nasdaq_predictor.api.routes.price_routes - WARNING - No 1m data available for NQ=F
+2025-11-17 08:29:59,861 - werkzeug - INFO - 127.0.0.1 - - [17/Nov/2025 08:29:59] "[35m[1mGET /api/current-price/NQ=F HTTP/1.1[0m" 503 -
+2025-11-17 08:29:59,900 - nasdaq_predictor.data.fetcher_live - INFO - Fetching NQ=F 1m data (period: 7d)
+2025-11-17 08:30:00,862 - yfinance - ERROR - Failed to get ticker 'NQ=F' reason: unsupported operand type(s) for -: 'datetime.datetime' and 'str'
+2025-11-17 08:30:00,862 - yfinance - ERROR - NQ=F: No price data found, symbol may be delisted (period=7d)
+2025-11-17 08:30:00,862 - nasdaq_predictor.data.fetcher_live - WARNING - Fetch attempt 1/3 failed: Empty DataFrame returned for NQ=F 1m
+2025-11-17 08:30:00,862 - nasdaq_predictor.data.fetcher_live - INFO - Retrying in 2s...
+2025-11-17 08:30:02,868 - yfinance - ERROR - Failed to get ticker 'NQ=F' reason: unsupported operand type(s) for -: 'datetime.datetime' and 'str'
+2025-11-17 08:30:02,869 - yfinance - ERROR - NQ=F: No price data found, symbol may be delisted (period=7d)
+2025-11-17 08:30:02,869 - nasdaq_predictor.data.fetcher_live - WARNING - Fetch attempt 2/3 failed: Empty DataFrame returned for NQ=F 1m
+2025-11-17 08:30:02,869 - nasdaq_predictor.data.fetcher_live - INFO - Retrying in 5s...
+2025-11-17 08:30:07,876 - yfinance - ERROR - Failed to get ticker 'NQ=F' reason: unsupported operand type(s) for -: 'datetime.datetime' and 'str'
+2025-11-17 08:30:07,877 - yfinance - ERROR - NQ=F: No price data found, symbol may be delisted (period=7d)
+2025-11-17 08:30:07,878 - nasdaq_predictor.data.fetcher_live - WARNING - Fetch attempt 3/3 failed: Empty DataFrame returned for NQ=F 1m
+2025-11-17 08:30:07,878 - nasdaq_predictor.data.fetcher_live - ERROR - All 3 fetch attempts failed for NQ=F 1m
+2025-11-17 08:30:07,878 - werkzeug - INFO - 127.0.0.1 - - [17/Nov/2025 08:30:07] "[35m[1mGET /api/current-price/NQ=F/ohlc HTTP/1.1[0m" 503 -
+2025-11-17 08:30:07,906 - nasdaq_predictor.api.routes.reference_levels_routes - INFO - Fetching reference levels for NQ=F
+2025-11-17 08:30:07,907 - nasdaq_predictor.data.fetcher_live - ERROR - Failed to get current price for NQ=F: unsupported operand type(s) for -: 'datetime.datetime' and 'str'
+2025-11-17 08:30:07,907 - nasdaq_predictor.api.routes.reference_levels_routes - WARNING - Failed to get current price for NQ=F
+2025-11-17 08:30:07,907 - werkzeug - INFO - 127.0.0.1 - - [17/Nov/2025 08:30:07] "[35m[1mGET /api/reference-levels/NQ=F HTTP/1.1[0m" 503 -
+2025-11-17 08:30:08,913 - nasdaq_predictor.data.fetcher_live - ERROR - Failed to get current price for NQ=F: unsupported operand type(s) for -: 'datetime.datetime' and 'str'
+2025-11-17 08:30:08,914 - werkzeug - INFO - 127.0.0.1 - - [17/Nov/2025 08:30:08] "[35m[1mGET /api/reference-levels/NQ=F/summary HTTP/1.1[0m" 503 -
+2025-11-17 08:30:09,920 - nasdaq_predictor.data.fetcher_live - ERROR - Failed to get current price for NQ=F: unsupported operand type(s) for -: 'datetime.datetime' and 'str'
+2025-11-17 08:30:09,921 - werkzeug - INFO - 127.0.0.1 - - [17/Nov/2025 08:30:09] "[35m[1mGET /api/reference-levels/NQ=F/closest HTTP/1.1[0m" 503 -
+2025-11-17 08:30:09,955 - nasdaq_predictor.api.routes.session_ranges_routes - INFO - Fetching session ranges for NQ=F
+2025-11-17 08:30:10,921 - nasdaq_predictor.data.fetcher_live - ERROR - Failed to get current price for NQ=F: unsupported operand type(s) for -: 'datetime.datetime' and 'str'
+2025-11-17 08:30:10,921 - nasdaq_predictor.api.routes.session_ranges_routes - WARNING - Failed to get current price for NQ=F
+2025-11-17 08:30:10,921 - werkzeug - INFO - 127.0.0.1 - - [17/Nov/2025 08:30:10] "[35m[1mGET /api/session-ranges/NQ=F HTTP/1.1[0m" 503 -
+2025-11-17 08:30:10,942 - nasdaq_predictor.data.fetcher_live - INFO - Fetching NQ=F 5m data (period: 60d)
+2025-11-17 08:30:10,944 - yfinance - ERROR - Failed to get ticker 'NQ=F' reason: unsupported operand type(s) for -: 'datetime.datetime' and 'str'
+2025-11-17 08:30:10,944 - yfinance - ERROR - NQ=F: No price data found, symbol may be delisted (period=60d)
+2025-11-17 08:30:10,944 - nasdaq_predictor.data.fetcher_live - WARNING - Fetch attempt 1/3 failed: Empty DataFrame returned for NQ=F 5m
+2025-11-17 08:30:10,944 - nasdaq_predictor.data.fetcher_live - INFO - Retrying in 2s...
+2025-11-17 08:30:12,952 - yfinance - ERROR - Failed to get ticker 'NQ=F' reason: unsupported operand type(s) for -: 'datetime.datetime' and 'str'
+2025-11-17 08:30:12,955 - yfinance - ERROR - NQ=F: No price data found, symbol may be delisted (period=60d)
+2025-11-17 08:30:12,955 - nasdaq_predictor.data.fetcher_live - WARNING - Fetch attempt 2/3 failed: Empty DataFrame returned for NQ=F 5m
+2025-11-17 08:30:12,955 - nasdaq_predictor.data.fetcher_live - INFO - Retrying in 5s...
+2025-11-17 08:30:17,959 - yfinance - ERROR - Failed to get ticker 'NQ=F' reason: unsupported operand type(s) for -: 'datetime.datetime' and 'str'
+2025-11-17 08:30:17,962 - yfinance - ERROR - NQ=F: No price data found, symbol may be delisted (period=60d)
+2025-11-17 08:30:17,963 - nasdaq_predictor.data.fetcher_live - WARNING - Fetch attempt 3/3 failed: Empty DataFrame returned for NQ=F 5m
+2025-11-17 08:30:17,963 - nasdaq_predictor.data.fetcher_live - ERROR - All 3 fetch attempts failed for NQ=F 5m
+2025-11-17 08:30:17,963 - nasdaq_predictor.services.session_range_service - ERROR - Failed to fetch 5m data for NQ=F
+2025-11-17 08:30:17,964 - werkzeug - INFO - 127.0.0.1 - - [17/Nov/2025 08:30:17] "[35m[1mGET /api/session-ranges/NQ=F/current HTTP/1.1[0m" 503 -
+2025-11-17 08:30:18,002 - nasdaq_predictor.data.fetcher_live - INFO - Fetching NQ=F 5m data (period: 60d)
+2025-11-17 08:30:18,966 - yfinance - ERROR - Failed to get ticker 'NQ=F' reason: unsupported operand type(s) for -: 'datetime.datetime' and 'str'
+2025-11-17 08:30:18,967 - yfinance - ERROR - NQ=F: No price data found, symbol may be delisted (period=60d)
+2025-11-17 08:30:18,968 - nasdaq_predictor.data.fetcher_live - WARNING - Fetch attempt 1/3 failed: Empty DataFrame returned for NQ=F 5m
+2025-11-17 08:30:18,968 - nasdaq_predictor.data.fetcher_live - INFO - Retrying in 2s...
+2025-11-17 08:30:20,974 - yfinance - ERROR - Failed to get ticker 'NQ=F' reason: unsupported operand type(s) for -: 'datetime.datetime' and 'str'
+2025-11-17 08:30:20,976 - yfinance - ERROR - NQ=F: No price data found, symbol may be delisted (period=60d)
+2025-11-17 08:30:20,976 - nasdaq_predictor.data.fetcher_live - WARNING - Fetch attempt 2/3 failed: Empty DataFrame returned for NQ=F 5m
+2025-11-17 08:30:20,976 - nasdaq_predictor.data.fetcher_live - INFO - Retrying in 5s...
+2025-11-17 08:30:25,982 - yfinance - ERROR - Failed to get ticker 'NQ=F' reason: unsupported operand type(s) for -: 'datetime.datetime' and 'str'
+2025-11-17 08:30:25,983 - yfinance - ERROR - NQ=F: No price data found, symbol may be delisted (period=60d)
+2025-11-17 08:30:25,984 - nasdaq_predictor.data.fetcher_live - WARNING - Fetch attempt 3/3 failed: Empty DataFrame returned for NQ=F 5m
+2025-11-17 08:30:25,984 - nasdaq_predictor.data.fetcher_live - ERROR - All 3 fetch attempts failed for NQ=F 5m
+2025-11-17 08:30:25,984 - nasdaq_predictor.services.session_range_service - ERROR - Failed to fetch 5m data for NQ=F
+2025-11-17 08:30:25,985 - werkzeug - INFO - 127.0.0.1 - - [17/Nov/2025 08:30:25] "[35m[1mGET /api/session-ranges/NQ=F/previous HTTP/1.1[0m" 503 -
+2025-11-17 08:30:26,020 - nasdaq_predictor.api.routes.fibonacci_routes - INFO - Fetching Fibonacci pivots for NQ=F
+2025-11-17 08:30:26,021 - nasdaq_predictor.data.fetcher_live - ERROR - Failed to get current price for NQ=F: unsupported operand type(s) for -: 'datetime.datetime' and 'str'
+2025-11-17 08:30:26,021 - nasdaq_predictor.api.routes.fibonacci_routes - WARNING - Failed to get current price for NQ=F
+2025-11-17 08:30:26,022 - werkzeug - INFO - 127.0.0.1 - - [17/Nov/2025 08:30:26] "[35m[1mGET /api/fibonacci-pivots/NQ=F HTTP/1.1[0m" 503 -
+2025-11-17 08:30:27,030 - nasdaq_predictor.data.fetcher_live - ERROR - Failed to get current price for NQ=F: unsupported operand type(s) for -: 'datetime.datetime' and 'str'
+2025-11-17 08:30:27,030 - nasdaq_predictor.data.fetcher_live - INFO - Fetching NQ=F 1d data (period: max)
+2025-11-17 08:30:27,033 - yfinance - ERROR - Failed to get ticker 'NQ=F' reason: unsupported operand type(s) for -: 'datetime.datetime' and 'str'
+2025-11-17 08:30:27,038 - yfinance - ERROR - NQ=F: No timezone found, symbol may be delisted
+2025-11-17 08:30:27,039 - nasdaq_predictor.data.fetcher_live - WARNING - Fetch attempt 1/3 failed: Empty DataFrame returned for NQ=F 1d
+2025-11-17 08:30:27,039 - nasdaq_predictor.data.fetcher_live - INFO - Retrying in 2s...
+2025-11-17 08:30:29,043 - yfinance - ERROR - Failed to get ticker 'NQ=F' reason: unsupported operand type(s) for -: 'datetime.datetime' and 'str'
+2025-11-17 08:30:29,044 - yfinance - ERROR - NQ=F: No timezone found, symbol may be delisted
+2025-11-17 08:30:29,044 - nasdaq_predictor.data.fetcher_live - WARNING - Fetch attempt 2/3 failed: Empty DataFrame returned for NQ=F 1d
+2025-11-17 08:30:29,044 - nasdaq_predictor.data.fetcher_live - INFO - Retrying in 5s...
+2025-11-17 08:30:34,051 - yfinance - ERROR - Failed to get ticker 'NQ=F' reason: unsupported operand type(s) for -: 'datetime.datetime' and 'str'
+2025-11-17 08:30:34,052 - yfinance - ERROR - NQ=F: No timezone found, symbol may be delisted
+2025-11-17 08:30:34,052 - nasdaq_predictor.data.fetcher_live - WARNING - Fetch attempt 3/3 failed: Empty DataFrame returned for NQ=F 1d
+2025-11-17 08:30:34,053 - nasdaq_predictor.data.fetcher_live - ERROR - All 3 fetch attempts failed for NQ=F 1d
+2025-11-17 08:30:34,053 - werkzeug - INFO - 127.0.0.1 - - [17/Nov/2025 08:30:34] "[35m[1mGET /api/fibonacci-pivots/NQ=F/daily HTTP/1.1[0m" 503 -
+2025-11-17 08:30:34,096 - nasdaq_predictor.data.fetcher_live - ERROR - Failed to get current price for NQ=F: unsupported operand type(s) for -: 'datetime.datetime' and 'str'
+2025-11-17 08:30:34,096 - nasdaq_predictor.data.fetcher_live - INFO - Fetching NQ=F 1wk data (period: max)
+2025-11-17 08:30:35,058 - yfinance - ERROR - Failed to get ticker 'NQ=F' reason: unsupported operand type(s) for -: 'datetime.datetime' and 'str'
+2025-11-17 08:30:35,059 - yfinance - ERROR - NQ=F: No timezone found, symbol may be delisted
+2025-11-17 08:30:35,059 - nasdaq_predictor.data.fetcher_live - WARNING - Fetch attempt 1/3 failed: Empty DataFrame returned for NQ=F 1wk
+2025-11-17 08:30:35,060 - nasdaq_predictor.data.fetcher_live - INFO - Retrying in 2s...
+2025-11-17 08:30:37,063 - yfinance - ERROR - Failed to get ticker 'NQ=F' reason: unsupported operand type(s) for -: 'datetime.datetime' and 'str'
+2025-11-17 08:30:37,064 - yfinance - ERROR - NQ=F: No timezone found, symbol may be delisted
+2025-11-17 08:30:37,064 - nasdaq_predictor.data.fetcher_live - WARNING - Fetch attempt 2/3 failed: Empty DataFrame returned for NQ=F 1wk
+2025-11-17 08:30:37,065 - nasdaq_predictor.data.fetcher_live - INFO - Retrying in 5s...
+2025-11-17 08:30:42,072 - yfinance - ERROR - Failed to get ticker 'NQ=F' reason: unsupported operand type(s) for -: 'datetime.datetime' and 'str'
+2025-11-17 08:30:42,073 - yfinance - ERROR - NQ=F: No timezone found, symbol may be delisted
+2025-11-17 08:30:42,074 - nasdaq_predictor.data.fetcher_live - WARNING - Fetch attempt 3/3 failed: Empty DataFrame returned for NQ=F 1wk
+2025-11-17 08:30:42,074 - nasdaq_predictor.data.fetcher_live - ERROR - All 3 fetch attempts failed for NQ=F 1wk
+2025-11-17 08:30:42,075 - werkzeug - INFO - 127.0.0.1 - - [17/Nov/2025 08:30:42] "[35m[1mGET /api/fibonacci-pivots/NQ=F/weekly HTTP/1.1[0m" 503 -
+2025-11-17 08:30:42,114 - nasdaq_predictor.api.routes.block_routes - INFO - Fetching hourly blocks for NQ=F
+2025-11-17 08:30:42,115 - nasdaq_predictor.data.fetcher_live - ERROR - Failed to get current price for NQ=F: unsupported operand type(s) for -: 'datetime.datetime' and 'str'
+2025-11-17 08:30:42,115 - nasdaq_predictor.api.routes.block_routes - WARNING - Failed to get current price for NQ=F
+2025-11-17 08:30:42,115 - werkzeug - INFO - 127.0.0.1 - - [17/Nov/2025 08:30:42] "[35m[1mGET /api/hourly-blocks/NQ=F HTTP/1.1[0m" 503 -
+2025-11-17 08:30:42,135 - nasdaq_predictor.data.fetcher_live - INFO - Fetching NQ=F 1m data (period: 7d)
+2025-11-17 08:30:43,081 - yfinance - ERROR - Failed to get ticker 'NQ=F' reason: unsupported operand type(s) for -: 'datetime.datetime' and 'str'
+2025-11-17 08:30:43,083 - yfinance - ERROR - NQ=F: No price data found, symbol may be delisted (period=7d)
+2025-11-17 08:30:43,083 - nasdaq_predictor.data.fetcher_live - WARNING - Fetch attempt 1/3 failed: Empty DataFrame returned for NQ=F 1m
+2025-11-17 08:30:43,083 - nasdaq_predictor.data.fetcher_live - INFO - Retrying in 2s...
+2025-11-17 08:30:45,090 - yfinance - ERROR - Failed to get ticker 'NQ=F' reason: unsupported operand type(s) for -: 'datetime.datetime' and 'str'
+2025-11-17 08:30:45,091 - yfinance - ERROR - NQ=F: No price data found, symbol may be delisted (period=7d)
+2025-11-17 08:30:45,092 - nasdaq_predictor.data.fetcher_live - WARNING - Fetch attempt 2/3 failed: Empty DataFrame returned for NQ=F 1m
+2025-11-17 08:30:45,092 - nasdaq_predictor.data.fetcher_live - INFO - Retrying in 5s...
+2025-11-17 08:30:50,098 - yfinance - ERROR - Failed to get ticker 'NQ=F' reason: unsupported operand type(s) for -: 'datetime.datetime' and 'str'
+2025-11-17 08:30:50,098 - yfinance - ERROR - NQ=F: No price data found, symbol may be delisted (period=7d)
+2025-11-17 08:30:50,098 - nasdaq_predictor.data.fetcher_live - WARNING - Fetch attempt 3/3 failed: Empty DataFrame returned for NQ=F 1m
+2025-11-17 08:30:50,098 - nasdaq_predictor.data.fetcher_live - ERROR - All 3 fetch attempts failed for NQ=F 1m
+2025-11-17 08:30:50,099 - werkzeug - INFO - 127.0.0.1 - - [17/Nov/2025 08:30:50] "GET /api/hourly-blocks/NQ=F/current-block HTTP/1.1" 200 -
+2025-11-17 08:30:50,123 - werkzeug - INFO - 127.0.0.1 - - [17/Nov/2025 08:30:50] "GET /api/hourly-blocks/NQ=F/summary HTTP/1.1" 200 -
+2025-11-17 08:30:53,929 - werkzeug - INFO - 127.0.0.1 - - [17/Nov/2025 08:30:53] "GET /api/market-status/NQ=F HTTP/1.1" 200 -
+2025-11-17 08:30:57,685 - __main__ - INFO - Serving dashboard UI
+2025-11-17 08:30:57,685 - werkzeug - INFO - 127.0.0.1 - - [17/Nov/2025 08:30:57] "GET /dashboard HTTP/1.1" 200 -
+2025-11-17 08:34:14,838 - __main__ - INFO - Serving dashboard UI
+2025-11-17 08:34:14,842 - werkzeug - INFO - 127.0.0.1 - - [17/Nov/2025 08:34:14] "GET /dashboard HTTP/1.1" 200 -
+2025-11-17 08:34:14,912 - werkzeug - INFO - 127.0.0.1 - - [17/Nov/2025 08:34:14] "GET /static/js/dashboard.js HTTP/1.1" 200 -
+2025-11-17 08:34:14,952 - werkzeug - INFO - 127.0.0.1 - - [17/Nov/2025 08:34:14] "GET /static/css/dashboard.css HTTP/1.1" 200 -
+2025-11-17 08:34:15,312 - werkzeug - INFO - 127.0.0.1 - - [17/Nov/2025 08:34:15] "GET /api/market-status/NQ=F HTTP/1.1" 200 -
+2025-11-17 08:34:15,313 - nasdaq_predictor.api.routes.fibonacci_routes - INFO - Fetching Fibonacci pivots for NQ=F
+2025-11-17 08:34:15,316 - nasdaq_predictor.api.routes.price_routes - INFO - Fetching price for NQ=F
+2025-11-17 08:34:15,316 - nasdaq_predictor.data.fetcher_live - INFO - Fetching NQ=F 1m data (period: 7d)
+2025-11-17 08:34:15,317 - nasdaq_predictor.api.routes.reference_levels_routes - INFO - Fetching reference levels for NQ=F
+2025-11-17 08:34:15,318 - nasdaq_predictor.api.routes.session_ranges_routes - INFO - Fetching session ranges for NQ=F
+2025-11-17 08:34:15,318 - nasdaq_predictor.api.routes.block_routes - INFO - Fetching hourly blocks for NQ=F
+2025-11-17 08:34:15,319 - nasdaq_predictor.data.fetcher_live - ERROR - Failed to get current price for NQ=F: unsupported operand type(s) for -: 'datetime.datetime' and 'str'
+2025-11-17 08:34:15,319 - nasdaq_predictor.api.routes.fibonacci_routes - WARNING - Failed to get current price for NQ=F
+2025-11-17 08:34:15,319 - werkzeug - INFO - 127.0.0.1 - - [17/Nov/2025 08:34:15] "[35m[1mGET /api/fibonacci-pivots/NQ=F HTTP/1.1[0m" 503 -
+2025-11-17 08:34:15,321 - yfinance - ERROR - Failed to get ticker 'NQ=F' reason: unsupported operand type(s) for -: 'datetime.datetime' and 'str'
+2025-11-17 08:34:15,324 - yfinance - ERROR - NQ=F: No price data found, symbol may be delisted (period=7d)
+2025-11-17 08:34:15,324 - nasdaq_predictor.data.fetcher_live - WARNING - Fetch attempt 1/3 failed: Empty DataFrame returned for NQ=F 1m
+2025-11-17 08:34:15,324 - nasdaq_predictor.data.fetcher_live - INFO - Retrying in 2s...
+2025-11-17 08:34:16,317 - nasdaq_predictor.data.fetcher_live - ERROR - Failed to get current price for NQ=F: unsupported operand type(s) for -: 'datetime.datetime' and 'str'
+2025-11-17 08:34:16,318 - nasdaq_predictor.api.routes.session_ranges_routes - WARNING - Failed to get current price for NQ=F
+2025-11-17 08:34:16,318 - werkzeug - INFO - 127.0.0.1 - - [17/Nov/2025 08:34:16] "[35m[1mGET /api/session-ranges/NQ=F HTTP/1.1[0m" 503 -
+2025-11-17 08:34:16,320 - nasdaq_predictor.data.fetcher_live - ERROR - Failed to get current price for NQ=F: unsupported operand type(s) for -: 'datetime.datetime' and 'str'
+2025-11-17 08:34:16,324 - nasdaq_predictor.api.routes.block_routes - WARNING - Failed to get current price for NQ=F
+2025-11-17 08:34:16,326 - werkzeug - INFO - 127.0.0.1 - - [17/Nov/2025 08:34:16] "[35m[1mGET /api/hourly-blocks/NQ=F HTTP/1.1[0m" 503 -
+2025-11-17 08:34:16,339 - nasdaq_predictor.data.fetcher_live - ERROR - Failed to get current price for NQ=F: unsupported operand type(s) for -: 'datetime.datetime' and 'str'
+2025-11-17 08:34:16,339 - nasdaq_predictor.api.routes.reference_levels_routes - WARNING - Failed to get current price for NQ=F
+2025-11-17 08:34:16,340 - werkzeug - INFO - 127.0.0.1 - - [17/Nov/2025 08:34:16] "[35m[1mGET /api/reference-levels/NQ=F HTTP/1.1[0m" 503 -
+2025-11-17 08:34:17,332 - yfinance - ERROR - Failed to get ticker 'NQ=F' reason: unsupported operand type(s) for -: 'datetime.datetime' and 'str'
+2025-11-17 08:34:17,334 - yfinance - ERROR - NQ=F: No price data found, symbol may be delisted (period=7d)
+2025-11-17 08:34:17,335 - nasdaq_predictor.data.fetcher_live - WARNING - Fetch attempt 2/3 failed: Empty DataFrame returned for NQ=F 1m
+2025-11-17 08:34:17,335 - nasdaq_predictor.data.fetcher_live - INFO - Retrying in 5s...
+2025-11-17 08:34:22,342 - yfinance - ERROR - Failed to get ticker 'NQ=F' reason: unsupported operand type(s) for -: 'datetime.datetime' and 'str'
+2025-11-17 08:34:22,344 - yfinance - ERROR - NQ=F: No price data found, symbol may be delisted (period=7d)
+2025-11-17 08:34:22,344 - nasdaq_predictor.data.fetcher_live - WARNING - Fetch attempt 3/3 failed: Empty DataFrame returned for NQ=F 1m
+2025-11-17 08:34:22,345 - nasdaq_predictor.data.fetcher_live - ERROR - All 3 fetch attempts failed for NQ=F 1m
+2025-11-17 08:34:22,345 - nasdaq_predictor.api.routes.price_routes - WARNING - No 1m data available for NQ=F
+2025-11-17 08:34:22,345 - werkzeug - INFO - 127.0.0.1 - - [17/Nov/2025 08:34:22] "[35m[1mGET /api/current-price/NQ=F HTTP/1.1[0m" 503 -
+2025-11-17 08:35:43,824 - werkzeug - INFO - 127.0.0.1 - - [17/Nov/2025 08:35:43] "GET /api/market-status/NQ=F HTTP/1.1" 200 -
+2025-11-17 08:35:43,825 - nasdaq_predictor.api.routes.reference_levels_routes - INFO - Fetching reference levels for NQ=F
+2025-11-17 08:35:43,826 - nasdaq_predictor.api.routes.price_routes - INFO - Fetching price for NQ=F
+2025-11-17 08:35:43,826 - nasdaq_predictor.data.fetcher_live - INFO - Fetching NQ=F 1m data (period: 7d)
+2025-11-17 08:35:43,827 - nasdaq_predictor.data.fetcher_live - ERROR - Failed to get current price for NQ=F: unsupported operand type(s) for -: 'datetime.datetime' and 'str'
+2025-11-17 08:35:43,827 - nasdaq_predictor.api.routes.reference_levels_routes - WARNING - Failed to get current price for NQ=F
+2025-11-17 08:35:43,827 - nasdaq_predictor.api.routes.session_ranges_routes - INFO - Fetching session ranges for NQ=F
+2025-11-17 08:35:43,827 - werkzeug - INFO - 127.0.0.1 - - [17/Nov/2025 08:35:43] "[35m[1mGET /api/reference-levels/NQ=F HTTP/1.1[0m" 503 -
+2025-11-17 08:35:43,828 - yfinance - ERROR - Failed to get ticker 'NQ=F' reason: unsupported operand type(s) for -: 'datetime.datetime' and 'str'
+2025-11-17 08:35:43,829 - yfinance - ERROR - NQ=F: No price data found, symbol may be delisted (period=7d)
+2025-11-17 08:35:43,829 - nasdaq_predictor.data.fetcher_live - WARNING - Fetch attempt 1/3 failed: Empty DataFrame returned for NQ=F 1m
+2025-11-17 08:35:43,829 - nasdaq_predictor.data.fetcher_live - INFO - Retrying in 2s...
+2025-11-17 08:35:43,830 - nasdaq_predictor.api.routes.fibonacci_routes - INFO - Fetching Fibonacci pivots for NQ=F
+2025-11-17 08:35:43,832 - nasdaq_predictor.api.routes.block_routes - INFO - Fetching hourly blocks for NQ=F
+2025-11-17 08:35:44,829 - nasdaq_predictor.data.fetcher_live - ERROR - Failed to get current price for NQ=F: unsupported operand type(s) for -: 'datetime.datetime' and 'str'
+2025-11-17 08:35:44,829 - nasdaq_predictor.api.routes.fibonacci_routes - WARNING - Failed to get current price for NQ=F
+2025-11-17 08:35:44,830 - werkzeug - INFO - 127.0.0.1 - - [17/Nov/2025 08:35:44] "[35m[1mGET /api/fibonacci-pivots/NQ=F HTTP/1.1[0m" 503 -
+2025-11-17 08:35:44,832 - nasdaq_predictor.data.fetcher_live - ERROR - Failed to get current price for NQ=F: unsupported operand type(s) for -: 'datetime.datetime' and 'str'
+2025-11-17 08:35:44,833 - nasdaq_predictor.api.routes.session_ranges_routes - WARNING - Failed to get current price for NQ=F
+2025-11-17 08:35:44,834 - werkzeug - INFO - 127.0.0.1 - - [17/Nov/2025 08:35:44] "[35m[1mGET /api/session-ranges/NQ=F HTTP/1.1[0m" 503 -
+2025-11-17 08:35:44,835 - nasdaq_predictor.data.fetcher_live - ERROR - Failed to get current price for NQ=F: unsupported operand type(s) for -: 'datetime.datetime' and 'str'
+2025-11-17 08:35:44,835 - nasdaq_predictor.api.routes.block_routes - WARNING - Failed to get current price for NQ=F
+2025-11-17 08:35:44,835 - werkzeug - INFO - 127.0.0.1 - - [17/Nov/2025 08:35:44] "[35m[1mGET /api/hourly-blocks/NQ=F HTTP/1.1[0m" 503 -
+2025-11-17 08:35:45,837 - yfinance - ERROR - Failed to get ticker 'NQ=F' reason: unsupported operand type(s) for -: 'datetime.datetime' and 'str'
+2025-11-17 08:35:45,839 - yfinance - ERROR - NQ=F: No price data found, symbol may be delisted (period=7d)
+2025-11-17 08:35:45,839 - nasdaq_predictor.data.fetcher_live - WARNING - Fetch attempt 2/3 failed: Empty DataFrame returned for NQ=F 1m
+2025-11-17 08:35:45,839 - nasdaq_predictor.data.fetcher_live - INFO - Retrying in 5s...
+2025-11-17 08:35:50,847 - yfinance - ERROR - Failed to get ticker 'NQ=F' reason: unsupported operand type(s) for -: 'datetime.datetime' and 'str'
+2025-11-17 08:35:50,849 - yfinance - ERROR - NQ=F: No price data found, symbol may be delisted (period=7d)
+2025-11-17 08:35:50,850 - nasdaq_predictor.data.fetcher_live - WARNING - Fetch attempt 3/3 failed: Empty DataFrame returned for NQ=F 1m
+2025-11-17 08:35:50,850 - nasdaq_predictor.data.fetcher_live - ERROR - All 3 fetch attempts failed for NQ=F 1m
+2025-11-17 08:35:50,850 - nasdaq_predictor.api.routes.price_routes - WARNING - No 1m data available for NQ=F
+2025-11-17 08:35:50,851 - werkzeug - INFO - 127.0.0.1 - - [17/Nov/2025 08:35:50] "[35m[1mGET /api/current-price/NQ=F HTTP/1.1[0m" 503 -
+2025-11-17 08:39:13,587 - werkzeug - INFO - 127.0.0.1 - - [17/Nov/2025 08:39:13] "GET /api/market-status/NQ=F HTTP/1.1" 200 -
+2025-11-17 08:39:13,624 - nasdaq_predictor.api.routes.price_routes - INFO - Fetching price for NQ=F
+2025-11-17 08:39:13,624 - nasdaq_predictor.data.fetcher_live - INFO - Fetching NQ=F 1m data (period: 7d)
+2025-11-17 08:39:13,630 - yfinance - ERROR - Failed to get ticker 'NQ=F' reason: unsupported operand type(s) for -: 'datetime.datetime' and 'str'
+2025-11-17 08:39:13,633 - yfinance - ERROR - NQ=F: No price data found, symbol may be delisted (period=7d)
+2025-11-17 08:39:13,635 - nasdaq_predictor.data.fetcher_live - WARNING - Fetch attempt 1/3 failed: Empty DataFrame returned for NQ=F 1m
+2025-11-17 08:39:13,635 - nasdaq_predictor.data.fetcher_live - INFO - Retrying in 2s...
+2025-11-17 08:39:13,708 - nasdaq_predictor.api.routes.reference_levels_routes - INFO - Fetching reference levels for NQ=F
+2025-11-17 08:39:13,710 - nasdaq_predictor.data.fetcher_live - ERROR - Failed to get current price for NQ=F: unsupported operand type(s) for -: 'datetime.datetime' and 'str'
+2025-11-17 08:39:13,710 - nasdaq_predictor.api.routes.reference_levels_routes - WARNING - Failed to get current price for NQ=F
+2025-11-17 08:39:13,710 - werkzeug - INFO - 127.0.0.1 - - [17/Nov/2025 08:39:13] "[35m[1mGET /api/reference-levels/NQ=F HTTP/1.1[0m" 503 -
+2025-11-17 08:39:13,714 - nasdaq_predictor.api.routes.session_ranges_routes - INFO - Fetching session ranges for NQ=F
+2025-11-17 08:39:13,721 - nasdaq_predictor.api.routes.fibonacci_routes - INFO - Fetching Fibonacci pivots for NQ=F
+2025-11-17 08:39:13,723 - nasdaq_predictor.api.routes.block_routes - INFO - Fetching hourly blocks for NQ=F
+2025-11-17 08:39:14,714 - nasdaq_predictor.data.fetcher_live - ERROR - Failed to get current price for NQ=F: unsupported operand type(s) for -: 'datetime.datetime' and 'str'
+2025-11-17 08:39:14,714 - nasdaq_predictor.api.routes.fibonacci_routes - WARNING - Failed to get current price for NQ=F
+2025-11-17 08:39:14,715 - werkzeug - INFO - 127.0.0.1 - - [17/Nov/2025 08:39:14] "[35m[1mGET /api/fibonacci-pivots/NQ=F HTTP/1.1[0m" 503 -
+2025-11-17 08:39:14,716 - nasdaq_predictor.data.fetcher_live - ERROR - Failed to get current price for NQ=F: unsupported operand type(s) for -: 'datetime.datetime' and 'str'
+2025-11-17 08:39:14,716 - nasdaq_predictor.api.routes.session_ranges_routes - WARNING - Failed to get current price for NQ=F
+2025-11-17 08:39:14,717 - werkzeug - INFO - 127.0.0.1 - - [17/Nov/2025 08:39:14] "[35m[1mGET /api/session-ranges/NQ=F HTTP/1.1[0m" 503 -
+2025-11-17 08:39:14,718 - nasdaq_predictor.data.fetcher_live - ERROR - Failed to get current price for NQ=F: unsupported operand type(s) for -: 'datetime.datetime' and 'str'
+2025-11-17 08:39:14,718 - nasdaq_predictor.api.routes.block_routes - WARNING - Failed to get current price for NQ=F
+2025-11-17 08:39:14,718 - werkzeug - INFO - 127.0.0.1 - - [17/Nov/2025 08:39:14] "[35m[1mGET /api/hourly-blocks/NQ=F HTTP/1.1[0m" 503 -
+2025-11-17 08:39:15,641 - yfinance - ERROR - Failed to get ticker 'NQ=F' reason: unsupported operand type(s) for -: 'datetime.datetime' and 'str'
+2025-11-17 08:39:15,643 - yfinance - ERROR - NQ=F: No price data found, symbol may be delisted (period=7d)
+2025-11-17 08:39:15,643 - nasdaq_predictor.data.fetcher_live - WARNING - Fetch attempt 2/3 failed: Empty DataFrame returned for NQ=F 1m
+2025-11-17 08:39:15,643 - nasdaq_predictor.data.fetcher_live - INFO - Retrying in 5s...
+2025-11-17 08:39:20,651 - yfinance - ERROR - Failed to get ticker 'NQ=F' reason: unsupported operand type(s) for -: 'datetime.datetime' and 'str'
+2025-11-17 08:39:20,656 - yfinance - ERROR - NQ=F: No price data found, symbol may be delisted (period=7d)
+2025-11-17 08:39:20,657 - nasdaq_predictor.data.fetcher_live - WARNING - Fetch attempt 3/3 failed: Empty DataFrame returned for NQ=F 1m
+2025-11-17 08:39:20,657 - nasdaq_predictor.data.fetcher_live - ERROR - All 3 fetch attempts failed for NQ=F 1m
+2025-11-17 08:39:20,657 - nasdaq_predictor.api.routes.price_routes - WARNING - No 1m data available for NQ=F
+2025-11-17 08:39:20,659 - werkzeug - INFO - 127.0.0.1 - - [17/Nov/2025 08:39:20] "[35m[1mGET /api/current-price/NQ=F HTTP/1.1[0m" 503 -
+2025-11-17 08:39:20,723 - werkzeug - INFO - 127.0.0.1 - - [17/Nov/2025 08:39:20] "[33mGET /api/data HTTP/1.1[0m" 404 -
+2025-11-17 08:54:39,770 - nasdaq_predictor.api.routes.reference_levels_routes - INFO - Fetching reference levels for NQ=F
+2025-11-17 08:54:39,774 - werkzeug - INFO - 127.0.0.1 - - [17/Nov/2025 08:54:39] "GET /api/market-status/NQ=F HTTP/1.1" 200 -
+2025-11-17 08:54:39,778 - nasdaq_predictor.api.routes.price_routes - INFO - Fetching price for NQ=F
+2025-11-17 08:54:39,778 - nasdaq_predictor.data.fetcher_live - INFO - Fetching NQ=F 1m data (period: 7d)
+2025-11-17 08:54:39,780 - nasdaq_predictor.api.routes.session_ranges_routes - INFO - Fetching session ranges for NQ=F
+2025-11-17 08:54:39,780 - nasdaq_predictor.api.routes.fibonacci_routes - INFO - Fetching Fibonacci pivots for NQ=F
+2025-11-17 08:54:39,781 - nasdaq_predictor.api.routes.block_routes - INFO - Fetching hourly blocks for NQ=F
+2025-11-17 08:54:39,784 - nasdaq_predictor.data.fetcher_live - ERROR - Failed to get current price for NQ=F: unsupported operand type(s) for -: 'datetime.datetime' and 'str'
+2025-11-17 08:54:39,786 - nasdaq_predictor.api.routes.reference_levels_routes - WARNING - Failed to get current price for NQ=F
+2025-11-17 08:54:39,786 - werkzeug - INFO - 127.0.0.1 - - [17/Nov/2025 08:54:39] "[35m[1mGET /api/reference-levels/NQ=F HTTP/1.1[0m" 503 -
+2025-11-17 08:54:39,788 - yfinance - ERROR - Failed to get ticker 'NQ=F' reason: unsupported operand type(s) for -: 'datetime.datetime' and 'str'
+2025-11-17 08:54:39,795 - yfinance - ERROR - NQ=F: No price data found, symbol may be delisted (period=7d)
+2025-11-17 08:54:39,796 - nasdaq_predictor.data.fetcher_live - WARNING - Fetch attempt 1/3 failed: Empty DataFrame returned for NQ=F 1m
+2025-11-17 08:54:39,796 - nasdaq_predictor.data.fetcher_live - INFO - Retrying in 2s...
+2025-11-17 08:54:40,776 - nasdaq_predictor.data.fetcher_live - ERROR - Failed to get current price for NQ=F: unsupported operand type(s) for -: 'datetime.datetime' and 'str'
+2025-11-17 08:54:40,776 - nasdaq_predictor.api.routes.fibonacci_routes - WARNING - Failed to get current price for NQ=F
+2025-11-17 08:54:40,777 - werkzeug - INFO - 127.0.0.1 - - [17/Nov/2025 08:54:40] "[35m[1mGET /api/fibonacci-pivots/NQ=F HTTP/1.1[0m" 503 -
+2025-11-17 08:54:40,782 - nasdaq_predictor.data.fetcher_live - ERROR - Failed to get current price for NQ=F: unsupported operand type(s) for -: 'datetime.datetime' and 'str'
+2025-11-17 08:54:40,782 - nasdaq_predictor.api.routes.block_routes - WARNING - Failed to get current price for NQ=F
+2025-11-17 08:54:40,783 - werkzeug - INFO - 127.0.0.1 - - [17/Nov/2025 08:54:40] "[35m[1mGET /api/hourly-blocks/NQ=F HTTP/1.1[0m" 503 -
+2025-11-17 08:54:40,785 - nasdaq_predictor.data.fetcher_live - ERROR - Failed to get current price for NQ=F: unsupported operand type(s) for -: 'datetime.datetime' and 'str'
+2025-11-17 08:54:40,786 - nasdaq_predictor.api.routes.session_ranges_routes - WARNING - Failed to get current price for NQ=F
+2025-11-17 08:54:40,786 - werkzeug - INFO - 127.0.0.1 - - [17/Nov/2025 08:54:40] "[35m[1mGET /api/session-ranges/NQ=F HTTP/1.1[0m" 503 -
+2025-11-17 08:54:41,803 - yfinance - ERROR - Failed to get ticker 'NQ=F' reason: unsupported operand type(s) for -: 'datetime.datetime' and 'str'
+2025-11-17 08:54:41,805 - yfinance - ERROR - NQ=F: No price data found, symbol may be delisted (period=7d)
+2025-11-17 08:54:41,806 - nasdaq_predictor.data.fetcher_live - WARNING - Fetch attempt 2/3 failed: Empty DataFrame returned for NQ=F 1m
+2025-11-17 08:54:41,806 - nasdaq_predictor.data.fetcher_live - INFO - Retrying in 5s...
+2025-11-17 08:54:46,811 - yfinance - ERROR - Failed to get ticker 'NQ=F' reason: unsupported operand type(s) for -: 'datetime.datetime' and 'str'
+2025-11-17 08:54:46,813 - yfinance - ERROR - NQ=F: No price data found, symbol may be delisted (period=7d)
+2025-11-17 08:54:46,813 - nasdaq_predictor.data.fetcher_live - WARNING - Fetch attempt 3/3 failed: Empty DataFrame returned for NQ=F 1m
+2025-11-17 08:54:46,813 - nasdaq_predictor.data.fetcher_live - ERROR - All 3 fetch attempts failed for NQ=F 1m
+2025-11-17 08:54:46,813 - nasdaq_predictor.api.routes.price_routes - WARNING - No 1m data available for NQ=F
+2025-11-17 08:54:46,814 - werkzeug - INFO - 127.0.0.1 - - [17/Nov/2025 08:54:46] "[35m[1mGET /api/current-price/NQ=F HTTP/1.1[0m" 503 -
+2025-11-17 08:56:40,646 - werkzeug - INFO - 127.0.0.1 - - [17/Nov/2025 08:56:40] "GET /api/market-status/NQ=F HTTP/1.1" 200 -
+2025-11-17 08:56:43,782 - werkzeug - INFO - 127.0.0.1 - - [17/Nov/2025 08:56:43] "GET /api/market-status/NQ=F HTTP/1.1" 200 -
+2025-11-17 08:56:45,672 - werkzeug - INFO - 127.0.0.1 - - [17/Nov/2025 08:56:45] "GET /api/market-status/NQ=F HTTP/1.1" 200 -
+2025-11-17 08:56:45,673 - nasdaq_predictor.api.routes.price_routes - INFO - Fetching price for NQ=F
+2025-11-17 08:56:45,673 - nasdaq_predictor.api.routes.reference_levels_routes - INFO - Fetching reference levels for NQ=F
+2025-11-17 08:56:45,673 - nasdaq_predictor.data.fetcher_live - INFO - Fetching NQ=F 1m data (period: 7d)
+2025-11-17 08:56:45,675 - nasdaq_predictor.api.routes.session_ranges_routes - INFO - Fetching session ranges for NQ=F
+2025-11-17 08:56:45,676 - nasdaq_predictor.api.routes.fibonacci_routes - INFO - Fetching Fibonacci pivots for NQ=F
+2025-11-17 08:56:45,677 - nasdaq_predictor.data.fetcher_live - ERROR - Failed to get current price for NQ=F: unsupported operand type(s) for -: 'datetime.datetime' and 'str'
+2025-11-17 08:56:45,677 - nasdaq_predictor.api.routes.reference_levels_routes - WARNING - Failed to get current price for NQ=F
+2025-11-17 08:56:45,678 - werkzeug - INFO - 127.0.0.1 - - [17/Nov/2025 08:56:45] "[35m[1mGET /api/reference-levels/NQ=F HTTP/1.1[0m" 503 -
+2025-11-17 08:56:45,679 - nasdaq_predictor.api.routes.block_routes - INFO - Fetching hourly blocks for NQ=F
+2025-11-17 08:56:45,679 - yfinance - ERROR - Failed to get ticker 'NQ=F' reason: unsupported operand type(s) for -: 'datetime.datetime' and 'str'
+2025-11-17 08:56:45,683 - yfinance - ERROR - NQ=F: No price data found, symbol may be delisted (period=7d)
+2025-11-17 08:56:45,684 - nasdaq_predictor.data.fetcher_live - WARNING - Fetch attempt 1/3 failed: Empty DataFrame returned for NQ=F 1m
+2025-11-17 08:56:45,685 - nasdaq_predictor.data.fetcher_live - INFO - Retrying in 2s...
+2025-11-17 08:56:46,676 - nasdaq_predictor.data.fetcher_live - ERROR - Failed to get current price for NQ=F: unsupported operand type(s) for -: 'datetime.datetime' and 'str'
+2025-11-17 08:56:46,677 - nasdaq_predictor.api.routes.block_routes - WARNING - Failed to get current price for NQ=F
+2025-11-17 08:56:46,677 - werkzeug - INFO - 127.0.0.1 - - [17/Nov/2025 08:56:46] "[35m[1mGET /api/hourly-blocks/NQ=F HTTP/1.1[0m" 503 -
+2025-11-17 08:56:46,679 - nasdaq_predictor.data.fetcher_live - ERROR - Failed to get current price for NQ=F: unsupported operand type(s) for -: 'datetime.datetime' and 'str'
+2025-11-17 08:56:46,680 - nasdaq_predictor.api.routes.session_ranges_routes - WARNING - Failed to get current price for NQ=F
+2025-11-17 08:56:46,680 - werkzeug - INFO - 127.0.0.1 - - [17/Nov/2025 08:56:46] "[35m[1mGET /api/session-ranges/NQ=F HTTP/1.1[0m" 503 -
+2025-11-17 08:56:46,680 - nasdaq_predictor.data.fetcher_live - ERROR - Failed to get current price for NQ=F: unsupported operand type(s) for -: 'datetime.datetime' and 'str'
+2025-11-17 08:56:46,680 - nasdaq_predictor.api.routes.fibonacci_routes - WARNING - Failed to get current price for NQ=F
+2025-11-17 08:56:46,681 - werkzeug - INFO - 127.0.0.1 - - [17/Nov/2025 08:56:46] "[35m[1mGET /api/fibonacci-pivots/NQ=F HTTP/1.1[0m" 503 -
+2025-11-17 08:56:47,686 - yfinance - ERROR - Failed to get ticker 'NQ=F' reason: unsupported operand type(s) for -: 'datetime.datetime' and 'str'
+2025-11-17 08:56:47,686 - yfinance - ERROR - NQ=F: No price data found, symbol may be delisted (period=7d)
+2025-11-17 08:56:47,687 - nasdaq_predictor.data.fetcher_live - WARNING - Fetch attempt 2/3 failed: Empty DataFrame returned for NQ=F 1m
+2025-11-17 08:56:47,687 - nasdaq_predictor.data.fetcher_live - INFO - Retrying in 5s...
+2025-11-17 08:56:51,132 - werkzeug - INFO - 127.0.0.1 - - [17/Nov/2025 08:56:51] "[33mGET /apple-touch-icon-precomposed.png HTTP/1.1[0m" 404 -
+2025-11-17 08:56:51,134 - werkzeug - INFO - 127.0.0.1 - - [17/Nov/2025 08:56:51] "[33mGET /apple-touch-icon.png HTTP/1.1[0m" 404 -
+2025-11-17 08:56:51,136 - werkzeug - INFO - 127.0.0.1 - - [17/Nov/2025 08:56:51] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-11-17 08:56:51,147 - werkzeug - INFO - 127.0.0.1 - - [17/Nov/2025 08:56:51] "GET / HTTP/1.1" 200 -
+2025-11-17 08:56:52,694 - yfinance - ERROR - Failed to get ticker 'NQ=F' reason: unsupported operand type(s) for -: 'datetime.datetime' and 'str'
+2025-11-17 08:56:52,695 - yfinance - ERROR - NQ=F: No price data found, symbol may be delisted (period=7d)
+2025-11-17 08:56:52,696 - nasdaq_predictor.data.fetcher_live - WARNING - Fetch attempt 3/3 failed: Empty DataFrame returned for NQ=F 1m
+2025-11-17 08:56:52,696 - nasdaq_predictor.data.fetcher_live - ERROR - All 3 fetch attempts failed for NQ=F 1m
+2025-11-17 08:56:52,696 - nasdaq_predictor.api.routes.price_routes - WARNING - No 1m data available for NQ=F
+2025-11-17 08:56:52,697 - werkzeug - INFO - 127.0.0.1 - - [17/Nov/2025 08:56:52] "[35m[1mGET /api/current-price/NQ=F HTTP/1.1[0m" 503 -
+2025-11-17 08:58:56,307 - werkzeug - INFO - 127.0.0.1 - - [17/Nov/2025 08:58:56] "GET /api/market-status/NQ=F HTTP/1.1" 200 -
+2025-11-17 08:59:29,735 - werkzeug - INFO - 127.0.0.1 - - [17/Nov/2025 08:59:29] "GET /api/market-status/NQ=F HTTP/1.1" 200 -
+2025-11-17 09:00:38,084 - werkzeug - INFO - 127.0.0.1 - - [17/Nov/2025 09:00:38] "GET /api/market-status/NQ=F HTTP/1.1" 200 -
+2025-11-17 09:04:17,123 - werkzeug - INFO - 127.0.0.1 - - [17/Nov/2025 09:04:17] "GET /api/market-status/NQ=F HTTP/1.1" 200 -
+2025-11-17 09:04:17,125 - nasdaq_predictor.api.routes.price_routes - INFO - Fetching price for NQ=F
+2025-11-17 09:04:17,126 - nasdaq_predictor.api.routes.reference_levels_routes - INFO - Fetching reference levels for NQ=F
+2025-11-17 09:04:17,127 - nasdaq_predictor.data.fetcher_live - INFO - Fetching NQ=F 1m data (period: 7d)
+2025-11-17 09:04:17,133 - nasdaq_predictor.api.routes.session_ranges_routes - INFO - Fetching session ranges for NQ=F
+2025-11-17 09:04:17,142 - nasdaq_predictor.api.routes.fibonacci_routes - INFO - Fetching Fibonacci pivots for NQ=F
+2025-11-17 09:04:17,143 - nasdaq_predictor.api.routes.block_routes - INFO - Fetching hourly blocks for NQ=F
+2025-11-17 09:04:17,143 - nasdaq_predictor.data.fetcher_live - ERROR - Failed to get current price for NQ=F: unsupported operand type(s) for -: 'datetime.datetime' and 'str'
+2025-11-17 09:04:17,143 - nasdaq_predictor.api.routes.reference_levels_routes - WARNING - Failed to get current price for NQ=F
+2025-11-17 09:04:17,144 - werkzeug - INFO - 127.0.0.1 - - [17/Nov/2025 09:04:17] "[35m[1mGET /api/reference-levels/NQ=F HTTP/1.1[0m" 503 -
+2025-11-17 09:04:17,149 - yfinance - ERROR - Failed to get ticker 'NQ=F' reason: unsupported operand type(s) for -: 'datetime.datetime' and 'str'
+2025-11-17 09:04:17,152 - yfinance - ERROR - NQ=F: No price data found, symbol may be delisted (period=7d)
+2025-11-17 09:04:17,152 - nasdaq_predictor.data.fetcher_live - WARNING - Fetch attempt 1/3 failed: Empty DataFrame returned for NQ=F 1m
+2025-11-17 09:04:17,152 - nasdaq_predictor.data.fetcher_live - INFO - Retrying in 2s...
+2025-11-17 09:04:18,133 - nasdaq_predictor.data.fetcher_live - ERROR - Failed to get current price for NQ=F: unsupported operand type(s) for -: 'datetime.datetime' and 'str'
+2025-11-17 09:04:18,133 - nasdaq_predictor.api.routes.session_ranges_routes - WARNING - Failed to get current price for NQ=F
+2025-11-17 09:04:18,133 - werkzeug - INFO - 127.0.0.1 - - [17/Nov/2025 09:04:18] "[35m[1mGET /api/session-ranges/NQ=F HTTP/1.1[0m" 503 -
+2025-11-17 09:04:18,134 - nasdaq_predictor.data.fetcher_live - ERROR - Failed to get current price for NQ=F: unsupported operand type(s) for -: 'datetime.datetime' and 'str'
+2025-11-17 09:04:18,134 - nasdaq_predictor.api.routes.block_routes - WARNING - Failed to get current price for NQ=F
+2025-11-17 09:04:18,134 - werkzeug - INFO - 127.0.0.1 - - [17/Nov/2025 09:04:18] "[35m[1mGET /api/hourly-blocks/NQ=F HTTP/1.1[0m" 503 -
+2025-11-17 09:04:18,135 - nasdaq_predictor.data.fetcher_live - ERROR - Failed to get current price for NQ=F: unsupported operand type(s) for -: 'datetime.datetime' and 'str'
+2025-11-17 09:04:18,135 - nasdaq_predictor.api.routes.fibonacci_routes - WARNING - Failed to get current price for NQ=F
+2025-11-17 09:04:18,135 - werkzeug - INFO - 127.0.0.1 - - [17/Nov/2025 09:04:18] "[35m[1mGET /api/fibonacci-pivots/NQ=F HTTP/1.1[0m" 503 -
+2025-11-17 09:04:19,159 - yfinance - ERROR - Failed to get ticker 'NQ=F' reason: unsupported operand type(s) for -: 'datetime.datetime' and 'str'
+2025-11-17 09:04:19,160 - yfinance - ERROR - NQ=F: No price data found, symbol may be delisted (period=7d)
+2025-11-17 09:04:19,161 - nasdaq_predictor.data.fetcher_live - WARNING - Fetch attempt 2/3 failed: Empty DataFrame returned for NQ=F 1m
+2025-11-17 09:04:19,161 - nasdaq_predictor.data.fetcher_live - INFO - Retrying in 5s...
+2025-11-17 09:04:24,170 - yfinance - ERROR - Failed to get ticker 'NQ=F' reason: unsupported operand type(s) for -: 'datetime.datetime' and 'str'
+2025-11-17 09:04:24,171 - yfinance - ERROR - NQ=F: No price data found, symbol may be delisted (period=7d)
+2025-11-17 09:04:24,171 - nasdaq_predictor.data.fetcher_live - WARNING - Fetch attempt 3/3 failed: Empty DataFrame returned for NQ=F 1m
+2025-11-17 09:04:24,171 - nasdaq_predictor.data.fetcher_live - ERROR - All 3 fetch attempts failed for NQ=F 1m
+2025-11-17 09:04:24,171 - nasdaq_predictor.api.routes.price_routes - WARNING - No 1m data available for NQ=F
+2025-11-17 09:04:24,171 - werkzeug - INFO - 127.0.0.1 - - [17/Nov/2025 09:04:24] "[35m[1mGET /api/current-price/NQ=F HTTP/1.1[0m" 503 -
