@@ -1,0 +1,208 @@
+================================================================================
+SESSION RANGE API ENDPOINT TEST - EXECUTIVE SUMMARY
+================================================================================
+
+TEST DATE: 2025-11-17
+TEST TIME: 12:00-12:10 UTC (07:00-07:10 AM ET)
+CURRENT STATUS: Pre-NY AM (between London and NY sessions)
+FLASK SERVER: http://localhost:8080 (Running)
+MOCK DATA: ENABLED (USE_MOCK_DATA = True)
+
+================================================================================
+OVERALL VERDICT
+================================================================================
+
+RESULT: MIXED - API works but has critical data bug
+
+[✓] API Infrastructure: WORKING
+    - All endpoints responding correctly
+    - Proper HTTP status codes
+    - Valid JSON responses
+    - Performance good (<200ms)
+
+[✗] Current Asian Session Data: BROKEN
+    - High/low/range values are NULL when they should have data
+    - 96 bars of data exist but are not being returned
+    - Severity: HIGH
+
+[✓] Other Sessions: WORKING
+    - London session: Properly populated
+    - NY AM session: Expected null (hasn't started)
+    - NY PM session: Expected null (hasn't started)
+    - Previous day sessions: All populated correctly
+
+================================================================================
+KEY FINDINGS
+================================================================================
+
+1. API FUNCTIONALITY: ✓ Working
+   - GET /api/session-ranges/NQ=F returns 200 OK
+   - GET /api/session-ranges/NQ=F/current returns 200 OK
+   - GET /api/session-ranges/NQ=F/previous returns 200 OK
+   - Response times: ~100ms (well under 200ms target)
+
+2. LONDON SESSION: ✓ Working
+   - High: 18,693.75
+   - Low: 18,560.75
+   - Range: 133.0 points
+   - Bars: 36 (3-hour session, 5m interval)
+   - Status: Correctly shows INACTIVE (just ended at 06:00 AM)
+
+3. ASIAN SESSION: ✗ Broken
+   - Currently returns: high=null, low=null, range=null, bars=0
+   - Should return: 96 bars from yesterday 18:00 ET to today 02:00 ET
+   - Data EXISTS in system but NOT being returned
+   - Root cause: Date range filtering logic error
+
+4. PREVIOUS DAY SESSIONS: ✓ All Working
+   - Asian: 96 bars, high=18,727.75, low=18,402.75, range=325.0
+   - London: 36 bars, high=18,513.75, low=18,454.5, range=59.25
+   - NY AM: 42 bars, high=18,546.75, low=18,493.25, range=53.5
+   - NY PM: 18 bars, high=18,557.75, low=18,522.0, range=35.75
+
+5. MOCK DATA: ✓ Working
+   - 17,280 bars generated (60 days of 5m data)
+   - Timezone: Properly set to ET
+   - OHLCV: Valid relationships
+   - Asian session data IS present: 96 bars on Nov 16-17
+   - London session data IS present: 36 bars on Nov 17
+
+6. TIMEZONE HANDLING: ✓ Working
+   - Data correctly localized to America/New_York (ET)
+   - DST properly handled
+   - All timestamps timezone-aware
+
+================================================================================
+THE BUG IN DETAIL
+================================================================================
+
+LOCATION: /Users/DSJP/Desktop/CODE/MidOpen/nasdaq_predictor/services/session_range_service.py
+METHOD: SessionRangeService._calculate_session_range() (lines 235-316)
+AFFECTED SESSIONS: Asian session only (spans midnight)
+
+ISSUE: When calculating Asian session for current day, code uses wrong date range
+
+EXAMPLE (Today = 2025-11-17):
+  Wrong: Looks for data on 2025-11-17 and 2025-11-18 with 18:00-02:00 times
+  Right: Should look for data on 2025-11-16 and 2025-11-17 with 18:00-02:00 times
+
+ROOT CAUSE: Code doesn't adjust target_date backward for midnight-spanning sessions
+IMPACT SCOPE: Only current day's Asian session (previous days work fine)
+SEVERITY: HIGH - Users cannot see Asian session ranges
+FIX DIFFICULTY: LOW - Simple conditional logic fix
+
+================================================================================
+WHAT'S WORKING CORRECTLY
+================================================================================
+
+✓ API Routing: All endpoints accessible and responding
+✓ HTTP Protocol: Proper status codes (200, 503, 400, 500)
+✓ JSON Format: Valid structure with all expected fields
+✓ Response Times: <200ms (excellent performance)
+✓ Mock Data Generation: 17,280 bars, proper OHLCV, timezone-aware
+✓ London Session: Data present and correctly calculated
+✓ Previous Day Data: All 4 sessions properly populated
+✓ Timezone Conversion: UTC to ET correctly implemented
+✓ Price Comparison: Current price vs range analysis working
+✓ Bar Counting: Correct number of 5m bars per session
+✓ Data Validation: OHLCV relationships valid
+
+================================================================================
+WHAT NEEDS FIXING
+================================================================================
+
+✗ Asian Session (Current Day): Data filtering logic broken for midnight spans
+
+  File: /Users/DSJP/Desktop/CODE/MidOpen/nasdaq_predictor/services/session_range_service.py
+  Lines: 258-287 (specifically the date filter logic)
+  
+  Problem Code:
+  ```
+  # For sessions that span midnight, adjust start date backward
+  if session_info['spans_midnight'] and session_info['end_hour'] < session_info['start_hour']:
+      # THIS IS MISSING - no adjustment to target_date for session_start
+      session_start = ...  // uses target_date directly (WRONG)
+  ```
+
+  The fix requires detecting midnight-spanning sessions and using different dates
+  for session_start and session_end when creating the timestamps.
+
+================================================================================
+VERIFICATION RESULTS
+================================================================================
+
+✓ Raw Data Check: Asian session bars DO exist in dataframe
+  - Count: 96 bars
+  - Date range: 2025-11-16 18:00 to 2025-11-17 02:00
+  - High: 20,206.50
+  - Low: 19,849.50
+
+✗ API Response Check: Asian session data NOT returned
+  - High: null
+  - Low: null
+  - Range: null
+  - Bars: 0
+
+Conclusion: Data exists but filtering logic prevents retrieval
+
+================================================================================
+TESTING AFTER FIX
+================================================================================
+
+Expected test results after the bug is fixed:
+
+GET /api/session-ranges/NQ=F (current time 07:00 AM ET)
+
+Current session ranges:
+  asian:
+    high: ~20,206.50  (currently null)
+    low: ~19,849.50   (currently null)
+    range: ~357.00    (currently null)
+    bars_in_session: 96 (currently 0)
+    is_active: false  (correct - session ended at 02:00 AM)
+  
+  london:
+    high: 18,693.75   (correct, no change)
+    low: 18,560.75    (correct, no change)
+    range: 133.0      (correct, no change)
+    bars_in_session: 36 (correct, no change)
+    is_active: false  (correct, just ended)
+
+================================================================================
+RECOMMENDATIONS
+================================================================================
+
+1. IMMEDIATE: Fix the _calculate_session_range() method
+   - Adjust date calculation for midnight-spanning sessions
+   - Test with current time in Asian session (18:00-02:00 ET)
+   - Verify London session still works
+   - Verify NY sessions still work
+
+2. MEDIUM TERM: Add unit tests for midnight-spanning sessions
+   - Test with time at start of session (18:00 ET)
+   - Test with time during session (22:00 ET)
+   - Test with time at end of session (01:59 ET)
+   - Test with time after session (03:00 ET)
+
+3. LONG TERM: Add integration tests for all session types
+   - Test each session at different times of day
+   - Test on actual market hours
+   - Test across daylight saving time transitions
+
+================================================================================
+FILES MODIFIED FOR TEST
+================================================================================
+
+Created:
+  - SESSION_RANGE_TEST_REPORT.md (detailed test report)
+  - ASIAN_SESSION_BUG_VISUAL.md (visual bug analysis)
+  - TEST_SUMMARY.txt (this file)
+
+Reviewed (no changes):
+  - /Users/DSJP/Desktop/CODE/MidOpen/app.py
+  - /Users/DSJP/Desktop/CODE/MidOpen/nasdaq_predictor/api/routes/session_ranges_routes.py
+  - /Users/DSJP/Desktop/CODE/MidOpen/nasdaq_predictor/services/session_range_service.py (BUG IDENTIFIED HERE)
+  - /Users/DSJP/Desktop/CODE/MidOpen/nasdaq_predictor/data/fetcher_live.py
+  - /Users/DSJP/Desktop/CODE/MidOpen/nasdaq_predictor/utils/timezone.py
+
+================================================================================

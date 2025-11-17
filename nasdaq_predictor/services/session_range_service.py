@@ -255,7 +255,19 @@ class SessionRangeService:
         """
         from datetime import datetime as dt_class
 
-        session_start = dt_class.combine(target_date, dt_class.min.time())
+        # DETERMINE THE CORRECT DATE RANGES FOR START AND END
+        # For sessions that span midnight, session starts on previous day
+        if session_info['spans_midnight'] and session_info['end_hour'] < session_info['start_hour']:
+            # Session spans midnight: starts yesterday, ends today
+            session_start_date = target_date - timedelta(days=1)  # FIX: Go back one day for start
+            session_end_date = target_date  # End is the target date
+        else:
+            # Normal same-day session
+            session_start_date = target_date
+            session_end_date = target_date
+
+        # Create session start time
+        session_start = dt_class.combine(session_start_date, dt_class.min.time())
         session_start = session_start.replace(
             hour=session_info['start_hour'],
             minute=session_info['start_min']
@@ -263,25 +275,28 @@ class SessionRangeService:
         # Localize to ET timezone
         session_start = ET_TZ.localize(session_start)
 
-        session_end = dt_class.combine(target_date, dt_class.min.time())
+        # Create session end time
+        session_end = dt_class.combine(session_end_date, dt_class.min.time())
         session_end = session_end.replace(
             hour=session_info['end_hour'],
             minute=session_info['end_min']
         )
 
-        # Handle sessions spanning midnight (BEFORE localizing)
+        # Handle sessions spanning midnight (add 1 day to end if needed)
         if session_info['spans_midnight'] and session_info['end_hour'] < session_info['start_hour']:
             session_end = session_end + timedelta(days=1)
 
-        # Localize to ET timezone (after handling midnight)
+        # Localize to ET timezone
         session_end = ET_TZ.localize(session_end)
 
-        # Filter data to session timeframe
+        # FILTER DATA WITH CORRECTED DATE RANGE
+        # FIX: Use the correct date range (start_date and end_date, not target_date and target_date+1)
         session_data = df[
-            (df.index.date == target_date) |
-            (df.index.date == (target_date + timedelta(days=1)))
+            (df.index.date == session_start_date) |  # FIX: Use session_start_date
+            (df.index.date == session_end_date)      # FIX: Use session_end_date
         ]
 
+        # Filter by time range
         session_data = session_data[
             (session_data.index >= session_start) & (session_data.index < session_end)
         ]
