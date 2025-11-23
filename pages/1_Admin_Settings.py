@@ -74,7 +74,17 @@ with col_button:
     if st.button("⚖️ Equalize All", use_container_width=True, help="Set all weights equally so they sum to 1.0"):
         # Use weight_names (from current_weights) - this is the source of truth
         equal_weight = 1.0 / len(weight_names)
-        equalized_weights = {level_name: equal_weight for level_name in weight_names}
+
+        # Distribute weights and adjust last one to ensure sum = 1.0 exactly
+        equalized_weights = {}
+        remaining = 1.0
+        for i, level_name in enumerate(weight_names):
+            if i == len(weight_names) - 1:
+                # Last weight gets the remainder to ensure exactly 1.0
+                equalized_weights[level_name] = round(remaining, 6)
+            else:
+                equalized_weights[level_name] = round(equal_weight, 6)
+                remaining -= round(equal_weight, 6)
 
         # Save equalized weights
         set_weights(selected_instrument, equalized_weights)
