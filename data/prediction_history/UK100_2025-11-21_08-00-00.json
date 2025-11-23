@@ -1,0 +1,211 @@
+{
+  "result": {
+    "metadata": {
+      "instrument": "UK100",
+      "timezone": "Europe/London",
+      "timestamp": "2025-11-21T08:00:00+00:00",
+      "current_price": 9436.1,
+      "data_points": 11194
+    },
+    "analysis": {
+      "bias": "BEARISH",
+      "confidence": 60.72,
+      "bullish_weight": 0.3152,
+      "bearish_weight": 0.4872
+    },
+    "weights": {
+      "available_levels": 15,
+      "total_levels": 15,
+      "utilization": 1.0
+    },
+    "levels": [
+      {
+        "name": "daily_midnight",
+        "type": "ALWAYS_AVAILABLE",
+        "price": 9449.1,
+        "position": "ABOVE",
+        "distance_percent": 0.138,
+        "base_weight": 0.1339,
+        "normalized_weight": 0.1619,
+        "depreciation": 0.975,
+        "effective_weight": 0.1579,
+        "direction": "BEARISH"
+      },
+      {
+        "name": "previous_hourly",
+        "type": "ALWAYS_AVAILABLE",
+        "price": 9429.1,
+        "position": "BELOW",
+        "distance_percent": 0.074,
+        "base_weight": 0.0822,
+        "normalized_weight": 0.0994,
+        "depreciation": 0.987,
+        "effective_weight": 0.0981,
+        "direction": "BULLISH"
+      },
+      {
+        "name": "2h_open",
+        "type": "ALWAYS_AVAILABLE",
+        "price": 9438.7,
+        "position": "ABOVE",
+        "distance_percent": 0.028,
+        "base_weight": 0.052,
+        "normalized_weight": 0.0629,
+        "depreciation": 0.995,
+        "effective_weight": 0.0626,
+        "direction": "BEARISH"
+      },
+      {
+        "name": "4h_open",
+        "type": "ALWAYS_AVAILABLE",
+        "price": 9550.4,
+        "position": "ABOVE",
+        "distance_percent": 1.211,
+        "base_weight": 0.065,
+        "normalized_weight": 0.0786,
+        "depreciation": 0.782,
+        "effective_weight": 0.0615,
+        "direction": "BEARISH"
+      },
+      {
+        "name": "london_open",
+        "type": "ALWAYS_AVAILABLE",
+        "price": 9434.4,
+        "position": "BELOW",
+        "distance_percent": 0.018,
+        "base_weight": 0.0779,
+        "normalized_weight": 0.0942,
+        "depreciation": 0.997,
+        "effective_weight": 0.0939,
+        "direction": "BULLISH"
+      },
+      {
+        "name": "prev_day_high",
+        "type": "ALWAYS_AVAILABLE",
+        "price": 9593.8,
+        "position": "ABOVE",
+        "distance_percent": 1.671,
+        "base_weight": 0.026,
+        "normalized_weight": 0.0314,
+        "depreciation": 0.699,
+        "effective_weight": 0.022,
+        "direction": "BEARISH"
+      },
+      {
+        "name": "prev_day_low",
+        "type": "ALWAYS_AVAILABLE",
+        "price": 9432.9,
+        "position": "BELOW",
+        "distance_percent": 0.034,
+        "base_weight": 0.026,
+        "normalized_weight": 0.0314,
+        "depreciation": 0.994,
+        "effective_weight": 0.0312,
+        "direction": "BULLISH"
+      },
+      {
+        "name": "weekly_open",
+        "type": "ALWAYS_AVAILABLE",
+        "price": 9695.7,
+        "position": "ABOVE",
+        "distance_percent": 2.751,
+        "base_weight": 0.065,
+        "normalized_weight": 0.0786,
+        "depreciation": 0.505,
+        "effective_weight": 0.0397,
+        "direction": "BEARISH"
+      },
+      {
+        "name": "weekly_high",
+        "type": "ALWAYS_AVAILABLE",
+        "price": 9707.8,
+        "position": "ABOVE",
+        "distance_percent": 2.879,
+        "base_weight": 0.026,
+        "normalized_weight": 0.0314,
+        "depreciation": 0.482,
+        "effective_weight": 0.0151,
+        "direction": "BEARISH"
+      },
+      {
+        "name": "weekly_low",
+        "type": "ALWAYS_AVAILABLE",
+        "price": 9423.2,
+        "position": "BELOW",
+        "distance_percent": 0.137,
+        "base_weight": 0.026,
+        "normalized_weight": 0.0314,
+        "depreciation": 0.975,
+        "effective_weight": 0.0307,
+        "direction": "BULLISH"
+      },
+      {
+        "name": "prev_week_high",
+        "type": "ALWAYS_AVAILABLE",
+        "price": 9928.4,
+        "position": "ABOVE",
+        "distance_percent": 5.217,
+        "base_weight": 0.052,
+        "normalized_weight": 0.0629,
+        "depreciation": 0.1,
+        "effective_weight": 0.0063,
+        "direction": "BEARISH"
+      },
+      {
+        "name": "prev_week_low",
+        "type": "ALWAYS_AVAILABLE",
+        "price": 9605.8,
+        "position": "ABOVE",
+        "distance_percent": 1.798,
+        "base_weight": 0.052,
+        "normalized_weight": 0.0629,
+        "depreciation": 0.676,
+        "effective_weight": 0.0425,
+        "direction": "BEARISH"
+      },
+      {
+        "name": "monthly_open",
+        "type": "ALWAYS_AVAILABLE",
+        "price": 9740.4,
+        "position": "ABOVE",
+        "distance_percent": 3.225,
+        "base_weight": 0.0391,
+        "normalized_weight": 0.0473,
+        "depreciation": 0.42,
+        "effective_weight": 0.0198,
+        "direction": "BEARISH"
+      },
+      {
+        "name": "london_range_high",
+        "type": "ALWAYS_AVAILABLE",
+        "price": 9461.0,
+        "position": "ABOVE",
+        "distance_percent": 0.264,
+        "base_weight": 0.052,
+        "normalized_weight": 0.0629,
+        "depreciation": 0.953,
+        "effective_weight": 0.0599,
+        "direction": "BEARISH"
+      },
+      {
+        "name": "london_range_low",
+        "type": "ALWAYS_AVAILABLE",
+        "price": 9423.2,
+        "position": "BELOW",
+        "distance_percent": 0.137,
+        "base_weight": 0.052,
+        "normalized_weight": 0.0629,
+        "depreciation": 0.975,
+        "effective_weight": 0.0613,
+        "direction": "BULLISH"
+      }
+    ]
+  },
+  "instrument": "UK100",
+  "timezone": "Europe/London",
+  "analysis_timestamp": "2025-11-23T16:53:31.499620",
+  "data_timestamp": "2025-11-21T08:00:00+00:00",
+  "filename": "CAPITALCOM_UK100, 5_65f49.csv",
+  "data_length": 11194,
+  "current_price": 9436.1
+}

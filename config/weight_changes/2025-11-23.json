@@ -1,0 +1,23 @@
+[
+  {
+    "timestamp": "2025-11-23T16:14:33.424428",
+    "instrument": "US100",
+    "user": "test_user",
+    "reason": "Test adjustment",
+    "changes": {
+      "level1": {
+        "old": 0.1,
+        "new": 0.15,
+        "change": 0.04999999999999999
+      },
+      "level3": {
+        "old": 0.7,
+        "new": 0.65,
+        "change": -0.04999999999999993
+      }
+    },
+    "old_total": 1.0,
+    "new_total": 1.0,
+    "num_changed_levels": 2
+  }
+]

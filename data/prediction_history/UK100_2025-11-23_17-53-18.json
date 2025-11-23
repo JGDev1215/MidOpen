@@ -1,0 +1,15 @@
+{
+  "result": {
+    "analysis": {
+      "bias": "BULLISH",
+      "confidence": 80.0
+    }
+  },
+  "instrument": "UK100",
+  "timezone": null,
+  "analysis_timestamp": "2025-11-23T17:53:18.988526",
+  "data_timestamp": "2025-11-23T17:53:18.988526",
+  "filename": "UK100_test.csv",
+  "data_length": 100,
+  "current_price": 18000.0
+}

@@ -1,0 +1,15 @@
+{
+  "result": {
+    "analysis": {
+      "bias": "BULLISH",
+      "confidence": 79.0
+    }
+  },
+  "instrument": "US500",
+  "timezone": null,
+  "analysis_timestamp": "2025-11-23T17:52:22.131542",
+  "data_timestamp": "2025-11-23T17:52:22.131542",
+  "filename": "test_4.csv",
+  "data_length": 100,
+  "current_price": 18000.0
+}

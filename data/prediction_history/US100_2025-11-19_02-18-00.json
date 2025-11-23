@@ -1,0 +1,223 @@
+{
+  "result": {
+    "metadata": {
+      "instrument": "US100",
+      "timezone": "America/New_York",
+      "timestamp": "2025-11-19T02:18:00-05:00",
+      "current_price": 24518.2,
+      "data_points": 2870
+    },
+    "analysis": {
+      "bias": "BEARISH",
+      "confidence": 54.83,
+      "bullish_weight": 0.3021,
+      "bearish_weight": 0.3667
+    },
+    "weights": {
+      "available_levels": 16,
+      "total_levels": 20,
+      "utilization": 0.8
+    },
+    "levels": [
+      {
+        "name": "daily_midnight",
+        "type": "ALWAYS_AVAILABLE",
+        "price": 24440.5,
+        "position": "BELOW",
+        "distance_percent": 0.317,
+        "base_weight": 0.1339,
+        "normalized_weight": 0.1637,
+        "depreciation": 0.943,
+        "effective_weight": 0.1544,
+        "direction": "BULLISH"
+      },
+      {
+        "name": "previous_hourly",
+        "type": "ALWAYS_AVAILABLE",
+        "price": 24521.0,
+        "position": "ABOVE",
+        "distance_percent": 0.011,
+        "base_weight": 0.0822,
+        "normalized_weight": 0.1005,
+        "depreciation": 0.998,
+        "effective_weight": 0.1003,
+        "direction": "BEARISH"
+      },
+      {
+        "name": "2h_open",
+        "type": "ALWAYS_AVAILABLE",
+        "price": 24508.9,
+        "position": "BELOW",
+        "distance_percent": 0.038,
+        "base_weight": 0.052,
+        "normalized_weight": 0.0636,
+        "depreciation": 0.993,
+        "effective_weight": 0.0631,
+        "direction": "BULLISH"
+      },
+      {
+        "name": "4h_open",
+        "type": "ALWAYS_AVAILABLE",
+        "price": 24632.0,
+        "position": "ABOVE",
+        "distance_percent": 0.464,
+        "base_weight": 0.065,
+        "normalized_weight": 0.0795,
+        "depreciation": 0.916,
+        "effective_weight": 0.0728,
+        "direction": "BEARISH"
+      },
+      {
+        "name": "ny_open",
+        "type": "ALWAYS_AVAILABLE",
+        "price": 24518.2,
+        "position": "AT",
+        "distance_percent": null,
+        "base_weight": 0.0779,
+        "normalized_weight": 0.0952,
+        "depreciation": 1.0,
+        "effective_weight": 0.0952,
+        "direction": "NEUTRAL"
+      },
+      {
+        "name": "ny_preopen",
+        "type": "ALWAYS_AVAILABLE",
+        "price": 24518.2,
+        "position": "AT",
+        "distance_percent": null,
+        "base_weight": 0.0391,
+        "normalized_weight": 0.0478,
+        "depreciation": 1.0,
+        "effective_weight": 0.0478,
+        "direction": "NEUTRAL"
+      },
+      {
+        "name": "prev_day_high",
+        "type": "ALWAYS_AVAILABLE",
+        "price": 24773.7,
+        "position": "ABOVE",
+        "distance_percent": 1.042,
+        "base_weight": 0.026,
+        "normalized_weight": 0.0318,
+        "depreciation": 0.812,
+        "effective_weight": 0.0258,
+        "direction": "BEARISH"
+      },
+      {
+        "name": "prev_day_low",
+        "type": "ALWAYS_AVAILABLE",
+        "price": 24296.3,
+        "position": "BELOW",
+        "distance_percent": 0.905,
+        "base_weight": 0.026,
+        "normalized_weight": 0.0318,
+        "depreciation": 0.837,
+        "effective_weight": 0.0266,
+        "direction": "BULLISH"
+      },
+      {
+        "name": "weekly_open",
+        "type": "ALWAYS_AVAILABLE",
+        "price": 25187.0,
+        "position": "ABOVE",
+        "distance_percent": 2.728,
+        "base_weight": 0.065,
+        "normalized_weight": 0.0795,
+        "depreciation": 0.509,
+        "effective_weight": 0.0404,
+        "direction": "BEARISH"
+      },
+      {
+        "name": "weekly_high",
+        "type": "ALWAYS_AVAILABLE",
+        "price": 25273.1,
+        "position": "ABOVE",
+        "distance_percent": 3.079,
+        "base_weight": 0.026,
+        "normalized_weight": 0.0318,
+        "depreciation": 0.446,
+        "effective_weight": 0.0142,
+        "direction": "BEARISH"
+      },
+      {
+        "name": "weekly_low",
+        "type": "ALWAYS_AVAILABLE",
+        "price": 24296.3,
+        "position": "BELOW",
+        "distance_percent": 0.905,
+        "base_weight": 0.026,
+        "normalized_weight": 0.0318,
+        "depreciation": 0.837,
+        "effective_weight": 0.0266,
+        "direction": "BULLISH"
+      },
+      {
+        "name": "prev_week_high",
+        "type": "ALWAYS_AVAILABLE",
+        "price": 25721.8,
+        "position": "ABOVE",
+        "distance_percent": 4.909,
+        "base_weight": 0.052,
+        "normalized_weight": 0.0636,
+        "depreciation": 0.116,
+        "effective_weight": 0.0074,
+        "direction": "BEARISH"
+      },
+      {
+        "name": "prev_week_low",
+        "type": "ALWAYS_AVAILABLE",
+        "price": 24532.7,
+        "position": "ABOVE",
+        "distance_percent": 0.059,
+        "base_weight": 0.052,
+        "normalized_weight": 0.0636,
+        "depreciation": 0.989,
+        "effective_weight": 0.0629,
+        "direction": "BEARISH"
+      },
+      {
+        "name": "monthly_open",
+        "type": "ALWAYS_AVAILABLE",
+        "price": 25589.2,
+        "position": "ABOVE",
+        "distance_percent": 4.368,
+        "base_weight": 0.0391,
+        "normalized_weight": 0.0478,
+        "depreciation": 0.214,
+        "effective_weight": 0.0102,
+        "direction": "BEARISH"
+      },
+      {
+        "name": "asian_range_high",
+        "type": "CONDITIONAL",
+        "price": 24574.5,
+        "position": "ABOVE",
+        "distance_percent": 0.23,
+        "base_weight": 0.0279,
+        "normalized_weight": 0.0341,
+        "depreciation": 0.959,
+        "effective_weight": 0.0327,
+        "direction": "BEARISH"
+      },
+      {
+        "name": "asian_range_low",
+        "type": "CONDITIONAL",
+        "price": 24409.4,
+        "position": "BELOW",
+        "distance_percent": 0.444,
+        "base_weight": 0.0279,
+        "normalized_weight": 0.0341,
+        "depreciation": 0.92,
+        "effective_weight": 0.0314,
+        "direction": "BULLISH"
+      }
+    ]
+  },
+  "instrument": "US100",
+  "timezone": "America/New_York",
+  "analysis_timestamp": "2025-11-23T16:52:08.194039",
+  "data_timestamp": "2025-11-19T02:18:00-05:00",
+  "filename": "CAPITALCOM_US100, 3_cbde3.csv",
+  "data_length": 2870,
+  "current_price": 24518.2
+}

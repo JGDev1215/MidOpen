@@ -1,0 +1,15 @@
+{
+  "result": {
+    "analysis": {
+      "bias": "BEARISH",
+      "confidence": 90.0
+    }
+  },
+  "instrument": "US100",
+  "timezone": null,
+  "analysis_timestamp": "2025-11-23T17:52:22.172467",
+  "data_timestamp": "2025-11-23T17:52:22.172467",
+  "filename": "test2.csv",
+  "data_length": 100,
+  "current_price": 18400.0
+}

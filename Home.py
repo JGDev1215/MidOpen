@@ -1,21 +1,28 @@
 #!/usr/bin/env python3
 """
-Financial Prediction Dashboard
-Streamlit UI for Prediction Model v3.0
-
-Allows users to:
-1. Upload CSV files with OHLCV price data
-2. Analyze predictions using the reference level system
-3. Visualize results with interactive charts
-4. Export predictions as JSON
+Financial Prediction Dashboard with DI Architecture
+Streamlit UI for Prediction Model v3.0 + Dependency Injection Services
 """
 
 import streamlit as st
 import pandas as pd
 import json
+import logging
 from datetime import datetime
 from pathlib import Path
 import traceback
+
+# Import DI accessors for services
+from src.di.accessors import (
+    get_top_predictions,
+    get_prediction_count,
+    save_prediction,
+    get_predictions_by_instrument
+)
+
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 # Configure page
 st.set_page_config(
@@ -52,30 +59,46 @@ st.markdown("""
         font-weight: bold;
         margin-bottom: 10px;
     }
+    .job-status-running {
+        color: #00AA00;
+        font-weight: bold;
+    }
+    .job-status-stopped {
+        color: #FF0000;
+        font-weight: bold;
+    }
 </style>
 """, unsafe_allow_html=True)
+
+# Note: Background scheduler disabled - all analysis is on-demand with manual CSV uploads
+
+# ========== SIDEBAR: INFORMATION ==========
+
+with st.sidebar:
+    st.header("📋 Information")
+
+    st.info("📤 **Manual Upload Mode**\n\nUpload CSV files with OHLC data (columns: time, open, high, low, close) to analyze predictions. All analysis is performed on-demand when you click the Analyze button.")
+
+    # Analysis mode selector
+    st.markdown("### 📊 Analysis Mode")
+    analysis_mode = st.radio(
+        "Select Mode",
+        ("Upload & Analyze", "View History"),
+        help="Choose between analyzing new data or viewing past predictions"
+    )
+
+# ========== MAIN CONTENT ==========
 
 # Title
 st.markdown('<div class="main-title">📊 Financial Prediction Dashboard</div>', unsafe_allow_html=True)
 st.markdown("Analyze price data using the Reference Level Prediction System")
 st.divider()
 
-# Initialize session state
+# Initialize session state for analysis results
 if 'analysis_result' not in st.session_state:
     st.session_state.analysis_result = None
 if 'analysis_history' not in st.session_state:
     st.session_state.analysis_history = []
-
-# Sidebar configuration
-with st.sidebar:
-    st.header("⚙️ Configuration")
-    st.markdown("### Analysis Settings")
-
-    analysis_mode = st.radio(
-        "Select Analysis Mode",
-        ("Upload & Analyze", "View History"),
-        help="Choose between analyzing new data or viewing past predictions"
-    )
 
 # Main content
 if analysis_mode == "Upload & Analyze":
@@ -121,8 +144,7 @@ if analysis_mode == "Upload & Analyze":
                 with st.spinner("Running prediction analysis..."):
                     try:
                         # Import prediction engine
-                        from extract_and_analyze import DataExtractor
-                        from prediction_model_v3 import PredictionEngine, OutputFormatter
+                        from prediction_model_v3 import PredictionEngine
 
                         # Parse time column
                         df['time'] = pd.to_datetime(df['time'], utc=True)
@@ -134,15 +156,15 @@ if analysis_mode == "Upload & Analyze":
 
                         if "NQ" in filename.upper():
                             instrument = "US100"
-                        elif "ES" in filename.upper():
-                            instrument = "ES"
+                        elif "ES" in filename.upper() or "SP" in filename.upper() or "US500" in filename.upper():
+                            instrument = "US500"
                         elif "UK100" in filename.upper() or "FTSE" in filename.upper():
                             instrument = "UK100"
 
                         # Get timezone mapping
                         timezone_map = {
                             'US100': 'America/New_York',
-                            'ES': 'America/Chicago',
+                            'US500': 'America/Chicago',
                             'UK100': 'Europe/London',
                         }
 
@@ -172,6 +194,12 @@ if analysis_mode == "Upload & Analyze":
                         # Add to history
                         st.session_state.analysis_history.append(st.session_state.analysis_result)
 
+                        # Auto-save to persistent storage
+                        if save_prediction(st.session_state.analysis_result):
+                            logger.info("Prediction auto-saved to storage")
+                        else:
+                            logger.warning("Failed to auto-save prediction")
+
                         st.success("✅ Analysis completed successfully!")
                         st.rerun()
 
@@ -181,26 +209,81 @@ if analysis_mode == "Upload & Analyze":
                         with st.expander("Show error details"):
                             st.code(traceback.format_exc())
 
-if analysis_mode == "View History":
-    st.header("📜 Analysis History")
+elif analysis_mode == "View History":
+    st.header("📜 Analysis History (Top 50 by Data Timestamp)")
+    st.markdown("Ranked by latest data point timestamp - newest data first")
 
-    if not st.session_state.analysis_history:
+    # Load top 50 predictions from persistent storage
+    predictions = get_top_predictions(n=50)
+
+    if not predictions:
         st.info("No analysis history yet. Upload and analyze a CSV file first.")
     else:
-        for idx, item in enumerate(reversed(st.session_state.analysis_history)):
-            with st.expander(f"📊 {item['instrument']} - {item['timestamp'][:19]}"):
-                col1, col2, col3 = st.columns(3)
-                with col1:
-                    st.write(f"**Instrument:** {item['instrument']}")
-                with col2:
-                    st.write(f"**Candles:** {item['data_length']}")
-                with col3:
-                    st.write(f"**Price:** ${item['current_price']:.2f}")
+        st.metric("Total Predictions Saved", get_prediction_count(), delta="in database")
+        st.divider()
 
-                # Show result preview
-                result = item['result']
-                st.write("**Analysis Result:**")
-                st.json(result)
+        for item in predictions:
+            # Extract key information
+            result = item.get('result', {})
+            analysis = result.get('analysis', {})
+            bias = analysis.get('bias', 'UNKNOWN')
+            confidence = analysis.get('confidence', 0)
+            analysis_time = item.get('analysis_timestamp', 'N/A')
+            latest_data_time = item.get('data_timestamp', 'N/A')
+
+            # Create color-coded title
+            bias_color = "🟢" if bias == "BULLISH" else "🔴"
+            instrument = item.get('instrument', 'UNKNOWN')
+            title = f"{bias_color} {instrument} - {bias} ({confidence:.1f}% confidence) | Data: {latest_data_time[:10]}"
+
+            with st.expander(title):
+                # Row 1: Timing Information
+                col1, col2 = st.columns(2)
+                with col1:
+                    st.write("**📅 Analysis Executed:**")
+                    st.write(f"{analysis_time[:10]} at {analysis_time[11:19]}" if analysis_time != 'N/A' else "N/A")
+                with col2:
+                    st.write("**📊 Latest Data Point:**")
+                    st.write(f"{latest_data_time[:10]} at {latest_data_time[11:19]}" if latest_data_time != 'N/A' else "N/A")
+
+                st.divider()
+
+                # Row 2: Result Highlight
+                if bias == "BULLISH":
+                    st.markdown(
+                        '<div style="background-color: #00AA0020; padding: 15px; border-radius: 5px; border-left: 4px solid #00AA00;">'
+                        '<span style="color: #00AA00; font-size: 24px; font-weight: bold;">▲ BULLISH</span><br>'
+                        f'<span style="font-size: 18px;">Confidence: {confidence:.2f}%</span></div>',
+                        unsafe_allow_html=True
+                    )
+                else:
+                    st.markdown(
+                        '<div style="background-color: #FF000020; padding: 15px; border-radius: 5px; border-left: 4px solid #FF0000;">'
+                        '<span style="color: #FF0000; font-size: 24px; font-weight: bold;">▼ BEARISH</span><br>'
+                        f'<span style="font-size: 18px;">Confidence: {confidence:.2f}%</span></div>',
+                        unsafe_allow_html=True
+                    )
+
+                st.divider()
+
+                # Row 3: Additional Details
+                col1, col2, col3, col4 = st.columns(4)
+                with col1:
+                    st.metric("Instrument", instrument)
+                with col2:
+                    current_price = item.get('current_price', 0)
+                    st.metric("Current Price", f"${current_price:.2f}")
+                with col3:
+                    data_length = item.get('data_length', 0)
+                    st.metric("Data Points", data_length)
+                with col4:
+                    bullish_pct = analysis.get('bullish_weight', 0) * 100
+                    bearish_pct = analysis.get('bearish_weight', 0) * 100
+                    st.metric("Bull/Bear", f"{bullish_pct:.1f}% / {bearish_pct:.1f}%")
+
+                # Optional: Full JSON details
+                with st.expander("🔍 View Full Analysis Details"):
+                    st.json(result)
 
 
 # Display results if available
@@ -300,37 +383,27 @@ if st.session_state.analysis_result:
     col1, col2 = st.columns(2)
 
     with col1:
-        # JSON export
-        json_data = json.dumps(result, indent=2, default=str)
+        json_str = json.dumps(result, indent=2)
         st.download_button(
             label="📥 Download JSON",
-            data=json_data,
-            file_name=f"prediction_{instrument}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json",
-            mime="application/json",
-            key="json_download"
+            data=json_str,
+            file_name=f"prediction_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json",
+            mime="application/json"
         )
 
     with col2:
-        # CSV export of levels
-        csv_data = levels_df.to_csv(index=False)
+        levels_csv = levels_df.to_csv(index=False)
         st.download_button(
-            label="📥 Download Levels CSV",
-            data=csv_data,
-            file_name=f"levels_{instrument}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv",
-            mime="text/csv",
-            key="csv_download"
+            label="📥 Download CSV (Levels)",
+            data=levels_csv,
+            file_name=f"levels_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv",
+            mime="text/csv"
         )
-
-    st.divider()
-
-    # Raw result display
-    with st.expander("📄 View Raw JSON Result"):
-        st.json(result)
-
 
 # Footer
 st.divider()
 st.caption("""
 Prediction Model v3.0 — Reference Level-based Analytical Framework
 Designed for technical analysis of financial instruments (US100/NASDAQ, ES/S&P500, UK100/FTSE)
+Background Scheduler: APScheduler with Streamlit integration | Pages: Admin Settings, Prediction History, Scheduler Status
 """)
