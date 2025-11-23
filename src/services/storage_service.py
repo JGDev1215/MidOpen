@@ -5,8 +5,9 @@ Wraps storage backend and provides business logic for prediction management
 import logging
 from pathlib import Path
 from datetime import datetime
-from typing import Dict, List, Any, Optional
+from typing import Dict, List, Any, Optional, Union
 from src.infrastructure.storage.json_storage import JSONStorageBackend
+from src.infrastructure.storage.postgresql_storage import PostgreSQLStorageBackend
 
 logger = logging.getLogger(__name__)
 
@@ -15,17 +16,19 @@ class StorageService:
     """
     Business logic service for prediction storage management.
     Implements StorageService Protocol and PredictionStorageService Protocol.
+    Works with both JSON and PostgreSQL storage backends.
     """
 
-    def __init__(self, storage_backend: JSONStorageBackend):
+    def __init__(self, storage_backend: Union[JSONStorageBackend, PostgreSQLStorageBackend]):
         """
         Initialize storage service with a backend dependency.
 
         Args:
-            storage_backend: JSONStorageBackend instance for file I/O
+            storage_backend: Storage backend instance (JSON or PostgreSQL)
         """
         self.backend = storage_backend
-        logger.info("StorageService initialized")
+        backend_type = type(storage_backend).__name__
+        logger.info(f"StorageService initialized with {backend_type}")
 
     def _format_timestamp_for_filename(self, timestamp_str: str) -> str:
         """
