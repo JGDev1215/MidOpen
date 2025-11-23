@@ -99,7 +99,6 @@ with col_button:
         )
 
         st.success(f"✅ Weights equalized and saved! Each level now has weight of {equal_weight:.6f}")
-        st.rerun()
 
 # Display weights in groups
 col_count = 2
@@ -121,7 +120,7 @@ for level_name in weight_names:
             min_value=0.0,
             max_value=0.2,  # Max individual weight
             value=current_value,
-            step=0.0001,
+            step=0.000001,
             label_visibility="collapsed",
             key=f"slider_{level_name}"
         )

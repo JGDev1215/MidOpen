@@ -1,0 +1,113 @@
+[
+  {
+    "timestamp": "2025-11-23T21:39:00.581766",
+    "instrument": "US100",
+    "user": "test_admin",
+    "reason": "Automated test - equalization",
+    "changes": {
+      "daily_midnight": {
+        "old": 0.1339,
+        "new": 0.05,
+        "change": -0.08389999999999999
+      },
+      "previous_hourly": {
+        "old": 0.0822,
+        "new": 0.05,
+        "change": -0.03219999999999999
+      },
+      "2h_open": {
+        "old": 0.052,
+        "new": 0.05,
+        "change": -0.001999999999999995
+      },
+      "4h_open": {
+        "old": 0.065,
+        "new": 0.05,
+        "change": -0.015
+      },
+      "ny_open": {
+        "old": 0.0779,
+        "new": 0.05,
+        "change": -0.027899999999999994
+      },
+      "ny_preopen": {
+        "old": 0.0391,
+        "new": 0.05,
+        "change": 0.0109
+      },
+      "prev_day_high": {
+        "old": 0.026,
+        "new": 0.05,
+        "change": 0.024000000000000004
+      },
+      "prev_day_low": {
+        "old": 0.026,
+        "new": 0.05,
+        "change": 0.024000000000000004
+      },
+      "weekly_open": {
+        "old": 0.065,
+        "new": 0.05,
+        "change": -0.015
+      },
+      "weekly_high": {
+        "old": 0.026,
+        "new": 0.05,
+        "change": 0.024000000000000004
+      },
+      "weekly_low": {
+        "old": 0.026,
+        "new": 0.05,
+        "change": 0.024000000000000004
+      },
+      "prev_week_high": {
+        "old": 0.052,
+        "new": 0.05,
+        "change": -0.001999999999999995
+      },
+      "prev_week_low": {
+        "old": 0.052,
+        "new": 0.05,
+        "change": -0.001999999999999995
+      },
+      "monthly_open": {
+        "old": 0.0391,
+        "new": 0.05,
+        "change": 0.0109
+      },
+      "asian_range_high": {
+        "old": 0.0279,
+        "new": 0.05,
+        "change": 0.0221
+      },
+      "asian_range_low": {
+        "old": 0.0279,
+        "new": 0.05,
+        "change": 0.0221
+      },
+      "london_range_high": {
+        "old": 0.052,
+        "new": 0.05,
+        "change": -0.001999999999999995
+      },
+      "london_range_low": {
+        "old": 0.052,
+        "new": 0.05,
+        "change": -0.001999999999999995
+      },
+      "ny_range_high": {
+        "old": 0.0391,
+        "new": 0.05,
+        "change": 0.0109
+      },
+      "ny_range_low": {
+        "old": 0.0391,
+        "new": 0.05,
+        "change": 0.0109
+      }
+    },
+    "old_total": 1.0002,
+    "new_total": 1.0,
+    "num_changed_levels": 20
+  }
+]

@@ -44,20 +44,20 @@
     "chicago_range_low": 0.0391
   },
   "UK100": {
-    "daily_midnight": 0.1339,
-    "previous_hourly": 0.0822,
-    "2h_open": 0.052,
-    "4h_open": 0.065,
-    "london_open": 0.0779,
-    "prev_day_high": 0.026,
-    "prev_day_low": 0.026,
-    "weekly_open": 0.065,
-    "weekly_high": 0.026,
-    "weekly_low": 0.026,
-    "prev_week_high": 0.052,
-    "prev_week_low": 0.052,
-    "monthly_open": 0.0391,
-    "london_range_high": 0.052,
-    "london_range_low": 0.052
+    "daily_midnight": 0.066667,
+    "previous_hourly": 0.066667,
+    "2h_open": 0.066667,
+    "4h_open": 0.066667,
+    "london_open": 0.066667,
+    "prev_day_high": 0.066667,
+    "prev_day_low": 0.066667,
+    "weekly_open": 0.066667,
+    "weekly_high": 0.066667,
+    "weekly_low": 0.066667,
+    "prev_week_high": 0.066667,
+    "prev_week_low": 0.066667,
+    "monthly_open": 0.066667,
+    "london_range_high": 0.066667,
+    "london_range_low": 0.066662
   }
 }
