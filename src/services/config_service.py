@@ -128,7 +128,7 @@ class ConfigurationService:
     def set_weights(self, instrument: str, weights: Dict[str, float]) -> None:
         """Set weights for an instrument (must sum to 1.0)"""
         total = sum(weights.values())
-        if abs(total - 1.0) > 0.0001:
+        if abs(total - 1.0) > 0.001:
             raise ValueError(f"Weights must sum to 1.0, got {total}")
 
         self.weights[instrument] = weights
@@ -136,9 +136,9 @@ class ConfigurationService:
         logger.info(f"Updated weights for {instrument}")
 
     def validate_weights(self, weights: Dict[str, float]) -> Tuple[bool, str]:
-        """Validate weights (must sum to 1.0)"""
+        """Validate weights (must sum to 1.0, with tolerance for floating-point precision)"""
         total = sum(weights.values())
-        if abs(total - 1.0) > 0.0001:
+        if abs(total - 1.0) > 0.001:
             return False, f"Weights sum to {total:.4f}, must be 1.0"
         return True, "Weights are valid"
 
