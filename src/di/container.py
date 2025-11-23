@@ -3,15 +3,21 @@ Dependency Injection Container
 Manages service instantiation, lifecycle, and dependency resolution
 """
 import logging
+import os
 from pathlib import Path
-from typing import Dict, Any, Optional
+from typing import Dict, Any, Optional, Union
+from dotenv import load_dotenv
 from src.infrastructure.config.file_config_store import FileConfigStore
 from src.infrastructure.logging.file_log_store import FileLogStore
 from src.infrastructure.storage.json_storage import JSONStorageBackend
+from src.infrastructure.storage.postgresql_storage import PostgreSQLStorageBackend
 from src.services.config_service import ConfigurationService
 from src.services.logging_service import LoggingService
 from src.services.storage_service import StorageService
 from src.services.analysis_orchestrator import AnalysisOrchestrator
+
+# Load environment variables from .env file
+load_dotenv()
 
 logger = logging.getLogger(__name__)
 
@@ -49,17 +55,27 @@ class DIContainer:
         self._services: Dict[str, Dict[str, Any]] = {
             'FileConfigStore': {'lifetime': ServiceLifetime.SINGLETON},
             'FileLogStore': {'lifetime': ServiceLifetime.SINGLETON},
-            'JSONStorageBackend': {'lifetime': ServiceLifetime.SINGLETON},
+            'StorageBackend': {'lifetime': ServiceLifetime.SINGLETON},
             'ConfigurationService': {'lifetime': ServiceLifetime.SINGLETON},
             'LoggingService': {'lifetime': ServiceLifetime.SINGLETON},
             'StorageService': {'lifetime': ServiceLifetime.SINGLETON},
             'AnalysisOrchestrator': {'lifetime': ServiceLifetime.SINGLETON},
         }
 
+        # Determine storage backend type
+        self.database_url = os.getenv('DATABASE_URL')
+        if self.database_url:
+            self.storage_backend_type = 'postgresql'
+            logger.info("Using PostgreSQL storage backend (DATABASE_URL found)")
+        else:
+            self.storage_backend_type = 'json'
+            logger.info("Using JSON file storage backend (DATABASE_URL not found)")
+
         logger.info(f"DIContainer initialized with paths:")
         logger.info(f"  Config: {self.config_path}")
         logger.info(f"  Logs: {self.log_path}")
         logger.info(f"  Storage: {self.storage_path}")
+        logger.info(f"  Backend: {self.storage_backend_type}")
 
     def get_file_config_store(self) -> FileConfigStore:
         """Get or create FileConfigStore (singleton)"""
@@ -75,12 +91,16 @@ class DIContainer:
             self._singletons['FileLogStore'] = FileLogStore(self.log_path)
         return self._singletons['FileLogStore']
 
-    def get_json_storage_backend(self) -> JSONStorageBackend:
-        """Get or create JSONStorageBackend (singleton)"""
-        if 'JSONStorageBackend' not in self._singletons:
-            logger.info("Creating JSONStorageBackend singleton")
-            self._singletons['JSONStorageBackend'] = JSONStorageBackend(self.storage_path)
-        return self._singletons['JSONStorageBackend']
+    def get_storage_backend(self) -> Union[JSONStorageBackend, PostgreSQLStorageBackend]:
+        """Get or create storage backend (singleton) - PostgreSQL or JSON based on config"""
+        if 'StorageBackend' not in self._singletons:
+            if self.storage_backend_type == 'postgresql':
+                logger.info("Creating PostgreSQLStorageBackend singleton")
+                self._singletons['StorageBackend'] = PostgreSQLStorageBackend(self.database_url)
+            else:
+                logger.info("Creating JSONStorageBackend singleton")
+                self._singletons['StorageBackend'] = JSONStorageBackend(self.storage_path)
+        return self._singletons['StorageBackend']
 
     def get_configuration_service(self) -> ConfigurationService:
         """Get or create ConfigurationService (singleton)"""
@@ -102,7 +122,7 @@ class DIContainer:
         """Get or create StorageService (singleton)"""
         if 'StorageService' not in self._singletons:
             logger.info("Creating StorageService singleton")
-            backend = self.get_json_storage_backend()
+            backend = self.get_storage_backend()
             self._singletons['StorageService'] = StorageService(backend)
         return self._singletons['StorageService']
 

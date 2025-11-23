@@ -405,5 +405,5 @@ st.divider()
 st.caption("""
 Prediction Model v3.0 — Reference Level-based Analytical Framework
 Designed for technical analysis of financial instruments (US100/NASDAQ, ES/S&P500, UK100/FTSE)
-Background Scheduler: APScheduler with Streamlit integration | Pages: Admin Settings, Prediction History, Scheduler Status
+Manual Analysis Mode | Pages: Admin Settings, Prediction History
 """)
