@@ -65,7 +65,31 @@ current_weights = get_weights(selected_instrument)
 weight_names = list(current_weights.keys())
 
 # Create columns for weight sliders
-st.markdown("### 🎚️ Level Weights")
+col_heading, col_button = st.columns([4, 1])
+
+with col_heading:
+    st.markdown("### 🎚️ Level Weights")
+
+with col_button:
+    if st.button("⚖️ Equalize All", use_container_width=True, help="Set all weights equally so they sum to 1.0"):
+        # Use weight_names (from current_weights) - this is the source of truth
+        equal_weight = 1.0 / len(weight_names)
+        equalized_weights = {level_name: equal_weight for level_name in weight_names}
+
+        # Save equalized weights
+        set_weights(selected_instrument, equalized_weights)
+
+        # Log the change
+        log_weight_change(
+            instrument=selected_instrument,
+            old_weights=current_weights,
+            new_weights=equalized_weights,
+            user="admin",
+            reason="Automatic equalization via Equalize All button"
+        )
+
+        st.success(f"✅ Weights equalized and saved! Each level now has weight of {equal_weight:.6f}")
+        st.rerun()
 
 # Display weights in groups
 col_count = 2
@@ -145,30 +169,6 @@ for level_name, weight in new_weights.items():
 
 weights_df = pd.DataFrame(weights_table_data)
 st.dataframe(weights_df, use_container_width=True, hide_index=True)
-
-st.divider()
-
-# Equalize weights button
-col_equalize = st.columns(1)
-with col_equalize[0]:
-    if st.button("🎯 Equalize All Weights to 1.0", use_container_width=True, help="Distribute all weights equally so they sum to 1.0"):
-        equal_weight = 1.0 / len(new_weights)
-        equalized_weights = {level_name: equal_weight for level_name in new_weights}
-
-        # Save equalized weights
-        set_weights(selected_instrument, equalized_weights)
-
-        # Log the change
-        log_weight_change(
-            instrument=selected_instrument,
-            old_weights=current_weights,
-            new_weights=equalized_weights,
-            user="admin",
-            reason="Automatic equalization via Equalize button"
-        )
-
-        st.success(f"✅ Weights equalized and saved! Each level now has weight of {equal_weight:.6f}")
-        st.rerun()
 
 st.divider()
 
