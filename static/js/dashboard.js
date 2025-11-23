@@ -1,13 +1,15 @@
 /**
  * NQ=F Real-Time Market Data Dashboard
  * Auto-refresh and data binding logic
- * Refresh interval: 75 seconds
+ * Refresh interval: 602 seconds (10 minutes 2 seconds)
  */
 
 // Configuration
 const CONFIG = {
     TICKER: 'NQ=F',
-    REFRESH_INTERVAL: 75000, // 75 seconds
+    REFRESH_INTERVAL: 602000, // 602 seconds (10 minutes 2 seconds)
+    DATA_FRESHNESS_SYNC_INTERVAL: 5000, // Sync with server every 5 seconds
+    COUNTDOWN_UPDATE_INTERVAL: 1000, // Update countdown display every 1 second
     TIMEOUT: 5000, // 5 seconds
     RETRY_DELAYS: [1000, 2000, 4000, 8000, 16000], // Exponential backoff
     API_BASE: '/api',
@@ -30,20 +32,207 @@ let dashboardState = {
 let refreshIntervalId = null;
 let countdownIntervalId = null;
 let clockIntervalId = null;
+let dataFreshnessTimer = null; // DataFreshnessTimer instance
+
+/**
+ * DataFreshnessTimer Class
+ * Manages the 602-second countdown timer and traffic light status
+ * Syncs with backend /api/refresh-status endpoint
+ */
+class DataFreshnessTimer {
+    constructor() {
+        this.lastRefreshTime = null;
+        this.totalInterval = 602000; // 602 seconds in milliseconds
+        this.timerId = null;
+        this.statusTimerId = null;
+
+        // Thresholds (in seconds remaining)
+        this.greenThreshold = 200;
+        this.orangeThreshold = 60;
+
+        // Color definitions
+        this.colors = {
+            green: { hex: '#10b981', name: 'Fresh Data', label: 'Green: Data is fresh' },
+            orange: { hex: '#f59e0b', name: 'Aging Data', label: 'Orange: Data is aging' },
+            red: { hex: '#ef4444', name: 'Stale Data', label: 'Red: Data is stale' }
+        };
+
+        this.initialize();
+    }
+
+    initialize() {
+        // Start 1-second countdown ticker
+        this.startCountdownTicker();
+
+        // Sync with server every 5 seconds
+        this.syncWithServer();
+        this.statusTimerId = setInterval(() => this.syncWithServer(), CONFIG.DATA_FRESHNESS_SYNC_INTERVAL);
+
+        // Initial display update
+        this.updateDisplay();
+    }
+
+    startCountdownTicker() {
+        if (this.timerId) clearInterval(this.timerId);
+
+        this.updateDisplay(); // Initial call
+        this.timerId = setInterval(() => this.updateDisplay(), CONFIG.COUNTDOWN_UPDATE_INTERVAL);
+    }
+
+    syncWithServer() {
+        fetch(`${CONFIG.API_BASE}/refresh-status`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    this.lastRefreshTime = data.last_refresh_timestamp * 1000; // Convert to milliseconds
+                    this.updateDisplay();
+                }
+            })
+            .catch(error => console.error('Error syncing refresh status:', error));
+    }
+
+    updateDisplay() {
+        const now = Date.now();
+        const secondsElapsed = (now - this.lastRefreshTime) / 1000;
+        const secondsRemaining = Math.max(0, 602 - secondsElapsed);
+        const progressPercent = Math.min(100, (secondsElapsed / 602) * 100);
+
+        // Update countdown timer display (MM:SS format)
+        this.updateCountdownDisplay(secondsRemaining);
+
+        // Update progress bar
+        this.updateProgressBar(progressPercent);
+
+        // Update traffic light color
+        this.updateTrafficLight(secondsRemaining);
+
+        // Update timestamps
+        this.updateTimestamps();
+    }
+
+    updateCountdownDisplay(secondsRemaining) {
+        const minutes = Math.floor(secondsRemaining / 60);
+        const seconds = Math.floor(secondsRemaining % 60);
+        const formatted = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+
+        const display = document.getElementById('countdown-timer');
+        if (display) {
+            display.textContent = formatted;
+        }
+    }
+
+    updateProgressBar(percent) {
+        const bar = document.getElementById('freshness-progress-bar');
+        const percentDisplay = document.getElementById('progress-percent');
+
+        if (bar) {
+            bar.style.width = percent + '%';
+
+            // Update progress bar color
+            if (percent < 33) {
+                bar.className = 'progress-bar progress-fill-green';
+            } else if (percent < 90) {
+                bar.className = 'progress-bar progress-fill-orange';
+            } else {
+                bar.className = 'progress-bar progress-fill-red';
+            }
+        }
+
+        if (percentDisplay) {
+            percentDisplay.textContent = Math.round(percent) + '% elapsed';
+        }
+    }
+
+    updateTrafficLight(secondsRemaining) {
+        const indicator = document.getElementById('freshness-indicator');
+        const statusLabel = document.getElementById('freshness-status-label');
+        const statusName = document.getElementById('freshness-status-name');
+
+        if (!indicator) return;
+
+        let color;
+        if (secondsRemaining > this.greenThreshold) {
+            color = this.colors.green;
+            indicator.className = 'light-indicator status-green';
+        } else if (secondsRemaining > this.orangeThreshold) {
+            color = this.colors.orange;
+            indicator.className = 'light-indicator status-orange';
+        } else {
+            color = this.colors.red;
+            indicator.className = 'light-indicator status-red';
+        }
+
+        if (statusLabel) statusLabel.textContent = color.name;
+        if (statusName) statusName.textContent = color.label;
+    }
+
+    updateTimestamps() {
+        if (!this.lastRefreshTime) return;
+
+        const lastRefreshDt = new Date(this.lastRefreshTime);
+        const nextRefreshDt = new Date(this.lastRefreshTime + 602000);
+
+        const formatTime = (date) => {
+            return new Intl.DateTimeFormat('en-US', {
+                timeZone: 'America/New_York',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: false
+            }).format(date) + ' ET';
+        };
+
+        const lastDisplay = document.getElementById('last-refresh-display');
+        const nextDisplay = document.getElementById('next-refresh-display');
+
+        if (lastDisplay) lastDisplay.textContent = formatTime(lastRefreshDt);
+        if (nextDisplay) nextDisplay.textContent = formatTime(nextRefreshDt);
+    }
+
+    resetTimer() {
+        // Call backend to reset timer
+        fetch(`${CONFIG.API_BASE}/refresh-status/reset`, { method: 'POST' })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success && data.new_status) {
+                    this.lastRefreshTime = data.new_status.last_refresh_timestamp * 1000;
+                    this.updateDisplay();
+                }
+            })
+            .catch(error => console.error('Error resetting timer:', error));
+    }
+
+    destroy() {
+        if (this.timerId) clearInterval(this.timerId);
+        if (this.statusTimerId) clearInterval(this.statusTimerId);
+    }
+}
 
 // Initialization
 document.addEventListener('DOMContentLoaded', () => {
     console.log('Dashboard initialized');
-    
+
+    // Initialize data freshness countdown timer
+    dataFreshnessTimer = new DataFreshnessTimer();
+
+    // Setup manual refresh button
+    const manualRefreshBtn = document.getElementById('manual-refresh-btn');
+    if (manualRefreshBtn) {
+        manualRefreshBtn.addEventListener('click', () => {
+            dataFreshnessTimer.resetTimer();
+            refreshAllData(); // Also trigger data refresh
+        });
+    }
+
     // Initial data load
     refreshAllData();
-    
+
     // Start clock and countdown updates (every second)
     startClockAndCountdown();
-    
+
     // Setup auto-refresh timer
     setupAutoRefresh();
-    
+
     // Setup error alert dismissal
     setupErrorHandling();
 });
@@ -112,7 +301,7 @@ function updateCountdown(nextEvent) {
 
 // Auto-Refresh Setup
 function setupAutoRefresh() {
-    // Refresh every 75 seconds
+    // Refresh every 602 seconds (10 minutes 2 seconds)
     refreshIntervalId = setInterval(() => {
         refreshAllData();
     }, CONFIG.REFRESH_INTERVAL);

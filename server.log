@@ -1,0 +1,229 @@
+2025-11-17 21:17:41,224 - nasdaq_predictor.services.refresh_status_service - INFO - Refresh status initialized at 2025-11-17 21:17:41.224743
+2025-11-17 21:17:41,227 - __main__ - INFO - Starting NQ=F Market Data Dashboard API on port 8080
+ * Serving Flask app 'app'
+ * Debug mode: off
+2025-11-17 21:17:41,390 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8080
+ * Running on http://192.168.0.105:8080
+2025-11-17 21:17:41,390 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-11-17 21:17:48,073 - werkzeug - INFO - 127.0.0.1 - - [17/Nov/2025 21:17:48] "GET /api/refresh-status HTTP/1.1" 200 -
+2025-11-17 21:17:51,005 - nasdaq_predictor.services.refresh_status_service - INFO - Refresh timer manually reset
+2025-11-17 21:17:51,005 - werkzeug - INFO - 127.0.0.1 - - [17/Nov/2025 21:17:51] "POST /api/refresh-status/reset HTTP/1.1" 200 -
+2025-11-17 21:18:09,274 - werkzeug - INFO - 127.0.0.1 - - [17/Nov/2025 21:18:09] "GET /api/market-status/NQ=F HTTP/1.1" 200 -
+2025-11-17 21:18:09,288 - nasdaq_predictor.api.routes.price_routes - INFO - Fetching price for NQ=F
+2025-11-17 21:18:09,288 - nasdaq_predictor.api.routes.reference_levels_routes - INFO - Fetching reference levels for NQ=F
+2025-11-17 21:18:09,289 - nasdaq_predictor.api.routes.session_ranges_routes - INFO - Fetching session ranges for NQ=F
+2025-11-17 21:18:09,289 - nasdaq_predictor.data.fetcher_live - INFO - Fetching NQ=F 1m data (period: 7d)
+2025-11-17 21:18:09,289 - nasdaq_predictor.api.routes.fibonacci_routes - INFO - Fetching Fibonacci pivots for NQ=F
+2025-11-17 21:18:09,290 - nasdaq_predictor.api.routes.block_routes - INFO - Fetching hourly blocks for NQ=F
+2025-11-17 21:18:09,995 - nasdaq_predictor.data.fetcher_live - INFO - Successfully fetched 7817 bars for NQ=F 1m
+2025-11-17 21:18:09,995 - nasdaq_predictor.data.fetcher_live - INFO - Fetching NQ=F 1d data (period: max)
+2025-11-17 21:18:10,092 - nasdaq_predictor.services.reference_level_service - INFO - Calculating reference levels for NQ=F at price 24906.0
+2025-11-17 21:18:10,092 - nasdaq_predictor.data.fetcher_live - INFO - Fetching NQ=F 1h data (period: 730d)
+2025-11-17 21:18:10,688 - nasdaq_predictor.data.fetcher_live - WARNING - Detected 8 price jumps >10% for NQ=F 1d
+2025-11-17 21:18:10,689 - nasdaq_predictor.data.fetcher_live - INFO - Successfully fetched 6356 bars for NQ=F 1d
+2025-11-17 21:18:10,689 - werkzeug - INFO - 127.0.0.1 - - [17/Nov/2025 21:18:10] "GET /api/current-price/NQ=F HTTP/1.1" 200 -
+2025-11-17 21:18:10,795 - nasdaq_predictor.data.fetcher_live - INFO - Fetching NQ=F 5m data (period: 60d)
+2025-11-17 21:18:10,897 - nasdaq_predictor.data.fetcher_live - INFO - Successfully fetched 13702 bars for NQ=F 1h
+2025-11-17 21:18:10,899 - werkzeug - INFO - 127.0.0.1 - - [17/Nov/2025 21:18:10] "GET /api/reference-levels/NQ=F HTTP/1.1" 200 -
+2025-11-17 21:18:10,923 - nasdaq_predictor.api.routes.block_routes - INFO - Fetching 1m data for NQ=F
+2025-11-17 21:18:10,925 - werkzeug - INFO - 127.0.0.1 - - [17/Nov/2025 21:18:10] "GET /api/hourly-blocks/NQ=F HTTP/1.1" 200 -
+2025-11-17 21:18:10,951 - nasdaq_predictor.data.fetcher_live - INFO - Fetching NQ=F 1wk data (period: max)
+2025-11-17 21:18:11,431 - nasdaq_predictor.data.fetcher_live - WARNING - Detected 12 price jumps >10% for NQ=F 1wk
+2025-11-17 21:18:11,431 - nasdaq_predictor.data.fetcher_live - INFO - Successfully fetched 1314 bars for NQ=F 1wk
+2025-11-17 21:18:11,432 - werkzeug - INFO - 127.0.0.1 - - [17/Nov/2025 21:18:11] "GET /api/fibonacci-pivots/NQ=F HTTP/1.1" 200 -
+2025-11-17 21:18:11,594 - nasdaq_predictor.data.fetcher_live - INFO - Successfully fetched 13474 bars for NQ=F 5m
+2025-11-17 21:18:11,619 - werkzeug - INFO - 127.0.0.1 - - [17/Nov/2025 21:18:11] "GET /api/session-ranges/NQ=F HTTP/1.1" 200 -
+2025-11-18 06:15:34,755 - werkzeug - INFO - 127.0.0.1 - - [18/Nov/2025 06:15:34] "GET /api/market-status/NQ=F HTTP/1.1" 200 -
+2025-11-18 06:15:34,757 - nasdaq_predictor.api.routes.price_routes - INFO - Fetching price for NQ=F
+2025-11-18 06:15:34,757 - nasdaq_predictor.api.routes.reference_levels_routes - INFO - Fetching reference levels for NQ=F
+2025-11-18 06:15:34,758 - nasdaq_predictor.data.fetcher_live - INFO - Fetching NQ=F 1m data (period: 7d)
+2025-11-18 06:15:34,758 - nasdaq_predictor.api.routes.session_ranges_routes - INFO - Fetching session ranges for NQ=F
+2025-11-18 06:15:34,760 - nasdaq_predictor.api.routes.fibonacci_routes - INFO - Fetching Fibonacci pivots for NQ=F
+2025-11-18 06:15:34,760 - nasdaq_predictor.api.routes.block_routes - INFO - Fetching hourly blocks for NQ=F
+2025-11-18 06:15:35,060 - nasdaq_predictor.data.fetcher_live - INFO - Successfully fetched 6904 bars for NQ=F 1m
+2025-11-18 06:15:35,061 - nasdaq_predictor.data.fetcher_live - INFO - Fetching NQ=F 1d data (period: max)
+2025-11-18 06:16:08,059 - nasdaq_predictor.data.fetcher_live - ERROR - Failed to get current price for NQ=F: Failed to perform, curl: (28) Operation timed out after 32994 milliseconds with 0 bytes received. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2025-11-18 06:16:08,059 - nasdaq_predictor.api.routes.reference_levels_routes - WARNING - Failed to get current price for NQ=F
+2025-11-18 06:16:08,060 - werkzeug - INFO - 127.0.0.1 - - [18/Nov/2025 06:16:08] "[35m[1mGET /api/reference-levels/NQ=F HTTP/1.1[0m" 503 -
+2025-11-18 06:16:08,114 - nasdaq_predictor.data.fetcher_live - WARNING - Detected 8 price jumps >10% for NQ=F 1d
+2025-11-18 06:16:08,114 - nasdaq_predictor.data.fetcher_live - INFO - Successfully fetched 6357 bars for NQ=F 1d
+2025-11-18 06:16:08,115 - werkzeug - INFO - 127.0.0.1 - - [18/Nov/2025 06:16:08] "GET /api/current-price/NQ=F HTTP/1.1" 200 -
+2025-11-18 06:16:08,429 - nasdaq_predictor.api.routes.block_routes - INFO - Fetching 1m data for NQ=F
+2025-11-18 06:16:08,429 - nasdaq_predictor.data.fetcher_live - INFO - Fetching NQ=F 1wk data (period: max)
+2025-11-18 06:16:08,432 - werkzeug - INFO - 127.0.0.1 - - [18/Nov/2025 06:16:08] "GET /api/hourly-blocks/NQ=F HTTP/1.1" 200 -
+2025-11-18 06:16:08,437 - nasdaq_predictor.data.fetcher_live - INFO - Fetching NQ=F 5m data (period: 60d)
+2025-11-18 06:16:08,873 - nasdaq_predictor.data.fetcher_live - WARNING - Detected 12 price jumps >10% for NQ=F 1wk
+2025-11-18 06:16:08,873 - nasdaq_predictor.data.fetcher_live - INFO - Successfully fetched 1314 bars for NQ=F 1wk
+2025-11-18 06:16:08,874 - werkzeug - INFO - 127.0.0.1 - - [18/Nov/2025 06:16:08] "GET /api/fibonacci-pivots/NQ=F HTTP/1.1" 200 -
+2025-11-18 06:16:09,084 - nasdaq_predictor.data.fetcher_live - INFO - Successfully fetched 13295 bars for NQ=F 5m
+2025-11-18 06:16:09,107 - werkzeug - INFO - 127.0.0.1 - - [18/Nov/2025 06:16:09] "GET /api/session-ranges/NQ=F HTTP/1.1" 200 -
+2025-11-18 06:19:43,194 - werkzeug - INFO - 127.0.0.1 - - [18/Nov/2025 06:19:43] "GET /api/market-status/NQ=F HTTP/1.1" 200 -
+2025-11-18 06:19:43,197 - nasdaq_predictor.api.routes.price_routes - INFO - Fetching price for NQ=F
+2025-11-18 06:19:43,198 - werkzeug - INFO - 127.0.0.1 - - [18/Nov/2025 06:19:43] "GET /api/current-price/NQ=F HTTP/1.1" 200 -
+2025-11-18 06:19:43,203 - nasdaq_predictor.api.routes.reference_levels_routes - INFO - Fetching reference levels for NQ=F
+2025-11-18 06:19:43,208 - nasdaq_predictor.api.routes.session_ranges_routes - INFO - Fetching session ranges for NQ=F
+2025-11-18 06:19:43,214 - nasdaq_predictor.api.routes.fibonacci_routes - INFO - Fetching Fibonacci pivots for NQ=F
+2025-11-18 06:19:43,218 - nasdaq_predictor.api.routes.block_routes - INFO - Fetching hourly blocks for NQ=F
+2025-11-18 06:19:43,488 - nasdaq_predictor.services.reference_level_service - INFO - Calculating reference levels for NQ=F at price 24704.75
+2025-11-18 06:19:43,489 - nasdaq_predictor.data.fetcher_live - INFO - Fetching NQ=F 1h data (period: 730d)
+2025-11-18 06:19:45,184 - nasdaq_predictor.data.fetcher_live - INFO - Successfully fetched 13687 bars for NQ=F 1h
+2025-11-18 06:19:45,186 - werkzeug - INFO - 127.0.0.1 - - [18/Nov/2025 06:19:45] "GET /api/reference-levels/NQ=F HTTP/1.1" 200 -
+2025-11-18 06:19:45,383 - werkzeug - INFO - 127.0.0.1 - - [18/Nov/2025 06:19:45] "GET /api/fibonacci-pivots/NQ=F HTTP/1.1" 200 -
+2025-11-18 06:19:45,395 - nasdaq_predictor.api.routes.block_routes - INFO - Fetching 1m data for NQ=F
+2025-11-18 06:19:45,397 - werkzeug - INFO - 127.0.0.1 - - [18/Nov/2025 06:19:45] "GET /api/hourly-blocks/NQ=F HTTP/1.1" 200 -
+2025-11-18 06:19:45,713 - werkzeug - INFO - 127.0.0.1 - - [18/Nov/2025 06:19:45] "GET /api/session-ranges/NQ=F HTTP/1.1" 200 -
+2025-11-18 07:38:58,357 - werkzeug - INFO - 127.0.0.1 - - [18/Nov/2025 07:38:58] "GET /api/market-status/NQ=F HTTP/1.1" 200 -
+2025-11-18 07:38:58,491 - nasdaq_predictor.api.routes.price_routes - INFO - Fetching price for NQ=F
+2025-11-18 07:38:58,491 - nasdaq_predictor.data.fetcher_live - INFO - Fetching NQ=F 1m data (period: 7d)
+2025-11-18 07:38:58,499 - nasdaq_predictor.api.routes.reference_levels_routes - INFO - Fetching reference levels for NQ=F
+2025-11-18 07:38:58,506 - nasdaq_predictor.data.fetcher_live - ERROR - Failed to get current price for NQ=F: Failed to perform, curl: (6) Could not resolve host: query2.finance.yahoo.com. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2025-11-18 07:38:58,508 - yfinance - ERROR - $NQ=F: possibly delisted; no price data found  (period=7d)
+2025-11-18 07:38:58,508 - nasdaq_predictor.api.routes.reference_levels_routes - WARNING - Failed to get current price for NQ=F
+2025-11-18 07:38:58,509 - nasdaq_predictor.data.fetcher_live - WARNING - Fetch attempt 1/3 failed: Empty DataFrame returned for NQ=F 1m
+2025-11-18 07:38:58,509 - werkzeug - INFO - 127.0.0.1 - - [18/Nov/2025 07:38:58] "[35m[1mGET /api/reference-levels/NQ=F HTTP/1.1[0m" 503 -
+2025-11-18 07:38:58,509 - nasdaq_predictor.data.fetcher_live - INFO - Retrying in 2s...
+2025-11-18 07:38:58,527 - nasdaq_predictor.api.routes.session_ranges_routes - INFO - Fetching session ranges for NQ=F
+2025-11-18 07:38:58,551 - nasdaq_predictor.api.routes.fibonacci_routes - INFO - Fetching Fibonacci pivots for NQ=F
+2025-11-18 07:38:58,564 - nasdaq_predictor.api.routes.block_routes - INFO - Fetching hourly blocks for NQ=F
+2025-11-18 07:38:59,575 - nasdaq_predictor.data.fetcher_live - ERROR - Failed to get current price for NQ=F: Failed to perform, curl: (6) Could not resolve host: query2.finance.yahoo.com. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2025-11-18 07:38:59,576 - nasdaq_predictor.api.routes.block_routes - WARNING - Failed to get current price for NQ=F
+2025-11-18 07:38:59,576 - nasdaq_predictor.data.fetcher_live - ERROR - Failed to get current price for NQ=F: Failed to perform, curl: (6) Could not resolve host: query2.finance.yahoo.com. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2025-11-18 07:38:59,576 - werkzeug - INFO - 127.0.0.1 - - [18/Nov/2025 07:38:59] "[35m[1mGET /api/hourly-blocks/NQ=F HTTP/1.1[0m" 503 -
+2025-11-18 07:38:59,576 - nasdaq_predictor.data.fetcher_live - ERROR - Failed to get current price for NQ=F: Failed to perform, curl: (6) Could not resolve host: query2.finance.yahoo.com. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.
+2025-11-18 07:38:59,576 - nasdaq_predictor.api.routes.fibonacci_routes - WARNING - Failed to get current price for NQ=F
+2025-11-18 07:38:59,576 - nasdaq_predictor.api.routes.session_ranges_routes - WARNING - Failed to get current price for NQ=F
+2025-11-18 07:38:59,576 - werkzeug - INFO - 127.0.0.1 - - [18/Nov/2025 07:38:59] "[35m[1mGET /api/fibonacci-pivots/NQ=F HTTP/1.1[0m" 503 -
+2025-11-18 07:38:59,576 - werkzeug - INFO - 127.0.0.1 - - [18/Nov/2025 07:38:59] "[35m[1mGET /api/session-ranges/NQ=F HTTP/1.1[0m" 503 -
+2025-11-18 07:39:01,363 - yfinance - ERROR - $NQ=F: possibly delisted; no price data found  (period=7d)
+2025-11-18 07:39:01,364 - nasdaq_predictor.data.fetcher_live - WARNING - Fetch attempt 2/3 failed: Empty DataFrame returned for NQ=F 1m
+2025-11-18 07:39:01,364 - nasdaq_predictor.data.fetcher_live - INFO - Retrying in 5s...
+2025-11-18 07:39:07,233 - nasdaq_predictor.data.fetcher_live - INFO - Successfully fetched 6988 bars for NQ=F 1m
+2025-11-18 07:39:07,234 - nasdaq_predictor.data.fetcher_live - INFO - Fetching NQ=F 1d data (period: max)
+2025-11-18 07:39:07,545 - nasdaq_predictor.data.fetcher_live - WARNING - Detected 8 price jumps >10% for NQ=F 1d
+2025-11-18 07:39:07,546 - nasdaq_predictor.data.fetcher_live - INFO - Successfully fetched 6357 bars for NQ=F 1d
+2025-11-18 07:39:07,550 - werkzeug - INFO - 127.0.0.1 - - [18/Nov/2025 07:39:07] "GET /api/current-price/NQ=F HTTP/1.1" 200 -
+2025-11-18 07:39:13,278 - werkzeug - INFO - 127.0.0.1 - - [18/Nov/2025 07:39:13] "GET /api/market-status/NQ=F HTTP/1.1" 200 -
+2025-11-18 07:39:13,279 - nasdaq_predictor.api.routes.price_routes - INFO - Fetching price for NQ=F
+2025-11-18 07:39:13,280 - nasdaq_predictor.api.routes.reference_levels_routes - INFO - Fetching reference levels for NQ=F
+2025-11-18 07:39:13,284 - werkzeug - INFO - 127.0.0.1 - - [18/Nov/2025 07:39:13] "GET /api/current-price/NQ=F HTTP/1.1" 200 -
+2025-11-18 07:39:13,285 - nasdaq_predictor.api.routes.session_ranges_routes - INFO - Fetching session ranges for NQ=F
+2025-11-18 07:39:13,286 - nasdaq_predictor.api.routes.fibonacci_routes - INFO - Fetching Fibonacci pivots for NQ=F
+2025-11-18 07:39:13,286 - nasdaq_predictor.api.routes.block_routes - INFO - Fetching hourly blocks for NQ=F
+2025-11-18 07:39:13,525 - nasdaq_predictor.services.reference_level_service - INFO - Calculating reference levels for NQ=F at price 24680.75
+2025-11-18 07:39:13,525 - nasdaq_predictor.data.fetcher_live - INFO - Fetching NQ=F 1h data (period: 730d)
+2025-11-18 07:39:13,825 - nasdaq_predictor.data.fetcher_live - INFO - Successfully fetched 13688 bars for NQ=F 1h
+2025-11-18 07:39:13,838 - werkzeug - INFO - 127.0.0.1 - - [18/Nov/2025 07:39:13] "GET /api/reference-levels/NQ=F HTTP/1.1" 200 -
+2025-11-18 07:39:14,522 - nasdaq_predictor.api.routes.block_routes - INFO - Fetching 1m data for NQ=F
+2025-11-18 07:39:14,522 - nasdaq_predictor.data.fetcher_live - INFO - Fetching NQ=F 1wk data (period: max)
+2025-11-18 07:39:14,529 - werkzeug - INFO - 127.0.0.1 - - [18/Nov/2025 07:39:14] "GET /api/hourly-blocks/NQ=F HTTP/1.1" 200 -
+2025-11-18 07:39:14,536 - nasdaq_predictor.data.fetcher_live - INFO - Fetching NQ=F 5m data (period: 60d)
+2025-11-18 07:39:14,636 - nasdaq_predictor.data.fetcher_live - WARNING - Detected 12 price jumps >10% for NQ=F 1wk
+2025-11-18 07:39:14,636 - nasdaq_predictor.data.fetcher_live - INFO - Successfully fetched 1314 bars for NQ=F 1wk
+2025-11-18 07:39:14,637 - werkzeug - INFO - 127.0.0.1 - - [18/Nov/2025 07:39:14] "GET /api/fibonacci-pivots/NQ=F HTTP/1.1" 200 -
+2025-11-18 07:39:15,871 - nasdaq_predictor.data.fetcher_live - INFO - Successfully fetched 13311 bars for NQ=F 5m
+2025-11-18 07:39:15,894 - werkzeug - INFO - 127.0.0.1 - - [18/Nov/2025 07:39:15] "GET /api/session-ranges/NQ=F HTTP/1.1" 200 -
+2025-11-18 09:07:59,324 - werkzeug - INFO - 127.0.0.1 - - [18/Nov/2025 09:07:59] "GET /api/market-status/NQ=F HTTP/1.1" 200 -
+2025-11-18 09:07:59,325 - nasdaq_predictor.api.routes.price_routes - INFO - Fetching price for NQ=F
+2025-11-18 09:07:59,326 - nasdaq_predictor.data.fetcher_live - INFO - Fetching NQ=F 1m data (period: 7d)
+2025-11-18 09:07:59,326 - nasdaq_predictor.api.routes.reference_levels_routes - INFO - Fetching reference levels for NQ=F
+2025-11-18 09:07:59,328 - nasdaq_predictor.api.routes.session_ranges_routes - INFO - Fetching session ranges for NQ=F
+2025-11-18 09:07:59,329 - nasdaq_predictor.api.routes.fibonacci_routes - INFO - Fetching Fibonacci pivots for NQ=F
+2025-11-18 09:07:59,329 - nasdaq_predictor.api.routes.block_routes - INFO - Fetching hourly blocks for NQ=F
+2025-11-18 09:08:00,139 - nasdaq_predictor.services.reference_level_service - INFO - Calculating reference levels for NQ=F at price 24801.75
+2025-11-18 09:08:00,139 - nasdaq_predictor.data.fetcher_live - INFO - Fetching NQ=F 1h data (period: 730d)
+2025-11-18 09:08:00,338 - nasdaq_predictor.data.fetcher_live - INFO - Successfully fetched 7078 bars for NQ=F 1m
+2025-11-18 09:08:00,339 - nasdaq_predictor.data.fetcher_live - INFO - Fetching NQ=F 1d data (period: max)
+2025-11-18 09:08:00,559 - nasdaq_predictor.data.fetcher_live - INFO - Fetching NQ=F 5m data (period: 60d)
+2025-11-18 09:08:00,717 - nasdaq_predictor.data.fetcher_live - INFO - Successfully fetched 13689 bars for NQ=F 1h
+2025-11-18 09:08:00,717 - nasdaq_predictor.data.fetcher_live - INFO - Fetching NQ=F 1d data (period: max)
+2025-11-18 09:08:00,815 - nasdaq_predictor.data.fetcher_live - INFO - Fetching NQ=F 1d data (period: max)
+2025-11-18 09:08:00,859 - nasdaq_predictor.api.routes.block_routes - INFO - Fetching 1m data for NQ=F
+2025-11-18 09:08:00,863 - werkzeug - INFO - 127.0.0.1 - - [18/Nov/2025 09:08:00] "GET /api/hourly-blocks/NQ=F HTTP/1.1" 200 -
+2025-11-18 09:08:01,735 - nasdaq_predictor.data.fetcher_live - WARNING - Detected 8 price jumps >10% for NQ=F 1d
+2025-11-18 09:08:01,736 - nasdaq_predictor.data.fetcher_live - INFO - Successfully fetched 6357 bars for NQ=F 1d
+2025-11-18 09:08:01,736 - werkzeug - INFO - 127.0.0.1 - - [18/Nov/2025 09:08:01] "GET /api/current-price/NQ=F HTTP/1.1" 200 -
+2025-11-18 09:08:01,904 - nasdaq_predictor.data.fetcher_live - WARNING - Detected 8 price jumps >10% for NQ=F 1d
+2025-11-18 09:08:01,905 - nasdaq_predictor.data.fetcher_live - INFO - Successfully fetched 6357 bars for NQ=F 1d
+2025-11-18 09:08:01,907 - werkzeug - INFO - 127.0.0.1 - - [18/Nov/2025 09:08:01] "GET /api/reference-levels/NQ=F HTTP/1.1" 200 -
+2025-11-18 09:08:01,968 - nasdaq_predictor.data.fetcher_live - INFO - Successfully fetched 13329 bars for NQ=F 5m
+2025-11-18 09:08:01,992 - werkzeug - INFO - 127.0.0.1 - - [18/Nov/2025 09:08:01] "GET /api/session-ranges/NQ=F HTTP/1.1" 200 -
+2025-11-18 09:08:02,005 - nasdaq_predictor.data.fetcher_live - WARNING - Detected 8 price jumps >10% for NQ=F 1d
+2025-11-18 09:08:02,006 - nasdaq_predictor.data.fetcher_live - INFO - Successfully fetched 6357 bars for NQ=F 1d
+2025-11-18 09:08:02,006 - nasdaq_predictor.data.fetcher_live - INFO - Fetching NQ=F 1wk data (period: max)
+2025-11-18 09:08:02,787 - nasdaq_predictor.data.fetcher_live - WARNING - Detected 12 price jumps >10% for NQ=F 1wk
+2025-11-18 09:08:02,788 - nasdaq_predictor.data.fetcher_live - INFO - Successfully fetched 1314 bars for NQ=F 1wk
+2025-11-18 09:08:02,789 - werkzeug - INFO - 127.0.0.1 - - [18/Nov/2025 09:08:02] "GET /api/fibonacci-pivots/NQ=F HTTP/1.1" 200 -
+2025-11-18 21:33:57,260 - werkzeug - INFO - 127.0.0.1 - - [18/Nov/2025 21:33:57] "GET /api/market-status/NQ=F HTTP/1.1" 200 -
+2025-11-18 21:33:57,262 - nasdaq_predictor.api.routes.price_routes - INFO - Fetching price for NQ=F
+2025-11-18 21:33:57,262 - nasdaq_predictor.api.routes.reference_levels_routes - INFO - Fetching reference levels for NQ=F
+2025-11-18 21:33:57,263 - nasdaq_predictor.data.fetcher_live - INFO - Fetching NQ=F 1m data (period: 7d)
+2025-11-18 21:33:57,265 - nasdaq_predictor.api.routes.session_ranges_routes - INFO - Fetching session ranges for NQ=F
+2025-11-18 21:33:57,265 - nasdaq_predictor.api.routes.fibonacci_routes - INFO - Fetching Fibonacci pivots for NQ=F
+2025-11-18 21:33:57,265 - nasdaq_predictor.api.routes.block_routes - INFO - Fetching hourly blocks for NQ=F
+2025-11-18 21:33:57,647 - nasdaq_predictor.data.fetcher_live - INFO - Successfully fetched 7821 bars for NQ=F 1m
+2025-11-18 21:33:57,647 - nasdaq_predictor.data.fetcher_live - INFO - Fetching NQ=F 1d data (period: max)
+2025-11-18 21:33:57,651 - nasdaq_predictor.services.reference_level_service - INFO - Calculating reference levels for NQ=F at price 24541.25
+2025-11-18 21:33:57,651 - nasdaq_predictor.data.fetcher_live - INFO - Fetching NQ=F 1h data (period: 730d)
+2025-11-18 21:33:58,857 - nasdaq_predictor.data.fetcher_live - INFO - Fetching NQ=F 5m data (period: 60d)
+2025-11-18 21:33:58,861 - nasdaq_predictor.data.fetcher_live - WARNING - Detected 8 price jumps >10% for NQ=F 1d
+2025-11-18 21:33:58,862 - nasdaq_predictor.data.fetcher_live - INFO - Successfully fetched 6357 bars for NQ=F 1d
+2025-11-18 21:33:58,862 - werkzeug - INFO - 127.0.0.1 - - [18/Nov/2025 21:33:58] "GET /api/current-price/NQ=F HTTP/1.1" 200 -
+2025-11-18 21:33:59,305 - nasdaq_predictor.data.fetcher_live - INFO - Fetching NQ=F 1wk data (period: max)
+2025-11-18 21:33:59,306 - nasdaq_predictor.api.routes.block_routes - INFO - Fetching 1m data for NQ=F
+2025-11-18 21:33:59,334 - werkzeug - INFO - 127.0.0.1 - - [18/Nov/2025 21:33:59] "GET /api/hourly-blocks/NQ=F HTTP/1.1" 200 -
+2025-11-18 21:33:59,346 - nasdaq_predictor.data.fetcher_live - INFO - Successfully fetched 13702 bars for NQ=F 1h
+2025-11-18 21:33:59,348 - werkzeug - INFO - 127.0.0.1 - - [18/Nov/2025 21:33:59] "GET /api/reference-levels/NQ=F HTTP/1.1" 200 -
+2025-11-18 21:34:00,391 - nasdaq_predictor.data.fetcher_live - INFO - Successfully fetched 13478 bars for NQ=F 5m
+2025-11-18 21:34:00,418 - werkzeug - INFO - 127.0.0.1 - - [18/Nov/2025 21:34:00] "GET /api/session-ranges/NQ=F HTTP/1.1" 200 -
+2025-11-18 21:34:00,446 - nasdaq_predictor.data.fetcher_live - WARNING - Detected 12 price jumps >10% for NQ=F 1wk
+2025-11-18 21:34:00,447 - nasdaq_predictor.data.fetcher_live - INFO - Successfully fetched 1314 bars for NQ=F 1wk
+2025-11-18 21:34:00,447 - werkzeug - INFO - 127.0.0.1 - - [18/Nov/2025 21:34:00] "GET /api/fibonacci-pivots/NQ=F HTTP/1.1" 200 -
+2025-11-18 21:41:51,536 - werkzeug - INFO - 127.0.0.1 - - [18/Nov/2025 21:41:51] "GET /api/market-status/NQ=F HTTP/1.1" 200 -
+2025-11-18 21:41:51,538 - nasdaq_predictor.api.routes.price_routes - INFO - Fetching price for NQ=F
+2025-11-18 21:41:51,538 - nasdaq_predictor.api.routes.reference_levels_routes - INFO - Fetching reference levels for NQ=F
+2025-11-18 21:41:51,540 - nasdaq_predictor.api.routes.session_ranges_routes - INFO - Fetching session ranges for NQ=F
+2025-11-18 21:41:51,544 - werkzeug - INFO - 127.0.0.1 - - [18/Nov/2025 21:41:51] "GET /api/current-price/NQ=F HTTP/1.1" 200 -
+2025-11-18 21:41:51,546 - nasdaq_predictor.api.routes.fibonacci_routes - INFO - Fetching Fibonacci pivots for NQ=F
+2025-11-18 21:41:51,547 - nasdaq_predictor.api.routes.block_routes - INFO - Fetching hourly blocks for NQ=F
+2025-11-18 21:41:51,880 - nasdaq_predictor.services.reference_level_service - INFO - Calculating reference levels for NQ=F at price 24545.75
+2025-11-18 21:41:51,890 - werkzeug - INFO - 127.0.0.1 - - [18/Nov/2025 21:41:51] "GET /api/reference-levels/NQ=F HTTP/1.1" 200 -
+2025-11-18 21:41:52,739 - nasdaq_predictor.api.routes.block_routes - INFO - Fetching 1m data for NQ=F
+2025-11-18 21:41:52,744 - werkzeug - INFO - 127.0.0.1 - - [18/Nov/2025 21:41:52] "GET /api/hourly-blocks/NQ=F HTTP/1.1" 200 -
+2025-11-18 21:41:52,877 - werkzeug - INFO - 127.0.0.1 - - [18/Nov/2025 21:41:52] "GET /api/fibonacci-pivots/NQ=F HTTP/1.1" 200 -
+2025-11-18 21:41:52,886 - werkzeug - INFO - 127.0.0.1 - - [18/Nov/2025 21:41:52] "GET /api/session-ranges/NQ=F HTTP/1.1" 200 -
+2025-11-19 21:07:57,497 - werkzeug - INFO - 127.0.0.1 - - [19/Nov/2025 21:07:57] "[33mGET /apple-touch-icon-precomposed.png HTTP/1.1[0m" 404 -
+2025-11-19 21:07:57,498 - werkzeug - INFO - 127.0.0.1 - - [19/Nov/2025 21:07:57] "GET / HTTP/1.1" 200 -
+2025-11-19 21:07:57,499 - werkzeug - INFO - 127.0.0.1 - - [19/Nov/2025 21:07:57] "[33mGET /apple-touch-icon.png HTTP/1.1[0m" 404 -
+2025-11-19 21:07:57,500 - werkzeug - INFO - 127.0.0.1 - - [19/Nov/2025 21:07:57] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-11-20 20:52:45,214 - werkzeug - INFO - 127.0.0.1 - - [20/Nov/2025 20:52:45] "GET / HTTP/1.1" 200 -
+2025-11-20 20:52:45,215 - werkzeug - INFO - 127.0.0.1 - - [20/Nov/2025 20:52:45] "[33mGET /apple-touch-icon-precomposed.png HTTP/1.1[0m" 404 -
+2025-11-20 20:52:45,216 - werkzeug - INFO - 127.0.0.1 - - [20/Nov/2025 20:52:45] "[33mGET /apple-touch-icon.png HTTP/1.1[0m" 404 -
+2025-11-20 20:52:45,218 - werkzeug - INFO - 127.0.0.1 - - [20/Nov/2025 20:52:45] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-11-21 13:47:19,276 - werkzeug - INFO - 127.0.0.1 - - [21/Nov/2025 13:47:19] "GET / HTTP/1.1" 200 -
+2025-11-21 13:47:19,323 - werkzeug - INFO - 127.0.0.1 - - [21/Nov/2025 13:47:19] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-11-21 13:47:30,295 - werkzeug - INFO - 127.0.0.1 - - [21/Nov/2025 13:47:30] "GET / HTTP/1.1" 200 -
+2025-11-22 08:42:09,624 - werkzeug - INFO - 127.0.0.1 - - [22/Nov/2025 08:42:09] "[33mGET /apple-touch-icon-precomposed.png HTTP/1.1[0m" 404 -
+2025-11-22 08:42:09,627 - werkzeug - INFO - 127.0.0.1 - - [22/Nov/2025 08:42:09] "GET / HTTP/1.1" 200 -
+2025-11-22 08:42:09,629 - werkzeug - INFO - 127.0.0.1 - - [22/Nov/2025 08:42:09] "[33mGET /apple-touch-icon.png HTTP/1.1[0m" 404 -
+2025-11-22 08:42:09,630 - werkzeug - INFO - 127.0.0.1 - - [22/Nov/2025 08:42:09] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-11-22 09:21:47,687 - werkzeug - INFO - 127.0.0.1 - - [22/Nov/2025 09:21:47] "GET / HTTP/1.1" 200 -
+2025-11-22 09:21:47,709 - werkzeug - INFO - 127.0.0.1 - - [22/Nov/2025 09:21:47] "[33mGET /apple-touch-icon-precomposed.png HTTP/1.1[0m" 404 -
+2025-11-22 09:21:47,727 - werkzeug - INFO - 127.0.0.1 - - [22/Nov/2025 09:21:47] "[33mGET /apple-touch-icon-precomposed.png HTTP/1.1[0m" 404 -
+2025-11-22 09:21:47,729 - werkzeug - INFO - 127.0.0.1 - - [22/Nov/2025 09:21:47] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-11-22 09:21:47,739 - werkzeug - INFO - 127.0.0.1 - - [22/Nov/2025 09:21:47] "[33mGET /apple-touch-icon.png HTTP/1.1[0m" 404 -
+2025-11-22 09:21:47,741 - werkzeug - INFO - 127.0.0.1 - - [22/Nov/2025 09:21:47] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-11-22 09:21:47,846 - werkzeug - INFO - 127.0.0.1 - - [22/Nov/2025 09:21:47] "[33mGET /apple-touch-icon.png HTTP/1.1[0m" 404 -
+2025-11-22 09:21:49,277 - werkzeug - INFO - 127.0.0.1 - - [22/Nov/2025 09:21:49] "GET / HTTP/1.1" 200 -
+2025-11-22 09:21:49,295 - werkzeug - INFO - 127.0.0.1 - - [22/Nov/2025 09:21:49] "[33mGET /apple-touch-icon-precomposed.png HTTP/1.1[0m" 404 -
+2025-11-22 09:21:49,370 - werkzeug - INFO - 127.0.0.1 - - [22/Nov/2025 09:21:49] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-11-22 09:21:49,388 - werkzeug - INFO - 127.0.0.1 - - [22/Nov/2025 09:21:49] "[33mGET /apple-touch-icon.png HTTP/1.1[0m" 404 -
+2025-11-23 09:14:21,456 - werkzeug - INFO - 127.0.0.1 - - [23/Nov/2025 09:14:21] "GET / HTTP/1.1" 200 -
+2025-11-23 09:14:21,486 - werkzeug - INFO - 127.0.0.1 - - [23/Nov/2025 09:14:21] "[33mGET /apple-touch-icon-precomposed.png HTTP/1.1[0m" 404 -
+2025-11-23 09:14:21,487 - werkzeug - INFO - 127.0.0.1 - - [23/Nov/2025 09:14:21] "[33mGET /apple-touch-icon.png HTTP/1.1[0m" 404 -
+2025-11-23 09:14:21,487 - werkzeug - INFO - 127.0.0.1 - - [23/Nov/2025 09:14:21] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-11-23 15:00:40,503 - werkzeug - INFO - 127.0.0.1 - - [23/Nov/2025 15:00:40] "GET / HTTP/1.1" 200 -
+2025-11-23 15:00:40,527 - werkzeug - INFO - 127.0.0.1 - - [23/Nov/2025 15:00:40] "[33mGET /apple-touch-icon-precomposed.png HTTP/1.1[0m" 404 -
+2025-11-23 15:00:40,529 - werkzeug - INFO - 127.0.0.1 - - [23/Nov/2025 15:00:40] "[33mGET /apple-touch-icon.png HTTP/1.1[0m" 404 -
+2025-11-23 15:00:40,531 - werkzeug - INFO - 127.0.0.1 - - [23/Nov/2025 15:00:40] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -

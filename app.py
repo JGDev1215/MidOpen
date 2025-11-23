@@ -14,6 +14,10 @@ from nasdaq_predictor.api.routes.reference_levels_routes import reference_levels
 from nasdaq_predictor.api.routes.session_ranges_routes import session_ranges_bp
 from nasdaq_predictor.api.routes.fibonacci_routes import fibonacci_bp
 from nasdaq_predictor.api.routes.block_routes import block_bp
+from nasdaq_predictor.api.routes.refresh_status_routes import refresh_status_bp
+
+# Import services
+from nasdaq_predictor.services.refresh_status_service import RefreshStatusService
 
 # Configure logging
 logging.basicConfig(
@@ -26,6 +30,9 @@ logger = logging.getLogger(__name__)
 app = Flask(__name__)
 CORS(app)  # Enable CORS for all routes
 
+# Initialize services
+RefreshStatusService.initialize()
+
 # Register blueprints
 app.register_blueprint(market_status_bp)
 app.register_blueprint(price_bp)
@@ -33,6 +40,7 @@ app.register_blueprint(reference_levels_bp)
 app.register_blueprint(session_ranges_bp)
 app.register_blueprint(fibonacci_bp)
 app.register_blueprint(block_bp)
+app.register_blueprint(refresh_status_bp)
 
 
 @app.route('/', methods=['GET'])
@@ -74,11 +82,15 @@ def index():
                 "GET /api/hourly-blocks/<ticker>": "7-block hourly segmentation",
                 "GET /api/hourly-blocks/<ticker>/current-block": "Current block only",
                 "GET /api/hourly-blocks/<ticker>/summary": "Progress bar summary"
+            },
+            "refresh_status": {
+                "GET /api/refresh-status": "Current countdown timer status with color indicators",
+                "POST /api/refresh-status/reset": "Reset refresh timer (for testing)"
             }
         },
         "default_ticker": "NQ=F",
         "market_hours": "Sunday 6 PM ET - Friday 5 PM ET",
-        "refresh_interval": "75 seconds"
+        "refresh_interval": "602 seconds (10 minutes 2 seconds)"
     }), 200
 
 

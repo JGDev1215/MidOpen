@@ -89,6 +89,60 @@
                 </div>
             </section>
 
+            <!-- 1.5. Data Freshness Countdown Timer -->
+            <section id="data-freshness-card" class="dashboard-card data-freshness-card" aria-label="Data Freshness Countdown Timer">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="fas fa-sync-alt me-2"></i>Data Freshness
+                    </h3>
+                </div>
+                <div class="card-body d-flex flex-column">
+                    <!-- Traffic Light Status Indicator -->
+                    <div class="freshness-status-wrapper mb-4">
+                        <div id="freshness-light" class="traffic-light" aria-live="polite" aria-label="Data freshness status">
+                            <div id="freshness-indicator" class="light-indicator status-green"></div>
+                        </div>
+                        <div class="freshness-status-text ms-3">
+                            <div id="freshness-status-label" class="status-label">Fresh Data</div>
+                            <div id="freshness-status-name" class="status-name text-muted small">Green: Data is fresh</div>
+                        </div>
+                    </div>
+
+                    <!-- Countdown Timer Display (MM:SS) -->
+                    <div class="countdown-timer-wrapper mb-4 text-center">
+                        <div id="countdown-timer" class="countdown-display" aria-label="Countdown to next data refresh">10:02</div>
+                        <div class="countdown-subtext text-muted small">until next refresh</div>
+                    </div>
+
+                    <!-- Progress Bar -->
+                    <div class="freshness-progress-wrapper mb-3">
+                        <div class="progress" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" aria-label="Data freshness progress">
+                            <div id="freshness-progress-bar" class="progress-bar progress-fill-green" style="width: 0%"></div>
+                        </div>
+                        <div class="progress-labels mt-2">
+                            <small id="progress-percent" class="text-muted">0% elapsed</small>
+                        </div>
+                    </div>
+
+                    <!-- Timestamps -->
+                    <div class="freshness-timestamps text-center">
+                        <div class="timestamp-item mb-2">
+                            <div class="timestamp-label small text-muted">Last Refresh</div>
+                            <div id="last-refresh-display" class="timestamp-value small">--:--:-- ET</div>
+                        </div>
+                        <div class="timestamp-item">
+                            <div class="timestamp-label small text-muted">Next Refresh</div>
+                            <div id="next-refresh-display" class="timestamp-value small">--:--:-- ET</div>
+                        </div>
+                    </div>
+
+                    <!-- Manual Refresh Button (Optional) -->
+                    <button id="manual-refresh-btn" class="btn btn-sm btn-outline-secondary mt-3 w-100" title="Manually trigger refresh now">
+                        <i class="fas fa-redo-alt me-1"></i>Refresh Now
+                    </button>
+                </div>
+            </section>
+
             <!-- 2. Current Price Display (Top Center) -->
             <section id="price-card" class="dashboard-card price-card" aria-label="Current Price Display">
                 <div class="card-header">
@@ -264,7 +318,7 @@
         <!-- Footer -->
         <footer class="dashboard-footer text-center py-3 mt-4" aria-label="Footer">
             <small class="text-muted">
-                Data refreshes every 75 seconds. 
+                Data refreshes every 602 seconds (10 minutes 2 seconds).
                 <span id="last-refresh-time" aria-label="Last refresh time">Never</span>
             </small>
         </footer>

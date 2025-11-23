@@ -30,12 +30,26 @@ logger = logging.getLogger(__name__)
 # ============================================================================
 # CONFIGURATION: Switch between real yfinance data and mock data
 # ============================================================================
-USE_MOCK_DATA = True  # Set to False to use real yfinance (when Yahoo unblocked)
+USE_MOCK_DATA = False  # Set to False to use real yfinance (when Yahoo unblocked)
 # ============================================================================
 
-# Rate limiting
+# ============================================================================
+# CACHE STRATEGY: 602-second (10m 2s) dashboard refresh cycle
+# ============================================================================
 RATE_LIMIT_DELAY = 1.0  # seconds between requests
-CACHE_TTL = 95  # Cache for 95 seconds (dashboard update interval)
+DEFAULT_CACHE_TTL = 580  # 9m 40s - expires just before 602s dashboard refresh
+
+# Differential cache TTL by interval type
+# Strategy: Faster-changing intervals refresh every cycle, slower intervals cached longer
+INTERVAL_CACHE_TTL = {
+    '1m': 580,      # 9m 40s - Intraday data, refresh every dashboard cycle
+    '5m': 580,      # 9m 40s - Session ranges, refresh every cycle
+    '15m': 580,     # 9m 40s - Reference levels, refresh every cycle
+    '30m': 580,     # 9m 40s - Hourly verification, refresh every cycle
+    '1h': 3540,     # 59 minutes - Hourly data changes once/hour
+    '1d': 14340,    # 4 hours - Daily pivots stable intraday
+    '1wk': 86340    # 24 hours - Weekly pivots very stable
+}
 
 # Cache directory for persistence
 CACHE_DIR = Path(__file__).parent.parent.parent / '.cache'
@@ -64,33 +78,43 @@ class RateLimiter:
 
 
 class DataCache:
-    """In-memory cache with optional persistent fallback storage"""
+    """In-memory cache with per-interval TTL support and fallback storage"""
 
-    def __init__(self, ttl_seconds: int = 95):
-        self.cache = {}  # {key: (timestamp, dataframe)}
+    def __init__(self, default_ttl: int = 580):
+        self.cache = {}  # {key: (timestamp, dataframe, ttl)}
         self.fallback = {}  # {key: dataframe} - last successful fetch
-        self.ttl = ttl_seconds
+        self.default_ttl = default_ttl
 
-    def get(self, key: str) -> Optional[pd.DataFrame]:
-        """Get data from cache if not expired"""
+    def get(self, key: str, interval: str = None) -> Optional[pd.DataFrame]:
+        """Get data from cache if not expired (with interval-specific TTL)"""
         if key not in self.cache:
             return None
 
-        timestamp, data = self.cache[key]
+        timestamp, data, cached_ttl = self.cache[key]
+
+        # Use cached TTL (stored with data) or determine from interval
+        ttl = cached_ttl if cached_ttl else self._get_ttl_for_interval(interval)
         age = time.time() - timestamp
 
-        if age < self.ttl:
-            logger.debug(f"Cache HIT for {key} (age: {age:.1f}s / TTL: {self.ttl}s)")
+        if age < ttl:
+            logger.debug(f"Cache HIT for {key} (age: {age:.1f}s / TTL: {ttl}s)")
             return data.copy()
 
-        logger.debug(f"Cache EXPIRED for {key} (age: {age:.1f}s / TTL: {self.ttl}s)")
+        logger.debug(f"Cache EXPIRED for {key} (age: {age:.1f}s / TTL: {ttl}s)")
         return None
 
-    def set(self, key: str, data: pd.DataFrame) -> None:
-        """Store data in cache and update fallback"""
-        self.cache[key] = (time.time(), data.copy())
+    def set(self, key: str, data: pd.DataFrame, interval: str = None) -> None:
+        """Store data in cache with interval-appropriate TTL"""
+        ttl = self._get_ttl_for_interval(interval)
+        self.cache[key] = (time.time(), data.copy(), ttl)
         self.fallback[key] = data.copy()  # Always keep last successful fetch
-        logger.debug(f"Cache SET for {key} (size: {len(data)} bars)")
+        logger.debug(f"Cache SET for {key} (size: {len(data)} bars, TTL: {ttl}s)")
+
+    def _get_ttl_for_interval(self, interval: str) -> int:
+        """Get appropriate TTL for interval type"""
+        if interval and interval in INTERVAL_CACHE_TTL:
+            return INTERVAL_CACHE_TTL[interval]
+        return self.default_ttl
 
     def get_fallback(self, key: str) -> Optional[pd.DataFrame]:
         """Get last successfully fetched data (even if API fails now)"""
@@ -102,15 +126,19 @@ class DataCache:
     def clear_expired(self) -> None:
         """Remove expired entries to save memory"""
         now = time.time()
-        expired_keys = [
-            key for key, (timestamp, _) in self.cache.items()
-            if now - timestamp > self.ttl * 2  # Keep for 2x TTL for flexibility
-        ]
+        expired_keys = []
+
+        for key, (timestamp, _, ttl) in self.cache.items():
+            # Clear entries that are 2x their TTL old
+            if now - timestamp > ttl * 2:
+                expired_keys.append(key)
+
         for key in expired_keys:
             del self.cache[key]
+            logger.debug(f"Cleared expired cache entry: {key}")
 
 
-cache = DataCache(ttl_seconds=CACHE_TTL)
+cache = DataCache(default_ttl=DEFAULT_CACHE_TTL)
 rate_limiter = RateLimiter(min_interval=RATE_LIMIT_DELAY)
 
 
@@ -216,11 +244,8 @@ class LiveDataFetcher:
                 # Apply rate limiting
                 rate_limiter.wait(key=ticker)
 
-                # Create fresh session for each attempt (helps with API 401 issues)
-                session = cls._create_session()
-
-                # Fetch data
-                ticker_obj = yf.Ticker(ticker, session=session)
+                # Fetch data - Don't pass session, let yfinance handle it with curl_cffi
+                ticker_obj = yf.Ticker(ticker)
                 df = ticker_obj.history(period=period, interval=interval)
 
                 if df.empty:
@@ -358,8 +383,8 @@ class LiveDataFetcher:
         try:
             rate_limiter.wait(key=f"{ticker}_price")
 
-            session = cls._create_session()
-            ticker_obj = yf.Ticker(ticker, session=session)
+            # Don't pass session, let yfinance handle it with curl_cffi
+            ticker_obj = yf.Ticker(ticker)
             current_price = ticker_obj.info.get('currentPrice') or ticker_obj.info.get('regularMarketPrice')
 
             if current_price is None:
