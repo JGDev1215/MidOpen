@@ -39,7 +39,7 @@ with st.sidebar:
     st.header("🎯 Configuration")
     selected_instrument = st.selectbox(
         "Select Instrument",
-        get_all_instruments(),
+        ["US100", "UK100", "US500"],
         help="Choose which instrument to configure"
     )
 
@@ -148,6 +148,18 @@ st.dataframe(weights_df, use_container_width=True, hide_index=True)
 
 st.divider()
 
+# Equalize weights button
+col_equalize = st.columns(1)
+with col_equalize[0]:
+    if st.button("🎯 Equalize All Weights to 1.0", use_container_width=True, help="Distribute all weights equally so they sum to 1.0"):
+        equal_weight = 1.0 / len(new_weights)
+        for level_name in new_weights:
+            new_weights[level_name] = equal_weight
+        st.success(f"Weights equalized! Each level now has weight of {equal_weight:.6f}")
+        st.rerun()
+
+st.divider()
+
 # Save or discard changes
 col1, col2, col3 = st.columns([1, 1, 2])
 
@@ -157,21 +169,30 @@ with col1:
             st.error(f"❌ Cannot save: {validation_message}")
         else:
             try:
-                # Save weights first
-                set_weights(selected_instrument, new_weights)
-
-                # Log the change
-                log_weight_change(
-                    instrument=selected_instrument,
-                    old_weights=current_weights,
-                    new_weights=new_weights,
-                    user="admin",
-                    reason="Manual adjustment via Admin Settings"
+                # Check if there are actual changes
+                has_changes = any(
+                    abs(new_weights.get(k, 0.0) - current_weights.get(k, 0.0)) > 0.00001
+                    for k in set(list(new_weights.keys()) + list(current_weights.keys()))
                 )
 
-                st.success(f"✅ Weights for {selected_instrument} updated successfully!")
-                st.info("Changes logged for audit trail")
-                st.rerun()
+                if has_changes:
+                    # Save weights first
+                    set_weights(selected_instrument, new_weights)
+
+                    # Log the change only if saved
+                    log_weight_change(
+                        instrument=selected_instrument,
+                        old_weights=current_weights,
+                        new_weights=new_weights,
+                        user="admin",
+                        reason="Manual adjustment via Admin Settings"
+                    )
+
+                    st.success(f"✅ Weights for {selected_instrument} updated successfully!")
+                    st.info("Changes logged for audit trail")
+                    st.rerun()
+                else:
+                    st.info("No changes detected - weights are identical to current values")
             except Exception as e:
                 st.error(f"❌ Error saving weights: {str(e)}")
 
@@ -181,7 +202,7 @@ with col2:
         st.rerun()
 
 with col3:
-    st.info("💡 Changes are logged for audit purposes regardless of save/discard")
+    st.info("💡 Only saved changes are logged for audit purposes")
 
 st.divider()
 
@@ -236,30 +257,33 @@ col1, col2, col3, col4 = st.columns(4)
 with col1:
     st.metric(
         label="Total Adjustments",
-        value=stats['total_changes'],
+        value=stats.get('total_changes', 0),
         delta="All time"
     )
 
 with col2:
+    most_adjusted_level = stats.get('most_adjusted_level')
+    most_adjusted_count = stats.get('most_adjusted_count', 0)
     st.metric(
         label="Most Adjusted Level",
-        value=stats['most_adjusted_level'][:20] if stats['most_adjusted_level'] else "N/A",
-        delta=f"{stats['most_adjusted_count']} times"
+        value=most_adjusted_level[:20] if most_adjusted_level else "N/A",
+        delta=f"{most_adjusted_count} times"
     )
 
 with col3:
     st.metric(
         label="Unique Levels Modified",
-        value=stats['unique_levels_modified'],
+        value=stats.get('unique_levels_modified', 0),
         delta=f"of {len(weight_names)} total"
     )
 
 with col4:
-    if stats['last_change']:
+    last_change = stats.get('last_change')
+    if last_change:
         st.metric(
             label="Last Change",
-            value=stats['last_change'][:10],
-            delta=stats['last_change'][11:19]
+            value=last_change[:10],
+            delta=last_change[11:19]
         )
     else:
         st.metric(label="Last Change", value="Never")
