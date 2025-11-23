@@ -153,9 +153,21 @@ col_equalize = st.columns(1)
 with col_equalize[0]:
     if st.button("🎯 Equalize All Weights to 1.0", use_container_width=True, help="Distribute all weights equally so they sum to 1.0"):
         equal_weight = 1.0 / len(new_weights)
-        for level_name in new_weights:
-            new_weights[level_name] = equal_weight
-        st.success(f"Weights equalized! Each level now has weight of {equal_weight:.6f}")
+        equalized_weights = {level_name: equal_weight for level_name in new_weights}
+
+        # Save equalized weights
+        set_weights(selected_instrument, equalized_weights)
+
+        # Log the change
+        log_weight_change(
+            instrument=selected_instrument,
+            old_weights=current_weights,
+            new_weights=equalized_weights,
+            user="admin",
+            reason="Automatic equalization via Equalize button"
+        )
+
+        st.success(f"✅ Weights equalized and saved! Each level now has weight of {equal_weight:.6f}")
         st.rerun()
 
 st.divider()
