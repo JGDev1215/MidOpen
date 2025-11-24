@@ -221,15 +221,34 @@ class PredictionEngine:
         levels_dict['2h_open'] = opens.iloc[max(0, len(opens) - 120)] if len(opens) > 120 else opens.iloc[0]
         levels_dict['4h_open'] = opens.iloc[max(0, len(opens) - 240)] if len(opens) > 240 else opens.iloc[0]
 
-        # NY/London/Chicago opens (9:30 AM for US, 8:00 AM for UK)
+        # NY/London/Chicago opens (9:30 AM ET for US100, 8:30 AM CT for ES)
         if self.instrument in ['US100', 'ES']:
-            ny_hour = 9 if current_time.hour >= 9 else 9
-            levels_dict['ny_open'] = opens.iloc[-1]  # Approximate
-            levels_dict['ny_preopen'] = opens.iloc[-1]  # Approximate
-            levels_dict['chicago_open'] = opens.iloc[-1] if self.instrument == 'ES' else None
-            levels_dict['chicago_preopen'] = opens.iloc[-1] if self.instrument == 'ES' else None
+            if self.instrument == 'US100':
+                # NY market opens at 9:30 AM ET
+                session_start = today_start.replace(hour=9, minute=30)
+                preopen_start = today_start.replace(hour=4)  # Pre-market starts at 4 AM ET
+                session_data = df[(df.index >= session_start) & (df.index < today_start.replace(hour=16))]
+                preopen_data = df[(df.index >= preopen_start) & (df.index < session_start)]
+
+                levels_dict['ny_open'] = session_data['open'].iloc[0] if len(session_data) > 0 else opens.iloc[-1]
+                levels_dict['ny_preopen'] = preopen_data['open'].iloc[0] if len(preopen_data) > 0 else opens.iloc[-1]
+            else:  # ES - Chicago market
+                # ES (Chicago) opens at 8:30 AM CT (which is 9:30 AM ET)
+                chicago_tz = pytz.timezone('America/Chicago')
+                current_time_chicago = current_time.astimezone(chicago_tz)
+                session_start = chicago_tz.localize(datetime.combine(current_time_chicago.date(), datetime.strptime('08:30', '%H:%M').time()))
+                preopen_start = chicago_tz.localize(datetime.combine(current_time_chicago.date(), datetime.strptime('17:00', '%H:%M').time())) - timedelta(days=1)  # Prev day 5 PM CT
+
+                session_data = df[(df.index >= session_start) & (df.index < session_start.replace(hour=15))]
+                preopen_data = df[(df.index >= preopen_start) & (df.index < session_start)]
+
+                levels_dict['chicago_open'] = session_data['open'].iloc[0] if len(session_data) > 0 else opens.iloc[-1]
+                levels_dict['chicago_preopen'] = preopen_data['open'].iloc[0] if len(preopen_data) > 0 else opens.iloc[-1]
         else:
-            levels_dict['london_open'] = opens.iloc[-1]
+            # London market opens at 8 AM GMT
+            session_start = today_start.replace(hour=8)
+            session_data = df[df.index >= session_start]
+            levels_dict['london_open'] = session_data['open'].iloc[0] if len(session_data) > 0 else opens.iloc[-1]
 
         # Previous day high/low
         yesterday_start = today_start - timedelta(days=1)
@@ -277,10 +296,19 @@ class PredictionEngine:
         else:
             levels_dict['monthly_open'] = opens.iloc[-1]
 
-        # Asian range (20:00 previous day - 00:00 current day)
-        asian_start = self.tz.localize(datetime.combine(
-            current_date - timedelta(days=1), datetime.strptime('20:00', '%H:%M').time()
-        ))
+        # Asian range (20:00 previous day - 00:00 current day, in instrument timezone)
+        try:
+            asian_start = self.tz.localize(datetime.combine(
+                current_date - timedelta(days=1),
+                datetime.min.time().replace(hour=20, minute=0, second=0, microsecond=0)
+            ))
+        except:
+            # Handle ambiguous times during DST transitions
+            asian_start = self.tz.localize(datetime.combine(
+                current_date - timedelta(days=1),
+                datetime.min.time().replace(hour=20, minute=0, second=0, microsecond=0)
+            ), is_dst=False)
+
         asian_end = today_start
         asian_data = df[(df.index >= asian_start) & (df.index < asian_end)]
 
@@ -303,22 +331,32 @@ class PredictionEngine:
             levels_dict['london_range_high'] = highs.iloc[-1]
             levels_dict['london_range_low'] = lows.iloc[-1]
 
-        # NY range (09:30 AM - 14:00 ET)
-        ny_start = today_start.replace(hour=9, minute=30)
-        ny_end = today_start.replace(hour=14)
-        ny_data = df[(df.index >= ny_start) & (df.index < ny_end)]
+        # Trading range - NY for US100, Chicago for ES
+        if self.instrument == 'US100':
+            # NY range (09:30 AM - 14:00 ET)
+            range_start = today_start.replace(hour=9, minute=30)
+            range_end = today_start.replace(hour=14)
+            range_data = df[(df.index >= range_start) & (df.index < range_end)]
 
-        if len(ny_data) > 0:
-            ny_high = ny_data['high'].max()
-            ny_low = ny_data['low'].min()
-            levels_dict['ny_range_high'] = ny_high
-            levels_dict['ny_range_low'] = ny_low
-            levels_dict['chicago_range_high'] = ny_high if self.instrument == 'ES' else None
-            levels_dict['chicago_range_low'] = ny_low if self.instrument == 'ES' else None
-        else:
-            levels_dict['ny_range_high'] = highs.iloc[-1]
-            levels_dict['ny_range_low'] = lows.iloc[-1]
-            if self.instrument == 'ES':
+            if len(range_data) > 0:
+                levels_dict['ny_range_high'] = range_data['high'].max()
+                levels_dict['ny_range_low'] = range_data['low'].min()
+            else:
+                levels_dict['ny_range_high'] = highs.iloc[-1]
+                levels_dict['ny_range_low'] = lows.iloc[-1]
+        else:  # ES - Chicago market
+            # Chicago range (08:30 AM - 14:00 CT / 9:30 AM - 15:00 ET)
+            chicago_tz = pytz.timezone('America/Chicago')
+            current_time_chicago = current_time.astimezone(chicago_tz)
+            chicago_today_start = chicago_tz.localize(datetime.combine(current_time_chicago.date(), datetime.min.time()))
+            range_start = chicago_today_start.replace(hour=8, minute=30)
+            range_end = chicago_today_start.replace(hour=14)
+            range_data = df[(df.index >= range_start) & (df.index < range_end)]
+
+            if len(range_data) > 0:
+                levels_dict['chicago_range_high'] = range_data['high'].max()
+                levels_dict['chicago_range_low'] = range_data['low'].min()
+            else:
                 levels_dict['chicago_range_high'] = highs.iloc[-1]
                 levels_dict['chicago_range_low'] = lows.iloc[-1]
 
@@ -542,7 +580,6 @@ Directional Bias: {analysis['bias']}
 Confidence Score: {analysis['confidence']:.2f}%
 Bullish Weight: {analysis['bullish_weight']:.4f}
 Bearish Weight: {analysis['bearish_weight']:.4f}
-Neutral Weight: {analysis['neutral_weight']:.4f}
 
 WEIGHT UTILIZATION
 {'-' * 50}
