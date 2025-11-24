@@ -498,9 +498,9 @@ if st.session_state.analysis_result:
     levels_data = []
     for level in result['levels']:
         distance = level['distance_percent'] if level['distance_percent'] is not None else 0.0
-        
+
         # Determine if level is bullish (above) or bearish (below)
-        position_type = "Bullish" if level['position'] == 'above' else "Bearish"
+        position_type = "Bullish" if level['position'] == 'ABOVE' else "Bearish"
         
         levels_data.append({
             'Level Name': level['name'].replace('_', ' ').title(),
