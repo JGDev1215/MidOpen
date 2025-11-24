@@ -54,6 +54,12 @@ with col2:
     if st.button("🔄 Reset to Defaults", use_container_width=True):
         config_service = get_config_service()
         config_service.reset_instrument_weights(selected_instrument)
+        
+        # Update session state
+        defaults = config_service.get_weights(selected_instrument)
+        for level_name, weight in defaults.items():
+            st.session_state[f"slider_{level_name}"] = weight
+            
         st.success(f"Reset {selected_instrument} weights to defaults")
         st.rerun()
 
@@ -64,6 +70,13 @@ st.divider()
 current_weights = get_weights(selected_instrument)
 weight_names = list(current_weights.keys())
 
+# CRITICAL FIX #1: Initialize session state for all sliders BEFORE rendering them
+# This ensures Streamlit properly tracks slider values across reruns
+for level_name in weight_names:
+    slider_key = f"slider_{level_name}"
+    if slider_key not in st.session_state:
+        st.session_state[slider_key] = current_weights.get(level_name, 0.0)
+
 # Create columns for weight sliders
 col_heading, col_button = st.columns([4, 1])
 
@@ -71,34 +84,56 @@ with col_heading:
     st.markdown("### 🎚️ Level Weights")
 
 with col_button:
-    if st.button("⚖️ Equalize All", use_container_width=True, help="Set all weights equally so they sum to 1.0"):
-        # Use weight_names (from current_weights) - this is the source of truth
-        equal_weight = 1.0 / len(weight_names)
+    if st.button("⚖️ Normalize Weights", use_container_width=True, help="Adjust all weights proportionally so they sum to 1.0"):
+        # Read current slider values from session state (preserving user's manual adjustments)
+        current_slider_values = {}
+        total_current_weight = 0.0
 
-        # Distribute weights and adjust last one to ensure sum = 1.0 exactly
-        equalized_weights = {}
-        remaining = 1.0
-        for i, level_name in enumerate(weight_names):
-            if i == len(weight_names) - 1:
-                # Last weight gets the remainder to ensure exactly 1.0
-                equalized_weights[level_name] = round(remaining, 6)
-            else:
-                equalized_weights[level_name] = round(equal_weight, 6)
-                remaining -= round(equal_weight, 6)
+        for level_name in weight_names:
+            # Get value from session state (user modified) or fall back to saved weight
+            val = st.session_state.get(f"slider_{level_name}", current_weights.get(level_name, 0.0))
+            current_slider_values[level_name] = val
+            total_current_weight += val
 
-        # Save equalized weights
-        set_weights(selected_instrument, equalized_weights)
+        # Normalize weights: scale proportionally so sum = 1.0
+        normalized_weights = {}
+
+        if total_current_weight > 0.0:
+            # Proportional scaling: preserve relative proportions while summing to 1.0
+            for level_name, current_val in current_slider_values.items():
+                normalized_weights[level_name] = round(current_val / total_current_weight, 6)
+        else:
+            # Edge case: all weights are 0, fall back to equal distribution
+            equal_weight = 1.0 / len(weight_names)
+            remaining = 1.0
+            for i, level_name in enumerate(weight_names):
+                if i == len(weight_names) - 1:
+                    normalized_weights[level_name] = round(remaining, 6)
+                else:
+                    normalized_weights[level_name] = round(equal_weight, 6)
+                    remaining -= round(equal_weight, 6)
+
+        # Save normalized weights
+        set_weights(selected_instrument, normalized_weights)
+
+        # Update session state BEFORE displaying success message
+        # This ensures sliders will reflect new values when page reruns
+        for level_name, weight in normalized_weights.items():
+            st.session_state[f"slider_{level_name}"] = weight
 
         # Log the change
         log_weight_change(
             instrument=selected_instrument,
             old_weights=current_weights,
-            new_weights=equalized_weights,
+            new_weights=normalized_weights,
             user="admin",
-            reason="Automatic equalization via Equalize All button"
+            reason="Proportional normalization via Normalize Weights button"
         )
 
-        st.success(f"✅ Weights equalized and saved! Each level now has weight of {equal_weight:.6f}")
+        st.success(f"✅ Weights normalized and saved! Total weight now equals 1.0")
+
+        # Force UI update to show normalized values in sliders
+        st.rerun()
 
 # Display weights in groups
 col_count = 2
@@ -111,15 +146,25 @@ for level_name in weight_names:
     col = cols[col_idx % col_count]
 
     with col:
-        current_value = current_weights.get(level_name, 0.0)
-
+        # CRITICAL FIX #4: Use session state value as the slider's default
+        # This ensures sliders show the most recent value (either from disk or from equalization)
+        # If user adjusted a slider, session state will have that value
+        # If equalize was clicked, session state will have the equalized value
+        session_value = st.session_state.get(f"slider_{level_name}", current_weights.get(level_name, 0.0))
+        
         st.markdown(f"**{level_name.replace('_', ' ').title()}**")
 
+        # CRITICAL FIX #5: Increase max_value from 0.2 to 1.0
+        # Previous constraint of 0.2 meant users couldn't allocate more than 20% to any weight
+        # With 20 levels, equal distribution is 5% (0.05)
+        # Some users might want to weight one level heavily (e.g., 0.25 or 0.40)
+        # This was artificially limiting and confusing
+        # NOTE: Validation still ensures total = 1.0, so this won't break anything
         new_value = st.slider(
             label=f"Weight for {level_name}",
             min_value=0.0,
-            max_value=0.2,  # Max individual weight
-            value=current_value,
+            max_value=1.0,  # FIX: Increased from 0.2 to 1.0 for better flexibility
+            value=session_value,
             step=0.000001,
             label_visibility="collapsed",
             key=f"slider_{level_name}"
