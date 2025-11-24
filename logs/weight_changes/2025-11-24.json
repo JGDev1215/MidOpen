@@ -1,0 +1,776 @@
+[
+  {
+    "timestamp": "2025-11-24T07:17:06.046998",
+    "instrument": "US100",
+    "user": "admin",
+    "reason": "Automatic equalization via Equalize All button",
+    "changes": {
+      "daily_midnight": {
+        "old": 0.1339,
+        "new": 0.05,
+        "change": -0.08389999999999999
+      },
+      "previous_hourly": {
+        "old": 0.0822,
+        "new": 0.05,
+        "change": -0.03219999999999999
+      },
+      "2h_open": {
+        "old": 0.052,
+        "new": 0.05,
+        "change": -0.001999999999999995
+      },
+      "4h_open": {
+        "old": 0.065,
+        "new": 0.05,
+        "change": -0.015
+      },
+      "ny_open": {
+        "old": 0.0779,
+        "new": 0.05,
+        "change": -0.027899999999999994
+      },
+      "ny_preopen": {
+        "old": 0.0391,
+        "new": 0.05,
+        "change": 0.0109
+      },
+      "prev_day_high": {
+        "old": 0.026,
+        "new": 0.05,
+        "change": 0.024000000000000004
+      },
+      "prev_day_low": {
+        "old": 0.026,
+        "new": 0.05,
+        "change": 0.024000000000000004
+      },
+      "weekly_open": {
+        "old": 0.065,
+        "new": 0.05,
+        "change": -0.015
+      },
+      "weekly_high": {
+        "old": 0.026,
+        "new": 0.05,
+        "change": 0.024000000000000004
+      },
+      "weekly_low": {
+        "old": 0.026,
+        "new": 0.05,
+        "change": 0.024000000000000004
+      },
+      "prev_week_high": {
+        "old": 0.052,
+        "new": 0.05,
+        "change": -0.001999999999999995
+      },
+      "prev_week_low": {
+        "old": 0.052,
+        "new": 0.05,
+        "change": -0.001999999999999995
+      },
+      "monthly_open": {
+        "old": 0.0391,
+        "new": 0.05,
+        "change": 0.0109
+      },
+      "asian_range_high": {
+        "old": 0.0279,
+        "new": 0.05,
+        "change": 0.0221
+      },
+      "asian_range_low": {
+        "old": 0.0279,
+        "new": 0.05,
+        "change": 0.0221
+      },
+      "london_range_high": {
+        "old": 0.052,
+        "new": 0.05,
+        "change": -0.001999999999999995
+      },
+      "london_range_low": {
+        "old": 0.052,
+        "new": 0.05,
+        "change": -0.001999999999999995
+      },
+      "ny_range_high": {
+        "old": 0.0391,
+        "new": 0.05,
+        "change": 0.0109
+      },
+      "ny_range_low": {
+        "old": 0.0391,
+        "new": 0.05,
+        "change": 0.0109
+      }
+    },
+    "old_total": 1.0002,
+    "new_total": 1.0,
+    "num_changed_levels": 20
+  },
+  {
+    "timestamp": "2025-11-24T07:30:03.162029",
+    "instrument": "US100",
+    "user": "admin",
+    "reason": "Automatic equalization via Equalize All button",
+    "changes": {
+      "daily_midnight": {
+        "old": 0.1339,
+        "new": 0.05,
+        "change": -0.08389999999999999
+      },
+      "previous_hourly": {
+        "old": 0.0822,
+        "new": 0.05,
+        "change": -0.03219999999999999
+      },
+      "2h_open": {
+        "old": 0.052,
+        "new": 0.05,
+        "change": -0.001999999999999995
+      },
+      "4h_open": {
+        "old": 0.065,
+        "new": 0.05,
+        "change": -0.015
+      },
+      "ny_open": {
+        "old": 0.0779,
+        "new": 0.05,
+        "change": -0.027899999999999994
+      },
+      "ny_preopen": {
+        "old": 0.0391,
+        "new": 0.05,
+        "change": 0.0109
+      },
+      "prev_day_high": {
+        "old": 0.026,
+        "new": 0.05,
+        "change": 0.024000000000000004
+      },
+      "prev_day_low": {
+        "old": 0.026,
+        "new": 0.05,
+        "change": 0.024000000000000004
+      },
+      "weekly_open": {
+        "old": 0.065,
+        "new": 0.05,
+        "change": -0.015
+      },
+      "weekly_high": {
+        "old": 0.026,
+        "new": 0.05,
+        "change": 0.024000000000000004
+      },
+      "weekly_low": {
+        "old": 0.026,
+        "new": 0.05,
+        "change": 0.024000000000000004
+      },
+      "prev_week_high": {
+        "old": 0.052,
+        "new": 0.05,
+        "change": -0.001999999999999995
+      },
+      "prev_week_low": {
+        "old": 0.052,
+        "new": 0.05,
+        "change": -0.001999999999999995
+      },
+      "monthly_open": {
+        "old": 0.0391,
+        "new": 0.05,
+        "change": 0.0109
+      },
+      "asian_range_high": {
+        "old": 0.0279,
+        "new": 0.05,
+        "change": 0.0221
+      },
+      "asian_range_low": {
+        "old": 0.0279,
+        "new": 0.05,
+        "change": 0.0221
+      },
+      "london_range_high": {
+        "old": 0.052,
+        "new": 0.05,
+        "change": -0.001999999999999995
+      },
+      "london_range_low": {
+        "old": 0.052,
+        "new": 0.05,
+        "change": -0.001999999999999995
+      },
+      "ny_range_high": {
+        "old": 0.0391,
+        "new": 0.05,
+        "change": 0.0109
+      },
+      "ny_range_low": {
+        "old": 0.0391,
+        "new": 0.05,
+        "change": 0.0109
+      }
+    },
+    "old_total": 1.0002,
+    "new_total": 1.0,
+    "num_changed_levels": 20
+  },
+  {
+    "timestamp": "2025-11-24T07:31:11.346443",
+    "instrument": "US100",
+    "user": "admin",
+    "reason": "Automatic equalization via Equalize All button",
+    "changes": {
+      "daily_midnight": {
+        "old": 0.1339,
+        "new": 0.05,
+        "change": -0.08389999999999999
+      },
+      "previous_hourly": {
+        "old": 0.0822,
+        "new": 0.05,
+        "change": -0.03219999999999999
+      },
+      "2h_open": {
+        "old": 0.052,
+        "new": 0.05,
+        "change": -0.001999999999999995
+      },
+      "4h_open": {
+        "old": 0.065,
+        "new": 0.05,
+        "change": -0.015
+      },
+      "ny_open": {
+        "old": 0.0779,
+        "new": 0.05,
+        "change": -0.027899999999999994
+      },
+      "ny_preopen": {
+        "old": 0.0391,
+        "new": 0.05,
+        "change": 0.0109
+      },
+      "prev_day_high": {
+        "old": 0.026,
+        "new": 0.05,
+        "change": 0.024000000000000004
+      },
+      "prev_day_low": {
+        "old": 0.026,
+        "new": 0.05,
+        "change": 0.024000000000000004
+      },
+      "weekly_open": {
+        "old": 0.065,
+        "new": 0.05,
+        "change": -0.015
+      },
+      "weekly_high": {
+        "old": 0.026,
+        "new": 0.05,
+        "change": 0.024000000000000004
+      },
+      "weekly_low": {
+        "old": 0.026,
+        "new": 0.05,
+        "change": 0.024000000000000004
+      },
+      "prev_week_high": {
+        "old": 0.052,
+        "new": 0.05,
+        "change": -0.001999999999999995
+      },
+      "prev_week_low": {
+        "old": 0.052,
+        "new": 0.05,
+        "change": -0.001999999999999995
+      },
+      "monthly_open": {
+        "old": 0.0391,
+        "new": 0.05,
+        "change": 0.0109
+      },
+      "asian_range_high": {
+        "old": 0.0279,
+        "new": 0.05,
+        "change": 0.0221
+      },
+      "asian_range_low": {
+        "old": 0.0279,
+        "new": 0.05,
+        "change": 0.0221
+      },
+      "london_range_high": {
+        "old": 0.052,
+        "new": 0.05,
+        "change": -0.001999999999999995
+      },
+      "london_range_low": {
+        "old": 0.052,
+        "new": 0.05,
+        "change": -0.001999999999999995
+      },
+      "ny_range_high": {
+        "old": 0.0391,
+        "new": 0.05,
+        "change": 0.0109
+      },
+      "ny_range_low": {
+        "old": 0.0391,
+        "new": 0.05,
+        "change": 0.0109
+      }
+    },
+    "old_total": 1.0002,
+    "new_total": 1.0,
+    "num_changed_levels": 20
+  },
+  {
+    "timestamp": "2025-11-24T08:07:37.793706",
+    "instrument": "US100",
+    "user": "admin",
+    "reason": "Proportional normalization via Normalize Weights button",
+    "changes": {
+      "daily_midnight": {
+        "old": 0.1339,
+        "new": 0.108439,
+        "change": -0.025460999999999998
+      },
+      "previous_hourly": {
+        "old": 0.0822,
+        "new": 0.256559,
+        "change": 0.174359
+      },
+      "2h_open": {
+        "old": 0.052,
+        "new": 0.042112,
+        "change": -0.009888000000000001
+      },
+      "4h_open": {
+        "old": 0.065,
+        "new": 0.05264,
+        "change": -0.012360000000000003
+      },
+      "ny_open": {
+        "old": 0.0779,
+        "new": 0.063087,
+        "change": -0.014812999999999993
+      },
+      "ny_preopen": {
+        "old": 0.0391,
+        "new": 0.031665,
+        "change": -0.007435000000000004
+      },
+      "prev_day_high": {
+        "old": 0.026,
+        "new": 0.021056,
+        "change": -0.0049440000000000005
+      },
+      "prev_day_low": {
+        "old": 0.026,
+        "new": 0.021056,
+        "change": -0.0049440000000000005
+      },
+      "weekly_open": {
+        "old": 0.065,
+        "new": 0.05264,
+        "change": -0.012360000000000003
+      },
+      "weekly_high": {
+        "old": 0.026,
+        "new": 0.021056,
+        "change": -0.0049440000000000005
+      },
+      "weekly_low": {
+        "old": 0.026,
+        "new": 0.021056,
+        "change": -0.0049440000000000005
+      },
+      "prev_week_high": {
+        "old": 0.052,
+        "new": 0.042112,
+        "change": -0.009888000000000001
+      },
+      "prev_week_low": {
+        "old": 0.052,
+        "new": 0.042112,
+        "change": -0.009888000000000001
+      },
+      "monthly_open": {
+        "old": 0.0391,
+        "new": 0.031665,
+        "change": -0.007435000000000004
+      },
+      "asian_range_high": {
+        "old": 0.0279,
+        "new": 0.022595,
+        "change": -0.005305000000000001
+      },
+      "asian_range_low": {
+        "old": 0.0279,
+        "new": 0.022595,
+        "change": -0.005305000000000001
+      },
+      "london_range_high": {
+        "old": 0.052,
+        "new": 0.042112,
+        "change": -0.009888000000000001
+      },
+      "london_range_low": {
+        "old": 0.052,
+        "new": 0.042112,
+        "change": -0.009888000000000001
+      },
+      "ny_range_high": {
+        "old": 0.0391,
+        "new": 0.031665,
+        "change": -0.007435000000000004
+      },
+      "ny_range_low": {
+        "old": 0.0391,
+        "new": 0.031665,
+        "change": -0.007435000000000004
+      }
+    },
+    "old_total": 1.0002,
+    "new_total": 0.999999,
+    "num_changed_levels": 20
+  },
+  {
+    "timestamp": "2025-11-24T08:08:37.943921",
+    "instrument": "US100",
+    "user": "admin",
+    "reason": "Proportional normalization via Normalize Weights button",
+    "changes": {
+      "daily_midnight": {
+        "old": 0.1339,
+        "new": 0.133873,
+        "change": -2.6999999999999247e-05
+      },
+      "previous_hourly": {
+        "old": 0.0822,
+        "new": 0.082184,
+        "change": -1.6000000000002124e-05
+      },
+      "4h_open": {
+        "old": 0.065,
+        "new": 0.064987,
+        "change": -1.2999999999999123e-05
+      },
+      "ny_open": {
+        "old": 0.0779,
+        "new": 0.077884,
+        "change": -1.6000000000002124e-05
+      },
+      "weekly_open": {
+        "old": 0.065,
+        "new": 0.064987,
+        "change": -1.2999999999999123e-05
+      }
+    },
+    "old_total": 1.0002,
+    "new_total": 1.000001,
+    "num_changed_levels": 5
+  },
+  {
+    "timestamp": "2025-11-24T08:08:44.817605",
+    "instrument": "US100",
+    "user": "admin",
+    "reason": "Proportional normalization via Normalize Weights button",
+    "changes": {
+      "daily_midnight": {
+        "old": 0.133873,
+        "new": 0.117642,
+        "change": -0.016230999999999995
+      },
+      "previous_hourly": {
+        "old": 0.082184,
+        "new": 0.052508,
+        "change": -0.029675999999999994
+      },
+      "2h_open": {
+        "old": 0.05199,
+        "new": 0.045687,
+        "change": -0.006303000000000003
+      },
+      "4h_open": {
+        "old": 0.064987,
+        "new": 0.129783,
+        "change": 0.064796
+      },
+      "ny_open": {
+        "old": 0.077884,
+        "new": 0.136718,
+        "change": 0.05883400000000001
+      },
+      "ny_preopen": {
+        "old": 0.039092,
+        "new": 0.034352,
+        "change": -0.004740000000000001
+      },
+      "prev_day_high": {
+        "old": 0.025995,
+        "new": 0.022843,
+        "change": -0.003152000000000002
+      },
+      "prev_day_low": {
+        "old": 0.025995,
+        "new": 0.022843,
+        "change": -0.003152000000000002
+      },
+      "weekly_open": {
+        "old": 0.064987,
+        "new": 0.057108,
+        "change": -0.007879000000000004
+      },
+      "weekly_high": {
+        "old": 0.025995,
+        "new": 0.022843,
+        "change": -0.003152000000000002
+      },
+      "weekly_low": {
+        "old": 0.025995,
+        "new": 0.022843,
+        "change": -0.003152000000000002
+      },
+      "prev_week_high": {
+        "old": 0.05199,
+        "new": 0.045687,
+        "change": -0.006303000000000003
+      },
+      "prev_week_low": {
+        "old": 0.05199,
+        "new": 0.045687,
+        "change": -0.006303000000000003
+      },
+      "monthly_open": {
+        "old": 0.039092,
+        "new": 0.034352,
+        "change": -0.004740000000000001
+      },
+      "asian_range_high": {
+        "old": 0.027894,
+        "new": 0.024512,
+        "change": -0.0033819999999999996
+      },
+      "asian_range_low": {
+        "old": 0.027894,
+        "new": 0.024512,
+        "change": -0.0033819999999999996
+      },
+      "london_range_high": {
+        "old": 0.05199,
+        "new": 0.045687,
+        "change": -0.006303000000000003
+      },
+      "london_range_low": {
+        "old": 0.05199,
+        "new": 0.045687,
+        "change": -0.006303000000000003
+      },
+      "ny_range_high": {
+        "old": 0.039092,
+        "new": 0.034352,
+        "change": -0.004740000000000001
+      },
+      "ny_range_low": {
+        "old": 0.039092,
+        "new": 0.034352,
+        "change": -0.004740000000000001
+      }
+    },
+    "old_total": 1.000001,
+    "new_total": 0.9999979999999999,
+    "num_changed_levels": 20
+  },
+  {
+    "timestamp": "2025-11-24T08:26:43.778926",
+    "instrument": "US100",
+    "user": "admin",
+    "reason": "Proportional normalization via Normalize Weights button",
+    "changes": {
+      "daily_midnight": {
+        "old": 0.1339,
+        "new": 0.177653,
+        "change": 0.043753000000000014
+      },
+      "previous_hourly": {
+        "old": 0.0822,
+        "new": 0.078029,
+        "change": -0.004170999999999994
+      },
+      "2h_open": {
+        "old": 0.052,
+        "new": 0.049362,
+        "change": -0.0026379999999999945
+      },
+      "4h_open": {
+        "old": 0.065,
+        "new": 0.061702,
+        "change": -0.0032980000000000023
+      },
+      "ny_open": {
+        "old": 0.0779,
+        "new": 0.073948,
+        "change": -0.003951999999999997
+      },
+      "ny_preopen": {
+        "old": 0.0391,
+        "new": 0.037116,
+        "change": -0.0019839999999999997
+      },
+      "prev_day_high": {
+        "old": 0.026,
+        "new": 0.024681,
+        "change": -0.0013189999999999973
+      },
+      "prev_day_low": {
+        "old": 0.026,
+        "new": 0.024681,
+        "change": -0.0013189999999999973
+      },
+      "weekly_open": {
+        "old": 0.065,
+        "new": 0.061702,
+        "change": -0.0032980000000000023
+      },
+      "weekly_high": {
+        "old": 0.026,
+        "new": 0.024681,
+        "change": -0.0013189999999999973
+      },
+      "weekly_low": {
+        "old": 0.026,
+        "new": 0.024681,
+        "change": -0.0013189999999999973
+      },
+      "prev_week_high": {
+        "old": 0.052,
+        "new": 0.049362,
+        "change": -0.0026379999999999945
+      },
+      "prev_week_low": {
+        "old": 0.052,
+        "new": 0.049362,
+        "change": -0.0026379999999999945
+      },
+      "monthly_open": {
+        "old": 0.0391,
+        "new": 0.037116,
+        "change": -0.0019839999999999997
+      },
+      "asian_range_high": {
+        "old": 0.0279,
+        "new": 0.026484,
+        "change": -0.0014160000000000006
+      },
+      "asian_range_low": {
+        "old": 0.0279,
+        "new": 0.026484,
+        "change": -0.0014160000000000006
+      },
+      "london_range_high": {
+        "old": 0.052,
+        "new": 0.049362,
+        "change": -0.0026379999999999945
+      },
+      "london_range_low": {
+        "old": 0.052,
+        "new": 0.049362,
+        "change": -0.0026379999999999945
+      },
+      "ny_range_high": {
+        "old": 0.0391,
+        "new": 0.037116,
+        "change": -0.0019839999999999997
+      },
+      "ny_range_low": {
+        "old": 0.0391,
+        "new": 0.037116,
+        "change": -0.0019839999999999997
+      }
+    },
+    "old_total": 1.0002,
+    "new_total": 1.0,
+    "num_changed_levels": 20
+  },
+  {
+    "timestamp": "2025-11-24T08:27:28.717583",
+    "instrument": "US100",
+    "user": "admin",
+    "reason": "Proportional normalization via Normalize Weights button",
+    "changes": {
+      "daily_midnight": {
+        "old": 0.1339,
+        "new": 0.133873,
+        "change": -2.6999999999999247e-05
+      },
+      "previous_hourly": {
+        "old": 0.0822,
+        "new": 0.082184,
+        "change": -1.6000000000002124e-05
+      },
+      "4h_open": {
+        "old": 0.065,
+        "new": 0.064987,
+        "change": -1.2999999999999123e-05
+      },
+      "ny_open": {
+        "old": 0.0779,
+        "new": 0.077884,
+        "change": -1.6000000000002124e-05
+      },
+      "weekly_open": {
+        "old": 0.065,
+        "new": 0.064987,
+        "change": -1.2999999999999123e-05
+      }
+    },
+    "old_total": 1.0002,
+    "new_total": 1.000001,
+    "num_changed_levels": 5
+  },
+  {
+    "timestamp": "2025-11-24T08:27:30.863289",
+    "instrument": "US100",
+    "user": "admin",
+    "reason": "Proportional normalization via Normalize Weights button",
+    "changes": {
+      "daily_midnight": {
+        "old": 0.1339,
+        "new": 0.133873,
+        "change": -2.6999999999999247e-05
+      },
+      "previous_hourly": {
+        "old": 0.0822,
+        "new": 0.082184,
+        "change": -1.6000000000002124e-05
+      },
+      "4h_open": {
+        "old": 0.065,
+        "new": 0.064987,
+        "change": -1.2999999999999123e-05
+      },
+      "ny_open": {
+        "old": 0.0779,
+        "new": 0.077884,
+        "change": -1.6000000000002124e-05
+      },
+      "weekly_open": {
+        "old": 0.065,
+        "new": 0.064987,
+        "change": -1.2999999999999123e-05
+      }
+    },
+    "old_total": 1.0002,
+    "new_total": 1.000001,
+    "num_changed_levels": 5
+  }
+]
